@@ -1,0 +1,73 @@
+{
+  "realm": "open-admin",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "directGrantFlow": "direct grant",
+  "requiredCredentials": [
+    "password"
+  ],
+  "users": [
+    {
+      "username": "service-account-keycloak-admin",
+      "enabled": true,
+      "serviceAccountClientId": "keycloak-admin",
+      "realmRoles": [
+        "default-roles-open-admin"
+      ],
+      "clientRoles": {
+        "realm-management": [
+          "query-users",
+          "view-users",
+          "manage-users"
+        ]
+      }
+    },
+    {
+      "id": "30f3efcc-c3ff-43f8-9b9a-ec3d8d9f6bc9",
+      "username": "user1",
+      "enabled": true,
+      "email": "user1@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "11111111"
+        }
+      ],
+      "createdTimestamp": 1639981692277
+    },
+    {
+      "id": "45e4c8f8-98bc-43c0-93e8-1a2a3aec6bf7",
+      "username": "user2",
+      "enabled": true,
+      "email": "user2@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "11111111"
+        }
+      ],
+      "createdTimestamp": 1639981692277
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "keycloak-admin",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType" : "client-secret",
+      "secret": "keycloak-admin-secret",
+      "redirectUris": [],
+      "webOrigins": [],
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "attributes" : { },
+      "authenticationFlowBindingOverrides" : { },
+      "fullScopeAllowed" : true,
+      "defaultClientScopes" : [ "web-origins", "roles", "profile", "email" ],
+      "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+    }
+  ]
+}
