@@ -39,7 +39,7 @@ public class KeycloakUserProvider implements UserProvider {
         Optional<UserResource> userResource = getUserResource(userId);
         return userResource.flatMap(
                 resource -> Optional.ofNullable(resource.toRepresentation())
-                        .map(UserMapper::convertToUser));
+                        .map(UserMapper::mapToUser));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class KeycloakUserProvider implements UserProvider {
         List<UserRepresentation> userList = usersResource.search(username, true);
         Optional<User> result = Optional.empty();
         if (userList.size() > 0) {
-            result = Optional.of(UserMapper.convertToUser(userList.get(0)));
+            result = Optional.of(UserMapper.mapToUser(userList.get(0)));
         }
         return result;
     }
@@ -59,7 +59,7 @@ public class KeycloakUserProvider implements UserProvider {
         List<UserRepresentation> userList = usersResource.search(null, null, null, email, 0, 1);
         Optional<User> result = Optional.empty();
         if (userList.size() > 0) {
-            result = Optional.of(UserMapper.convertToUser(userList.get(0)));
+            result = Optional.of(UserMapper.mapToUser(userList.get(0)));
         }
         return result;
     }
@@ -71,7 +71,7 @@ public class KeycloakUserProvider implements UserProvider {
             verifyEmail(user.getEmail());
         }
         UsersResource usersResource = adminClient.getUsersResource();
-        UserRepresentation userRepresentation = UserMapper.convertToUserRepresentation(user);
+        UserRepresentation userRepresentation = UserMapper.mapToUserRepresentation(user);
         Response response = usersResource.create(userRepresentation);
         log.info("Response Code: " + response.getStatusInfo());
         if (response.getStatusInfo().equals(Response.Status.CREATED)) {
@@ -87,7 +87,7 @@ public class KeycloakUserProvider implements UserProvider {
         Optional<UserResource> userResource = getUserResource(userProfile.getUserId());
         userResource.ifPresent(resource -> {
             UserRepresentation userRepresentation = resource.toRepresentation();
-            userRepresentation.setAttributes(UserMapper.convertToUserAttributes(userProfile));
+            userRepresentation.setAttributes(UserMapper.mapToUserAttributes(userProfile));
             resource.update(userRepresentation);
         });
     }
@@ -97,7 +97,7 @@ public class KeycloakUserProvider implements UserProvider {
         Optional<UserResource> userResource = getUserResource(userPassword.getUserId());
         userResource.map(UserResource::toRepresentation).ifPresent(user ->
                 verifyPassword(user.getUsername(), userPassword.getPassword()));
-        CredentialRepresentation passwordCredential = UserMapper.convertToPasswordCredential(userPassword);
+        CredentialRepresentation passwordCredential = UserMapper.mapToPasswordCredential(userPassword);
         userResource.ifPresent(resource -> resource.resetPassword(passwordCredential));
     }
 

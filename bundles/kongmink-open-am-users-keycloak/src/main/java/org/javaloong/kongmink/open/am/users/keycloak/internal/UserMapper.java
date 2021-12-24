@@ -23,35 +23,35 @@ public class UserMapper {
     public static final String CONTACT_NAME_KEY = "contactName";
     public static final String CONTACT_PHONE_KEY = "contactPhone";
 
-    public static User convertToUser(UserRepresentation userRepresentation) {
+    public static User mapToUser(UserRepresentation userRepresentation) {
         User user = new User();
         user.setId(userRepresentation.getId());
         user.setUsername(userRepresentation.getUsername());
         user.setEmail(userRepresentation.getEmail());
         user.setEmailVerified(userRepresentation.isEmailVerified());
         user.setEnabled(userRepresentation.isEnabled());
-        user.setProfile(convertToUserProfile(userRepresentation));
+        user.setProfile(mapToUserProfile(userRepresentation));
         user.setCreatedTimestamp(LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(userRepresentation.getCreatedTimestamp()), ZoneId.systemDefault()));
         return user;
     }
 
-    public static UserRepresentation convertToUserRepresentation(User user) {
+    public static UserRepresentation mapToUserRepresentation(User user) {
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername(user.getUsername());
         userRepresentation.setEmail(user.getEmail());
-//        userRepresentation.setEnabled(true);
+        userRepresentation.setEnabled(user.isEnabled());
         if(user.getPassword() != null) {
             userRepresentation.setCredentials(
-                    Collections.singletonList(convertToPasswordCredential(user.getPassword())));
+                    Collections.singletonList(mapToPasswordCredential(user.getPassword())));
         }
         if(user.getProfile() != null) {
-            userRepresentation.setAttributes(convertToUserAttributes(user.getProfile()));
+            userRepresentation.setAttributes(mapToUserAttributes(user.getProfile()));
         }
         return userRepresentation;
     }
 
-    public static CredentialRepresentation convertToPasswordCredential(Password password) {
+    public static CredentialRepresentation mapToPasswordCredential(Password password) {
         CredentialRepresentation passwordCredential = new CredentialRepresentation();
         passwordCredential.setTemporary(false);
         passwordCredential.setType(CredentialRepresentation.PASSWORD);
@@ -59,7 +59,7 @@ public class UserMapper {
         return passwordCredential;
     }
 
-    public static Map<String, List<String>> convertToUserAttributes(UserProfile userProfile) {
+    public static Map<String, List<String>> mapToUserAttributes(UserProfile userProfile) {
         Map<String, List<String>> attributes = new LinkedHashMap<>();
         setUserAttribute(attributes, COMPANY_NAME_KEY, userProfile.getCompanyName());
         setUserAttribute(attributes, COMPANY_PROVINCE_KEY, userProfile.getCompanyProvince());
@@ -70,7 +70,7 @@ public class UserMapper {
         return attributes;
     }
 
-    public static UserProfile convertToUserProfile(Map<String, List<String>> attributes) {
+    public static UserProfile mapToUserProfile(Map<String, List<String>> attributes) {
         UserProfile userProfile = new UserProfile();
         userProfile.setCompanyName(getUserAttribute(attributes, COMPANY_NAME_KEY));
         userProfile.setCompanyProvince(getUserAttribute(attributes, COMPANY_PROVINCE_KEY));
@@ -81,8 +81,8 @@ public class UserMapper {
         return userProfile;
     }
 
-    public static UserProfile convertToUserProfile(UserRepresentation userRepresentation) {
-        UserProfile userProfile = convertToUserProfile(userRepresentation.getAttributes());
+    public static UserProfile mapToUserProfile(UserRepresentation userRepresentation) {
+        UserProfile userProfile = mapToUserProfile(userRepresentation.getAttributes());
         userProfile.setUserId(userRepresentation.getId());
         return userProfile;
     }
