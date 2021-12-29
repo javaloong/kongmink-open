@@ -24,6 +24,7 @@
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <commons.lang3.version>3.11</commons.lang3.version>
         <jackson.version>2.12.5</jackson.version>
+        <modelmapper.version>2.4.2</modelmapper.version>
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
         <keycloak.version>15.0.2</keycloak.version>
         <resteasy.version>3.15.3.Final</resteasy.version>
@@ -100,6 +101,11 @@
                 <groupId>com.fasterxml.jackson.jaxrs</groupId>
                 <artifactId>jackson-jaxrs-json-provider</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>

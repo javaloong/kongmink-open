@@ -1,0 +1,82 @@
+{
+  "realm": "demo",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "directGrantFlow": "direct grant",
+  "requiredCredentials": [
+    "password"
+  ],
+  "users": [
+    {
+      "username": "service-account-keycloak-admin",
+      "enabled": true,
+      "serviceAccountClientId": "keycloak-admin",
+      "realmRoles": [
+        "default-roles-demo"
+      ],
+      "clientRoles": {
+        "realm-management": [
+          "create-client",
+          "manage-clients",
+          "query-clients",
+          "view-clients"
+        ]
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "keycloak-admin",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "clientAuthenticatorType" : "client-secret",
+      "secret": "keycloak-admin-secret",
+      "redirectUris": [],
+      "webOrigins": [],
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "attributes" : { },
+      "authenticationFlowBindingOverrides" : { },
+      "fullScopeAllowed" : true,
+      "defaultClientScopes" : [ "web-origins", "roles", "profile", "email" ],
+      "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+    },
+    {
+      "id" : "b88ce206-63d6-43b6-87c9-ea09d8c02f32",
+      "clientId": "example-client",
+      "name": "Example Client",
+      "enabled": true,
+      "clientAuthenticatorType" : "client-secret",
+      "secret" : "example-client-secret",
+      "redirectUris": [
+        "/example-client/*"
+      ],
+      "webOrigins" : [ "+" ],
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true
+    },
+    {
+      "id" : "6a4bfbd0-576d-4778-af56-56f876647355",
+      "clientId": "other-client",
+      "enabled": true,
+      "redirectUris": [
+        "/other-client/*"
+      ],
+      "consentRequired": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true
+    }
+  ]
+}
