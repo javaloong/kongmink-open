@@ -1,6 +1,8 @@
 package org.javaloong.kongmink.open.am.users;
 
-public class UserException extends RuntimeException {
+import org.javaloong.kongmink.open.common.exception.ErrorCodeException;
+
+public class UserException extends ErrorCodeException {
 
     public static final String USERNAME_EXISTS = "UsernameExists";
     public static final String EMAIL_EXISTS = "emailExists";
@@ -18,35 +20,19 @@ public class UserException extends RuntimeException {
         return new UserException(PASSWORD_NOT_MATCH);
     }
 
-    private final String errorCode;
-    private final Object[] args;
-
     public UserException(String errorCode) {
-        this(errorCode, errorCode);
+        super(errorCode);
     }
 
-    public UserException(String errorCode, String message) {
-        this(errorCode, message, null);
+    public UserException(String message, String errorCode) {
+        super(message, errorCode);
     }
 
-    public UserException(String errorCode, String message, Object[] args) {
-        super(message);
-        this.errorCode = errorCode;
-        this.args = args;
+    public UserException(String message, String errorCode, Object... args) {
+        super(message, errorCode, args);
     }
 
-    public UserException(String errorCode, Throwable cause, String message, Object[] args) {
-        super(message, cause);
-        this.errorCode = errorCode;
-        this.args = args;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-
-    public Object[] getArgs() {
-        return args;
+    public UserException(String message, Throwable cause, String errorCode, Object... args) {
+        super(message, cause, errorCode, args);
     }
 }

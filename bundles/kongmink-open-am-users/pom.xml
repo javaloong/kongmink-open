@@ -13,6 +13,14 @@
     <artifactId>kongmink-open-am-users</artifactId>
     <packaging>bundle</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

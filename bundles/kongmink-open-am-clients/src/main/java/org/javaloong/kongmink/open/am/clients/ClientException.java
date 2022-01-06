@@ -1,6 +1,8 @@
 package org.javaloong.kongmink.open.am.clients;
 
-public class ClientException extends RuntimeException {
+import org.javaloong.kongmink.open.common.exception.ErrorCodeException;
+
+public class ClientException extends ErrorCodeException {
 
     public static final String CLIENT_EXISTS = "ClientExists";
 
@@ -8,35 +10,19 @@ public class ClientException extends RuntimeException {
         return new ClientException(CLIENT_EXISTS);
     }
 
-    private final String errorCode;
-    private final Object[] args;
-
     public ClientException(String errorCode) {
-        this(errorCode, errorCode);
+        super(errorCode);
     }
 
-    public ClientException(String errorCode, String message) {
-        this(errorCode, message, null);
+    public ClientException(String message, String errorCode) {
+        super(message, errorCode);
     }
 
-    public ClientException(String errorCode, String message, Object[] args) {
-        super(message);
-        this.errorCode = errorCode;
-        this.args = args;
+    public ClientException(String message, String errorCode, Object... args) {
+        super(message, errorCode, args);
     }
 
-    public ClientException(String errorCode, Throwable cause, String message, Object[] args) {
-        super(message, cause);
-        this.errorCode = errorCode;
-        this.args = args;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-
-    public Object[] getArgs() {
-        return args;
+    public ClientException(String message, Throwable cause, String errorCode, Object... args) {
+        super(message, cause, errorCode, args);
     }
 }

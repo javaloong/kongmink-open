@@ -12,6 +12,10 @@
 
     <artifactId>kongmink-open-am-embedded-keycloak</artifactId>
 
+    <properties>
+        <h2.version>1.4.200</h2.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -56,6 +60,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
