@@ -19,6 +19,8 @@
 		<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
 
         <osgi.version>7.0.0</osgi.version>
+        <jakarta.persistence.version>2.2.3</jakarta.persistence.version>
+        <jakarta.transaction.version>1.3.3</jakarta.transaction.version>
         <jakarta.validation.version>2.0.2</jakarta.validation.version>
         <jakarta.ws.rs.version>2.1.6</jakarta.ws.rs.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>
@@ -61,6 +63,16 @@
                 <artifactId>osgi.cmpn</artifactId>
                 <version>${osgi.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.transaction</groupId>
+                <artifactId>jakarta.transaction-api</artifactId>
+                <version>${jakarta.transaction.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.validation</groupId>
