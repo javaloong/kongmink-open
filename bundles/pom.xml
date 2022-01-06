@@ -33,6 +33,7 @@
         <module>kongmink-open-am-embedded-keycloak</module>
         <module>kongmink-open-am-users</module>
         <module>kongmink-open-am-users-keycloak</module>
+        <module>kongmink-open-common</module>
     </modules>
 
 </project>
