@@ -6,6 +6,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.javaloong.kongmink.open.data.domain.User</class>
+        <class>org.javaloong.kongmink.open.data.domain.Client</class>
         <properties>
             <!-- Configuring JDBC properties -->
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
