@@ -20,7 +20,7 @@ public abstract class CrudRepositoryJpa<T extends AbstractEntity<ID>, ID extends
 
     private final Class<T> entityClass;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "kmOpen")
     protected EntityManager em;
 
     public void setEntityManager(EntityManager entityManager) {

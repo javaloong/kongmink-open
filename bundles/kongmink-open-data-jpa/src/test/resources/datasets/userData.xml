@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <users id="1" username="user1" enabled="1" created_date="2021-01-01 18:18:32" />
+    <users id="2" username="user2" enabled="1" created_date="2021-12-12 23:23:23" />
+    <users id="3" username="user3" enabled="0" created_date="2021-12-22 12:12:12" />
+</dataset>
