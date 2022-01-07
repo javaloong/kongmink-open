@@ -27,15 +27,17 @@
         <commons.lang3.version>3.11</commons.lang3.version>
         <jackson.version>2.12.5</jackson.version>
         <modelmapper.version>2.4.2</modelmapper.version>
+        <hibernate.version>5.4.32.Final</hibernate.version>
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
         <keycloak.version>16.1.0</keycloak.version>
         <resteasy.version>3.15.3.Final</resteasy.version>
-        <junit.version>5.8.2</junit.version>
+        <junit.version>5.7.2</junit.version>
         <junit.servers.version>2.0.0</junit.servers.version>
         <mockito.version>4.1.0</mockito.version>
         <assertj.version>3.20.2</assertj.version>
         <awaitility.version>3.1.6</awaitility.version>
-        <h2.verison>1.4.200</h2.verison>
+        <database.rider.version>1.32.0</database.rider.version>
+        <hsqldb.version>2.5.2</hsqldb.version>
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.9</logback.version>
     </properties>
@@ -120,6 +122,11 @@
                 <version>${modelmapper.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
@@ -150,9 +157,9 @@
                 <version>${resteasy.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.verison}</version>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -204,6 +211,12 @@
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${awaitility.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.database-rider</groupId>
+                <artifactId>rider-junit5</artifactId>
+                <version>${database.rider.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

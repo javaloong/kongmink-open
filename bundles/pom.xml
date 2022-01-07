@@ -35,6 +35,7 @@
         <module>kongmink-open-am-users-keycloak</module>
         <module>kongmink-open-common</module>
         <module>kongmink-open-data</module>
+        <module>kongmink-open-data-jpa</module>
     </modules>
 
 </project>
