@@ -1,5 +1,6 @@
 package org.javaloong.kongmink.open.am.embedded.keycloak;
 
+import org.apache.commons.lang.StringUtils;
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.representations.idm.RealmRepresentation;
@@ -25,7 +26,7 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
     public EmbeddedKeycloakApplication(KeycloakServerProperties serverProperties) {
         super();
         createMasterRealmAdminUser(serverProperties.getAdminUser(), serverProperties.getAdminPassword());
-        createConfigRealm(serverProperties.getRealmConfigPath());
+        createConfigRealms(serverProperties.getRealmConfigPath());
     }
 
     protected void loadConfig() {
@@ -45,6 +46,13 @@ public class EmbeddedKeycloakApplication extends KeycloakApplication {
             session.getTransactionManager().rollback();
         }
         session.close();
+    }
+
+    private void createConfigRealms(String path) {
+        String[] realmPaths = StringUtils.split(path, ',');
+        for (String realmPath: realmPaths) {
+            createConfigRealm(realmPath);
+        }
     }
 
     private void createConfigRealm(String path) {

@@ -12,7 +12,8 @@ public class SimplePlatformProvider implements PlatformProvider {
 
     private static final Logger log = LoggerFactory.getLogger(SimplePlatformProvider.class);
 
-    private File tmpDir;
+    protected File tmpDir;
+    protected Runnable shutdownHook;
 
     @Override
     public void onStartup(Runnable startupHook) {
@@ -21,6 +22,7 @@ public class SimplePlatformProvider implements PlatformProvider {
 
     @Override
     public void onShutdown(Runnable shutdownHook) {
+        this.shutdownHook = shutdownHook;
     }
 
     @Override
@@ -53,5 +55,9 @@ public class SimplePlatformProvider implements PlatformProvider {
             }
         }
         return tmpDir;
+    }
+
+    public void shutdown() {
+        this.shutdownHook.run();
     }
 }
