@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.users;
+package org.javaloong.kongmink.open.am.user;
 
 import org.javaloong.kongmink.open.common.exception.ErrorCodeException;
 

@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.clients;
+package org.javaloong.kongmink.open.am.client;
 
 import org.javaloong.kongmink.open.common.exception.ErrorCodeException;
 

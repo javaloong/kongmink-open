@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.users.model;
+package org.javaloong.kongmink.open.am.user.model;
 
 import java.time.LocalDateTime;
 

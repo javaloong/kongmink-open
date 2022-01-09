@@ -1,9 +1,9 @@
-package org.javaloong.kongmink.open.am.users;
+package org.javaloong.kongmink.open.am.user;
 
-import org.javaloong.kongmink.open.am.users.model.User;
-import org.javaloong.kongmink.open.am.users.model.UserEmail;
-import org.javaloong.kongmink.open.am.users.model.UserPassword;
-import org.javaloong.kongmink.open.am.users.model.UserProfile;
+import org.javaloong.kongmink.open.am.user.model.User;
+import org.javaloong.kongmink.open.am.user.model.UserEmail;
+import org.javaloong.kongmink.open.am.user.model.UserPassword;
+import org.javaloong.kongmink.open.am.user.model.UserProfile;
 
 import java.util.Optional;
 

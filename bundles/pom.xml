@@ -14,11 +14,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>kongmink-open-am-clients</module>
-        <module>kongmink-open-am-clients-keycloak</module>
+        <module>kongmink-open-am-core</module>
         <module>kongmink-open-am-embedded-keycloak</module>
-        <module>kongmink-open-am-users</module>
-        <module>kongmink-open-am-users-keycloak</module>
         <module>kongmink-open-common</module>
         <module>kongmink-open-data</module>
         <module>kongmink-open-data-jpa</module>
