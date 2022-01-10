@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.am.client;
 
-import org.javaloong.kongmink.open.am.client.model.Client;
+import org.javaloong.kongmink.open.common.model.client.Client;
 
 import java.util.Optional;
 

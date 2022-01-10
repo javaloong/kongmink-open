@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.am.keycloak.internal.client;
 
 import org.javaloong.kongmink.open.am.client.ClientException;
 import org.javaloong.kongmink.open.am.client.ClientProvider;
-import org.javaloong.kongmink.open.am.client.model.Client;
+import org.javaloong.kongmink.open.common.model.client.Client;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.resource.ClientResource;
 import org.keycloak.admin.client.resource.ClientsResource;

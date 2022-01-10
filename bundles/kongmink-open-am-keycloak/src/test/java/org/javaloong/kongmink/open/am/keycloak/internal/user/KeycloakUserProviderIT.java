@@ -7,10 +7,10 @@ import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties
 import org.javaloong.kongmink.open.am.keycloak.internal.EmbeddedKeycloakTestSupport;
 import org.javaloong.kongmink.open.am.user.UserException;
 import org.javaloong.kongmink.open.am.user.UserProvider;
-import org.javaloong.kongmink.open.am.user.model.User;
-import org.javaloong.kongmink.open.am.user.model.UserEmail;
-import org.javaloong.kongmink.open.am.user.model.UserPassword;
-import org.javaloong.kongmink.open.am.user.model.UserProfile;
+import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.model.user.UserEmail;
+import org.javaloong.kongmink.open.common.model.user.UserPassword;
+import org.javaloong.kongmink.open.common.model.user.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.osgi.util.converter.Converters;

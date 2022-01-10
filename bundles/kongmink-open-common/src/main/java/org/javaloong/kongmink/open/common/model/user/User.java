@@ -1,4 +1,6 @@
-package org.javaloong.kongmink.open.am.user.model;
+package org.javaloong.kongmink.open.common.model.user;
+
+import org.javaloong.kongmink.open.common.model.Password;
 
 import java.time.LocalDateTime;
 
