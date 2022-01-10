@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component(service = ClientRepository.class, immediate = true)
-public class JpaClientRepository extends CrudRepositoryJpa<Client, String> implements ClientRepository {
+public class JpaClientRepository extends JpaRepositorySupport<Client, String> implements ClientRepository {
 
     @Override
     public List<Client> findAllByUser(User user) {

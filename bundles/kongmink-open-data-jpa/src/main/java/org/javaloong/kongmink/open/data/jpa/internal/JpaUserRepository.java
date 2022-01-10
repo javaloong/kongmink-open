@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component(service = UserRepository.class, immediate = true)
-public class JpaUserRepository extends CrudRepositoryJpa<User, String> implements UserRepository {
+public class JpaUserRepository extends JpaRepositorySupport<User, String> implements UserRepository {
 
     @Override
     public Optional<User> findByUsername(String username) {

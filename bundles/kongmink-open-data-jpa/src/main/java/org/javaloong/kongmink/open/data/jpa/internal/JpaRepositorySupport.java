@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class CrudRepositoryJpa<T extends AbstractEntity<ID>, ID extends Serializable>
+public abstract class JpaRepositorySupport<T extends AbstractEntity<ID>, ID extends Serializable>
         implements CrudRepository<T, ID> {
 
     private final Class<T> entityClass;
@@ -28,7 +28,7 @@ public abstract class CrudRepositoryJpa<T extends AbstractEntity<ID>, ID extends
     }
 
     @SuppressWarnings("unchecked")
-    public CrudRepositoryJpa() {
+    public JpaRepositorySupport() {
         this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
