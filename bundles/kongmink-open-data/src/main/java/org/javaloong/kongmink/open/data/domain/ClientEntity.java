@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "clients")
-public class Client extends AbstractEntity<String> {
+public class ClientEntity extends AbstractEntity<String> {
 
     private String name;
     private LocalDateTime createdDate;
-    private User user;
+    private UserEntity user;
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -43,11 +43,11 @@ public class Client extends AbstractEntity<String> {
 
     @ManyToOne(optional=false)
     @JoinColumn(name="user_id", nullable=false)
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 }

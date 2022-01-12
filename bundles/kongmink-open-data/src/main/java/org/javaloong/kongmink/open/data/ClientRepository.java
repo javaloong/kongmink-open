@@ -1,14 +1,14 @@
 package org.javaloong.kongmink.open.data;
 
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.data.domain.Client;
-import org.javaloong.kongmink.open.data.domain.User;
+import org.javaloong.kongmink.open.data.domain.ClientEntity;
+import org.javaloong.kongmink.open.data.domain.UserEntity;
 
 import java.util.List;
 
-public interface ClientRepository extends CrudRepository<Client, String> {
+public interface ClientRepository extends CrudRepository<ClientEntity, String> {
 
-    List<Client> findAllByUser(User user);
+    List<ClientEntity> findAllByUser(UserEntity user, int size);
 
-    Page<Client> findAllByUser(User user, int page, int size);
+    Page<ClientEntity> findAllByUser(UserEntity user, int page, int size);
 }

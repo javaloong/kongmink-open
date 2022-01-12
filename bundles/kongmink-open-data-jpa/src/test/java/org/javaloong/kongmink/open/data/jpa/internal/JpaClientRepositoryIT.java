@@ -6,8 +6,8 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.data.ClientRepository;
-import org.javaloong.kongmink.open.data.domain.Client;
-import org.javaloong.kongmink.open.data.domain.User;
+import org.javaloong.kongmink.open.data.domain.ClientEntity;
+import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -26,12 +26,12 @@ public class JpaClientRepositoryIT extends RepositoryTestSupport {
     @DataSet(transactional = true)
     @ExpectedDataSet(value = "createClientDataExpected.xml", compareOperation = CompareOperation.CONTAINS)
     public void createClient() {
-        Client client = new Client();
+        ClientEntity client = new ClientEntity();
         client.setId("6");
         client.setName("client6");
         client.setCreatedDate(LocalDateTime.parse("2021-12-30T10:28:30"));
         client.setUser(getUser("1"));
-        Client result = getClientRepository().create(client);
+        ClientEntity result = getClientRepository().create(client);
         assertThat(result).isNotNull();
     }
 
@@ -41,8 +41,8 @@ public class JpaClientRepositoryIT extends RepositoryTestSupport {
     public void updateClient() {
         getClientRepository().findById("2").ifPresent(client -> {
             client.setName("client22");
-            Client result = getClientRepository().update(client);
-            assertThat(result).returns("client22", Client::getName);
+            ClientEntity result = getClientRepository().update(client);
+            assertThat(result).returns("client22", ClientEntity::getName);
         });
     }
 
@@ -55,7 +55,7 @@ public class JpaClientRepositoryIT extends RepositoryTestSupport {
 
     @Test
     public void findClientById() {
-        Optional<Client> result = getClientRepository().findById("1");
+        Optional<ClientEntity> result = getClientRepository().findById("1");
         assertThat(result).isPresent().hasValueSatisfying(client -> {
             assertThat(client.getName()).isEqualTo("client1");
         });
@@ -63,24 +63,24 @@ public class JpaClientRepositoryIT extends RepositoryTestSupport {
 
     @Test
     public void findAllClientsByUser() {
-        User user = getUser("1");
-        List<Client> clients = getClientRepository().findAllByUser(user);
+        UserEntity user = getUser("1");
+        List<ClientEntity> clients = getClientRepository().findAllByUser(user, 10);
         assertThat(clients).isNotEmpty().hasSize(4)
-                .extracting(Client::getName)
+                .extracting(ClientEntity::getName)
                 .containsExactly("client5", "client4", "client2", "client1");
     }
 
     @Test
     public void findAllClientsByUserByPagination() {
-        User user = getUser("1");
-        Page<Client> result = getClientRepository().findAllByUser(user, 1, 2);
+        UserEntity user = getUser("1");
+        Page<ClientEntity> result = getClientRepository().findAllByUser(user, 1, 2);
         assertThat(result.getTotalCount()).isEqualTo(4);
         assertThat(result.getData()).isNotEmpty().hasSize(2)
-                .extracting(Client::getName).containsExactly("client5", "client4");
+                .extracting(ClientEntity::getName).containsExactly("client5", "client4");
     }
 
-    private User getUser(String id) {
-        User user = new User();
+    private UserEntity getUser(String id) {
+        UserEntity user = new UserEntity();
         user.setId(id);
         return user;
     }

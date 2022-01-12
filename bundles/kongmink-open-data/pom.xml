@@ -36,11 +36,11 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Meta-Persistence>META-INF/persistence.xml</Meta-Persistence>
                         <Export-Package>
                             org.javaloong.kongmink.open.data.*;-noimport:=true
                         </Export-Package>
                         <Import-Package>
+                            javax.persistence.*;version="[2,3)",
                             *
                         </Import-Package>
                     </instructions>

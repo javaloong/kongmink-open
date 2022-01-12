@@ -2,8 +2,8 @@ package org.javaloong.kongmink.open.data.jpa.internal;
 
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.data.ClientRepository;
-import org.javaloong.kongmink.open.data.domain.Client;
-import org.javaloong.kongmink.open.data.domain.User;
+import org.javaloong.kongmink.open.data.domain.ClientEntity;
+import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.osgi.service.component.annotations.Component;
 
 import javax.persistence.criteria.Order;
@@ -12,29 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component(service = ClientRepository.class, immediate = true)
-public class JpaClientRepository extends JpaRepositorySupport<Client, String> implements ClientRepository {
+public class JpaClientRepository extends JpaRepositorySupport<ClientEntity, String> implements ClientRepository {
 
     @Override
-    public List<Client> findAllByUser(User user) {
-        return findAll(userCriteriaPredicate(user), defaultCriteriaOrder());
+    public List<ClientEntity> findAllByUser(UserEntity user, int size) {
+        return findAll(userCriteriaPredicate(user), defaultCriteriaOrder(), size);
     }
 
     @Override
-    public Page<Client> findAllByUser(User user, int page, int size) {
+    public Page<ClientEntity> findAllByUser(UserEntity user, int page, int size) {
         return findAll(userCriteriaPredicate(user), defaultCriteriaOrder(), page, size);
     }
 
-    private CriteriaPredicateCollector<Client> userCriteriaPredicate(User user) {
+    private CriteriaPredicateCollector<ClientEntity> userCriteriaPredicate(UserEntity user) {
         return (cb, entityRoot) -> {
             Predicate predicate = null;
-            if(user != null) {
+            if (user != null) {
                 predicate = cb.equal(entityRoot.get("user"), user);
             }
             return predicate;
         };
     }
 
-    private CriteriaOrderCollector<Client> defaultCriteriaOrder() {
+    private CriteriaOrderCollector<ClientEntity> defaultCriteriaOrder() {
         return (cb, entityRoot) -> {
             List<Order> orders = new ArrayList<>();
             orders.add(cb.desc(entityRoot.get("createdDate")));

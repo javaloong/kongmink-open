@@ -1,10 +1,10 @@
 package org.javaloong.kongmink.open.data;
 
-import org.javaloong.kongmink.open.data.domain.User;
+import org.javaloong.kongmink.open.data.domain.UserEntity;
 
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends CrudRepository<UserEntity, String> {
 
-    Optional<User> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 }

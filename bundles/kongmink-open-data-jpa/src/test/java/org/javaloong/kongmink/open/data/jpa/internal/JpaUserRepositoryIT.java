@@ -5,7 +5,7 @@ import com.github.database.rider.core.api.dataset.CompareOperation;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import org.javaloong.kongmink.open.data.UserRepository;
-import org.javaloong.kongmink.open.data.domain.User;
+import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -24,12 +24,12 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
     @DataSet(transactional = true)
     @ExpectedDataSet(value = "createUserDataExpected.xml", compareOperation = CompareOperation.CONTAINS)
     public void createUser() {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setId("4");
         user.setUsername("user4");
         user.setEnabled(true);
         user.setCreatedDate(LocalDateTime.parse("2021-12-30T10:25:12"));
-        User result = getUserRepository().create(user);
+        UserEntity result = getUserRepository().create(user);
         assertThat(result).isNotNull();
     }
 
@@ -39,8 +39,8 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
     public void updateUser() {
         getUserRepository().findById("2").ifPresent(user -> {
             user.setEnabled(false);
-            User result = getUserRepository().update(user);
-            assertThat(result).returns(false, User::isEnabled);
+            UserEntity result = getUserRepository().update(user);
+            assertThat(result).returns(false, UserEntity::isEnabled);
         });
     }
 
@@ -53,7 +53,7 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
 
     @Test
     public void findUserById() {
-        Optional<User> result = getUserRepository().findById("1");
+        Optional<UserEntity> result = getUserRepository().findById("1");
         assertThat(result).isPresent().hasValueSatisfying(user -> {
             assertThat(user.getUsername()).isEqualTo("user1");
         });
@@ -61,7 +61,7 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
 
     @Test
     public void findUserByUsername() {
-        Optional<User> result = getUserRepository().findByUsername("user2");
+        Optional<UserEntity> result = getUserRepository().findByUsername("user2");
         assertThat(result).isPresent().hasValueSatisfying(user -> {
             assertThat(user.getId()).isEqualTo("2");
         });
@@ -69,9 +69,9 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
 
     @Test
     public void findAllUsers() {
-        List<User> users = getUserRepository().findAll();
+        List<UserEntity> users = getUserRepository().findAll();
         assertThat(users).isNotEmpty().hasSize(3)
-                .extracting(User::getUsername)
+                .extracting(UserEntity::getUsername)
                 .containsExactly("user3", "user2", "user1");
     }
 

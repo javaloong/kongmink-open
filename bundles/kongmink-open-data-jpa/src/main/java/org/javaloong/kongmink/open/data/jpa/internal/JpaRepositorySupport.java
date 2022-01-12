@@ -3,16 +3,20 @@ package org.javaloong.kongmink.open.data.jpa.internal;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.data.CrudRepository;
 import org.javaloong.kongmink.open.data.domain.AbstractEntity;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.transaction.control.TransactionControl;
+import org.osgi.service.transaction.control.jpa.JPAEntityManagerProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class JpaRepositorySupport<T extends AbstractEntity<ID>, ID extends Serializable>
@@ -20,15 +24,25 @@ public abstract class JpaRepositorySupport<T extends AbstractEntity<ID>, ID exte
 
     private final Class<T> entityClass;
 
-    @PersistenceContext(unitName = "kmOpen")
-    protected EntityManager em;
+    @Reference
+    TransactionControl transactionControl;
+
+    @Reference(name = "provider")
+    JPAEntityManagerProvider jpaEntityManagerProvider;
+
+    EntityManager em;
 
     public void setEntityManager(EntityManager entityManager) {
         this.em = entityManager;
     }
 
+    @Activate
+    protected void activate(Map<String, Object> props) {
+        this.em = jpaEntityManagerProvider.getResource(transactionControl);
+    }
+
     @SuppressWarnings("unchecked")
-    public JpaRepositorySupport() {
+    protected JpaRepositorySupport() {
         this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
@@ -62,12 +76,12 @@ public abstract class JpaRepositorySupport<T extends AbstractEntity<ID>, ID exte
     }
 
     public List<T> findAll(CriteriaPredicateCollector<T> predicateCollector,
-                               CriteriaOrderCollector<T> orderCollector) {
+                           CriteriaOrderCollector<T> orderCollector) {
         return findAll(predicateCollector, orderCollector, null);
     }
 
     public List<T> findAll(CriteriaPredicateCollector<T> predicateCollector,
-                               CriteriaOrderCollector<T> orderCollector, Integer size) {
+                           CriteriaOrderCollector<T> orderCollector, Integer size) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> entityRoot = cq.from(entityClass);

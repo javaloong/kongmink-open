@@ -19,10 +19,6 @@
             <artifactId>kongmink-open-data</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>jakarta.transaction</groupId>
-            <artifactId>jakarta.transaction-api</artifactId>
-        </dependency>
         <!-- OSGi -->
         <dependency>
             <groupId>org.osgi</groupId>
@@ -31,6 +27,10 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.cmpn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.transaction.control</artifactId>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
@@ -75,6 +75,16 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Import-Package>
+                            javax.persistence.*;version="[2,3)",
+                            org.hibernate.proxy,
+                            javassist.util.proxy,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
