@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DBUnit(mergeDataSets = true)
-@DataSet(value = {"userData.xml", "clientData.xml"})
+@DataSet(value = {"userData.xml", "clientData.xml"}, cleanAfter = true)
 public class JpaClientRepositoryIT extends RepositoryTestSupport {
 
     private JpaClientRepository clientRepository;
