@@ -22,4 +22,6 @@ public interface UserProvider {
     void updatePassword(UserPassword userPassword);
 
     void updateEmail(UserEmail userEmail);
+
+    void delete(String userId);
 }

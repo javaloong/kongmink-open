@@ -48,6 +48,19 @@
         }
       ],
       "createdTimestamp": 1639981692277
+    },
+    {
+      "id": "13fb1f16-6986-433b-b56a-c2815c5858cc",
+      "username": "user3",
+      "enabled": true,
+      "email": "user3@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "11111111"
+        }
+      ],
+      "createdTimestamp": 1639981692277
     }
   ],
   "clients": [

@@ -75,7 +75,7 @@ public class KeycloakClientProviderIT extends EmbeddedKeycloakTestSupport {
         client.setEnabled(true);
         client.setSecret("example-client-secret");
         client.setGrantTypes(Collections.singletonList(OAuth2Constants.CLIENT_CREDENTIALS));
-        clientProvider.updateClient(client);
+        clientProvider.update(client);
         Optional<Client> result = clientProvider.findById(id);
         result.ifPresent(c -> {
             assertThat(c.getDescription()).isEqualTo("Example Description");
@@ -86,7 +86,7 @@ public class KeycloakClientProviderIT extends EmbeddedKeycloakTestSupport {
     @Test
     public void deleteClient() {
         String id = "6a4bfbd0-576d-4778-af56-56f876647355";
-        clientProvider.deleteClient(id);
+        clientProvider.delete(id);
         Optional<Client> result = clientProvider.findById(id);
         assertThat(result.isPresent()).isFalse();
     }

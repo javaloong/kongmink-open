@@ -64,7 +64,7 @@ public class KeycloakClientProvider implements ClientProvider {
     }
 
     @Override
-    public void updateClient(Client client) {
+    public void update(Client client) {
         Optional<ClientResource> clientResource = getClientResource(client.getId());
         clientResource.ifPresent(resource -> {
             ClientRepresentation clientRepresentation = resource.toRepresentation();
@@ -76,7 +76,7 @@ public class KeycloakClientProvider implements ClientProvider {
     }
 
     @Override
-    public void deleteClient(String id) {
+    public void delete(String id) {
         Optional<ClientResource> clientResource = getClientResource(id);
         clientResource.ifPresent(ClientResource::remove);
     }

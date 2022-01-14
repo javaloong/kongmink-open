@@ -12,9 +12,9 @@ public interface ClientProvider {
 
     Client create(Client client);
 
-    void updateClient(Client client);
+    void update(Client client);
 
-    void deleteClient(String id);
+    void delete(String id);
 
     String getSecret(String id);
 

@@ -54,7 +54,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
     public void createUser_emailExists_ThrowException() {
         UserException exception = assertThrows(UserException.class, () -> {
             User user = new User();
-            user.setUsername("user3");
+            user.setUsername("user4");
             user.setEmail("user1@example.com");
             userProvider.create(user);
         });
@@ -64,7 +64,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
     @Test
     public void createUser() {
         User user = new User();
-        user.setUsername("user3");
+        user.setUsername("user4");
         User saved = userProvider.create(user);
         assertThat(saved.getId()).isNotEmpty();
     }
@@ -112,6 +112,14 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
         result.ifPresent(user -> {
             assertThat(user.getEmail()).isEqualTo(email);
         });
+    }
+
+    @Test
+    public void deleteUser() {
+        String id = "13fb1f16-6986-433b-b56a-c2815c5858cc";
+        userProvider.delete(id);
+        Optional<User> result = userProvider.findById(id);
+        assertThat(result.isPresent()).isFalse();
     }
 
     @Test

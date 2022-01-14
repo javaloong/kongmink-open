@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class KeycloakUserProvider implements UserProvider {
     public Optional<User> findById(String userId) {
         Optional<UserResource> userResource = getUserResource(userId);
         return userResource.flatMap(
-                resource -> Optional.ofNullable(resource.toRepresentation())
+                resource -> getUserRepresentation(resource)
                         .map(UserMapper::mapToUser));
     }
 
@@ -114,8 +115,22 @@ public class KeycloakUserProvider implements UserProvider {
         });
     }
 
+    @Override
+    public void delete(String userId) {
+        Optional<UserResource> userResource = getUserResource(userId);
+        userResource.ifPresent(UserResource::remove);
+    }
+
     private Optional<UserResource> getUserResource(String id) {
         return Optional.ofNullable(adminClient.getUsersResource().get(id));
+    }
+
+    private Optional<UserRepresentation> getUserRepresentation(UserResource resource) {
+        try {
+            return Optional.ofNullable(resource.toRepresentation());
+        } catch (NotFoundException ex) {
+            return Optional.empty();
+        }
     }
 
     private void verifyUsername(String username) {
