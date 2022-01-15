@@ -19,6 +19,7 @@
 
     <modules>
         <module>kongmink-open-itest-common</module>
+        <module>kongmink-open-itest-service</module>
     </modules>
 
 </project>
