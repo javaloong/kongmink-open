@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component(service = UserRepository.class, immediate = true)
+@Component(service = UserRepository.class)
 public class JpaUserRepository extends JpaRepositorySupport<UserEntity, String> implements UserRepository {
 
     @Override

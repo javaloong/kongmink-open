@@ -27,7 +27,7 @@ public abstract class JpaRepositorySupport<T extends AbstractEntity<ID>, ID exte
     @Reference
     TransactionControl transactionControl;
 
-    @Reference(name = "provider")
+    @Reference(target="(osgi.unit.name=kmOpen)")
     JPAEntityManagerProvider jpaEntityManagerProvider;
 
     EntityManager em;

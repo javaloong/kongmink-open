@@ -11,7 +11,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(service = ClientRepository.class, immediate = true)
+@Component(service = ClientRepository.class)
 public class JpaClientRepository extends JpaRepositorySupport<ClientEntity, String> implements ClientRepository {
 
     @Override
@@ -28,7 +28,7 @@ public class JpaClientRepository extends JpaRepositorySupport<ClientEntity, Stri
         return (cb, entityRoot) -> {
             Predicate predicate = null;
             if (user != null) {
-                predicate = cb.equal(entityRoot.get("user"), user);
+                predicate = cb.equal(entityRoot.get("user").get("id"), user.getId());
             }
             return predicate;
         };
