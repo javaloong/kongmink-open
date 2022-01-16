@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    ComplexUser create(ComplexUser user);
+    ComplexUser create(User user);
 
     void save(User user);
 

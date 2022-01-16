@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public ComplexUser create(ComplexUser user) {
+    public ComplexUser create(User user) {
         User result = userProvider.create(user);
         log.debug("User {} successfully created", result.getId());
         return transactionControl.required(() -> {

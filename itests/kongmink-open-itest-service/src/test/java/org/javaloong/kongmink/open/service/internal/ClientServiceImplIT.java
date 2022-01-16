@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.service.internal;
 
 import org.javaloong.kongmink.open.am.client.ClientProvider;
 import org.javaloong.kongmink.open.common.model.client.Client;
+import org.javaloong.kongmink.open.common.model.user.User;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.javaloong.kongmink.open.service.ClientService;
@@ -59,26 +60,18 @@ public class ClientServiceImplIT extends AbstractServiceTestSupport {
     public void testCRUD() {
         Client client = TestUtils.createClient("1", "client1");
         when(clientProvider.create(any(Client.class))).thenReturn(client);
-        ComplexClient complexClient = createComplexClient("1", "client1", "1");
-        clientService.create(complexClient);
-        Collection<ComplexClient> clients = clientService.findAllByUser("1", 10);
+        User user = TestUtils.createUser("1", "user1");
+        clientService.create(user, client);
+        Collection<ComplexClient> clients = clientService.findAllByUser(user, 10);
         assertThat(clients).hasSize(1);
         doNothing().when(clientProvider).update(any(Client.class));
-        complexClient.setName("client11");
-        clientService.update(complexClient);
-        verify(clientProvider).update(complexClient);
+        client.setName("client11");
+        clientService.update(client);
+        verify(clientProvider).update(client);
         doNothing().when(clientProvider).delete(anyString());
         clientService.delete("1");
         when(clientProvider.findById(anyString())).thenReturn(Optional.of(client));
         assertThat(clientService.findById("1")).isEmpty();
-    }
-
-    private ComplexClient createComplexClient(String id, String name, String userId) {
-        ComplexClient client = new ComplexClient();
-        client.setId(id);
-        client.setName(name);
-        client.setUserId(userId);
-        return client;
     }
 
     private UserEntity createUser(String id, String name) {

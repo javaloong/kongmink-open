@@ -3,7 +3,6 @@ package org.javaloong.kongmink.open.service.internal;
 import org.javaloong.kongmink.open.am.user.UserProvider;
 import org.javaloong.kongmink.open.common.model.user.User;
 import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.ComplexUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -36,18 +35,13 @@ public class UserServiceImplIT extends AbstractServiceTestSupport {
     public void testCRUD() {
         User user = TestUtils.createUser("1", "user1");
         when(userProvider.create(any(User.class))).thenReturn(user);
-        ComplexUser complexUser = createUser("1", "user1");
-        userService.create(complexUser);
-        complexUser.setUsername("user11");
-        userService.save(complexUser);
+        userService.create(user);
+        user.setUsername("user11");
+        userService.save(user);
         when(userProvider.findById(anyString())).thenReturn(Optional.of(user));
         assertThat(userService.findById("1")).isPresent();
         doNothing().when(userProvider).delete(anyString());
         userService.delete("1");
         assertThat(userService.findById(anyString())).isEmpty();
-    }
-
-    private ComplexUser createUser(String id, String username) {
-        return ComplexUser.fromUser(TestUtils.createUser(id, username));
     }
 }
