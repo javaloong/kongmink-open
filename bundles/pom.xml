@@ -20,6 +20,7 @@
         <module>kongmink-open-common</module>
         <module>kongmink-open-data</module>
         <module>kongmink-open-data-jpa</module>
+        <module>kongmink-open-rest</module>
         <module>kongmink-open-service</module>
     </modules>
 
