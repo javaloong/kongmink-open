@@ -11,6 +11,9 @@ import org.osgi.framework.ServiceReference;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import static org.ops4j.pax.exam.Constants.START_LEVEL_SYSTEM_BUNDLES;
 import static org.ops4j.pax.exam.Constants.START_LEVEL_TEST_BUNDLE;
@@ -21,10 +24,22 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.configurationFolde
 @ExamReactorStrategy(PerClass.class)
 public abstract class PaxExamTestSupport {
 
+    protected static final String USE_CONFIG_ADMIN = "USE_CONFIG_ADMIN";
+    protected static final String USE_EVENT_ADMIN = "USE_EVENT_ADMIN";
+    protected static final String USE_COORDINATOR = "USE_COORDINATOR";
+    protected static final String USE_SCR = "USE_SCR";
+    protected static final String USE_JDBC = "USE_JDBC";
+    protected static final String USE_JPA = "USE_JPA";
+    protected static final String USE_JPA_PROVIDER = "USE_JPA_PROVIDER";
+    protected static final String USE_TX_CONTROL = "USE_TX_CONTROL";
+    protected static final String USE_JAX_RS_WHITEBOARD = "USE_JAX_RS_WHITEBOARD";
+
     protected static final String TX_CONTROL_FILTER = "tx.control.filter";
 
     @Inject
     BundleContext bundleContext;
+
+    Map<String, Boolean> configurationSettings = defaultSettings();
 
     public static <T> T getService(BundleContext bundleContext, Class<T> type) {
         ServiceReference<T> serviceReference = bundleContext.getServiceReference(type);
@@ -39,27 +54,70 @@ public abstract class PaxExamTestSupport {
     public Option[] config() {
         return new Option[]{
                 baseOptions(),
-                database(),
-                ariesJpa(),
-                jpaProvider(),
-                txControl(),
-                web(),
+                useOption(this::jdbc, USE_JDBC),
+                useOption(this::jpa, USE_JPA),
+                useOption(this::jpaProvider, USE_JPA_PROVIDER),
+                useOption(this::txControl, USE_TX_CONTROL),
+                useOption(this::jaxRSWhiteboard, USE_JAX_RS_WHITEBOARD),
                 testBundles(),
-
                 // Felix config admin
-                mavenBundle("org.apache.felix", "org.apache.felix.configadmin")
-                        .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                useOption(this::configAdmin, USE_CONFIG_ADMIN),
+                // Felix event admin
+                useOption(this::eventAdmin, USE_EVENT_ADMIN),
                 // Felix coordinator
-                mavenBundle("org.apache.felix", "org.apache.felix.coordinator")
-                        .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                useOption(this::coordinator, USE_COORDINATOR),
                 // Felix scr
+                useOption(this::scr, USE_SCR)
+        };
+    }
+
+    private Option useOption(Supplier<Option> supplier, String useKey) {
+        return configurationSettings.get(useKey) ? supplier.get() : null;
+    }
+
+    private Map<String, Boolean> defaultSettings() {
+        Map<String, Boolean> settings = new HashMap<>();
+        settings.put(USE_JDBC, true);
+        settings.put(USE_JPA, true);
+        settings.put(USE_JPA_PROVIDER, true);
+        settings.put(USE_TX_CONTROL, true);
+        settings.put(USE_JAX_RS_WHITEBOARD, true);
+        settings.put(USE_CONFIG_ADMIN, true);
+        settings.put(USE_EVENT_ADMIN, false);
+        settings.put(USE_COORDINATOR, true);
+        settings.put(USE_SCR, true);
+        customizeSettings(settings);
+        return settings;
+    }
+
+    protected void customizeSettings(Map<String, Boolean> settings) {
+        // Override configuration settings
+    }
+
+    protected Option configAdmin() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.configadmin")
+                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    }
+
+    protected Option eventAdmin() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.eventadmin")
+                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    }
+
+    protected Option coordinator() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.coordinator")
+                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    }
+
+    protected Option scr() {
+        return composite(
                 mavenBundle("org.osgi", "org.osgi.util.function", "1.1.0")
                         .startLevel(START_LEVEL_SYSTEM_BUNDLES),
                 mavenBundle("org.osgi", "org.osgi.util.promise", "1.1.1")
                         .startLevel(START_LEVEL_SYSTEM_BUNDLES),
                 mavenBundle("org.apache.felix", "org.apache.felix.scr")
                         .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES)
-        };
+        );
     }
 
     protected Option baseOptions() {
@@ -74,8 +132,12 @@ public abstract class PaxExamTestSupport {
                 workingDirectory("target/pax-exam"),
                 logback(),
                 junit(),
-                configurationFolder(new File("src/test/resources/config"))
+                configurationLocation(new File("src/test/resources/config"))
         );
+    }
+
+    protected Option configurationLocation(File folder) {
+        return folder.exists() ? configurationFolder(folder) : null;
     }
 
     protected Option logback() {
@@ -99,7 +161,7 @@ public abstract class PaxExamTestSupport {
 
     protected abstract Option testBundles();
 
-    protected Option web() {
+    protected Option jaxRSWhiteboard() {
         return composite(
                 ariesJaxRSWhiteboard(),
                 ariesJaxRSWhiteboardJackson()
@@ -134,8 +196,8 @@ public abstract class PaxExamTestSupport {
     protected Option ariesJaxRSWhiteboard() {
         return composite(
                 cxf(),
-                mavenBundle("jakarta.xml.bind", "jakarta.xml.bind-api", "2.3.3")
-                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                jaxb(),
+                spiflyBundles(),
                 mavenBundle("org.osgi", "org.osgi.service.jaxrs", "1.0.0")
                         .startLevel(START_LEVEL_SYSTEM_BUNDLES),
                 mavenBundle("org.apache.aries.component-dsl", "org.apache.aries.component-dsl.component-dsl", "1.2.2")
@@ -148,7 +210,9 @@ public abstract class PaxExamTestSupport {
     protected Option cxf() {
         return composite(
                 httpService(),
-                systemPackage("javax.annotation;version=1.2"),
+                systemPackage("javax.xml.ws;version=1.0"),
+                mavenBundle("javax.annotation", "javax.annotation-api", "1.3")
+                        .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.aries.spec", "org.apache.aries.javax.jax.rs-api", "1.0.1")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("com.fasterxml.woodstox", "woodstox-core", "6.2.6")
@@ -165,6 +229,8 @@ public abstract class PaxExamTestSupport {
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.cxf", "cxf-rt-rs-sse", "3.4.5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
+                mavenBundle("org.apache.cxf", "cxf-rt-rs-extension-providers", "3.4.5")
+                        .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.cxf", "cxf-rt-security", "3.4.5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.cxf", "cxf-rt-transports-http", "3.4.5")
@@ -172,8 +238,28 @@ public abstract class PaxExamTestSupport {
         );
     }
 
+    protected Option jaxb() {
+        return composite(
+                mavenBundle("org.apache.servicemix.specs", "org.apache.servicemix.specs.activation-api-1.2.1", "1.2.1_3")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("jakarta.xml.bind", "jakarta.xml.bind-api", "2.3.3")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("com.sun.xml.bind", "jaxb-osgi", "2.3.3")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES)
+        );
+    }
+
     protected Option httpService() {
         return felixHttpService();
+    }
+
+    protected Option felixHttpService() {
+        return composite(
+                mavenBundle("org.apache.felix", "org.apache.felix.http.servlet-api", "1.1.2")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("org.apache.felix", "org.apache.felix.http.jetty", "4.1.12")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES)
+        );
     }
 
     protected Option paxWebHttpService() {
@@ -202,15 +288,6 @@ public abstract class PaxExamTestSupport {
         );
     }
 
-    protected Option felixHttpService() {
-        return composite(
-                mavenBundle("org.apache.felix", "org.apache.felix.http.servlet-api", "1.1.2")
-                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
-                mavenBundle("org.apache.felix", "org.apache.felix.http.jetty", "4.1.12")
-                        .startLevel(START_LEVEL_SYSTEM_BUNDLES)
-        );
-    }
-
     protected Option jpaProvider() {
         return hibernate();
     }
@@ -222,9 +299,9 @@ public abstract class PaxExamTestSupport {
                 systemPackage("javax.xml.stream;version=1.2"),
                 systemPackage("javax.xml.stream.events;version=1.2"),
                 systemPackage("javax.xml.stream.util;version=1.2"),
-                mavenBundle("org.apache.geronimo.specs", "geronimo-activation_1.1_spec", "1.1")
+                mavenBundle("org.apache.servicemix.specs", "org.apache.servicemix.specs.activation-api-1.2.1", "1.2.1_3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.geronimo.specs", "geronimo-jaxb_2.2_spec", "1.0.1")
+                mavenBundle("org.apache.servicemix.specs", "org.apache.servicemix.specs.jaxb-api-2.3", "2.3_3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.servicemix.bundles", "org.apache.servicemix.bundles.antlr", "2.7.7_5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
@@ -286,7 +363,7 @@ public abstract class PaxExamTestSupport {
         );
     }
 
-    protected Option ariesJpa() {
+    protected Option jpa() {
         return composite(
                 mavenBundle("org.apache.aries.jpa", "org.apache.aries.jpa.container", "2.7.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
@@ -295,7 +372,7 @@ public abstract class PaxExamTestSupport {
         );
     }
 
-    protected Option ariesProxy() {
+    protected Option spiflyBundles() {
         return composite(
                 mavenBundle("org.ow2.asm", "asm", "9.2")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
@@ -306,8 +383,6 @@ public abstract class PaxExamTestSupport {
                 mavenBundle("org.ow2.asm", "asm-analysis", "9.2")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.ow2.asm", "asm-commons", "9.2")
-                        .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.aries.proxy", "org.apache.aries.proxy", "1.1.11")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.aries.spifly", "org.apache.aries.spifly.dynamic.bundle", "1.3.2")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1)
@@ -330,7 +405,7 @@ public abstract class PaxExamTestSupport {
         );
     }
 
-    protected Option database() {
+    protected Option jdbc() {
         return h2();
     }
 

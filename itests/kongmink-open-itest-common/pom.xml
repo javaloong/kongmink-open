@@ -67,10 +67,7 @@
                             org.ops4j.pax.exam.*
                         </DynamicImport-Package>
                         <Import-Package>
-                            javax.persistence;version="[2,3)",
                             javax.inject,
-                            org.hibernate,
-                            org.hibernate.internal,
                             org.osgi.framework
                         </Import-Package>
                     </instructions>
