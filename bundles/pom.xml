@@ -17,6 +17,7 @@
         <module>kongmink-open-am-core</module>
         <module>kongmink-open-am-embedded-keycloak</module>
         <module>kongmink-open-am-keycloak</module>
+        <module>kongmink-open-bean-validator</module>
         <module>kongmink-open-common</module>
         <module>kongmink-open-data</module>
         <module>kongmink-open-data-jpa</module>
