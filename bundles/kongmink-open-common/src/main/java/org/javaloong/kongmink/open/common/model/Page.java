@@ -4,8 +4,11 @@ import java.util.Collection;
 
 public class Page<T> {
 
-    private final Collection<T> data;
-    private final long totalCount;
+    private Collection<T> data;
+    private long totalCount;
+
+    public Page() {
+    }
 
     public Page(Collection<T> data, long totalCount) {
         this.data = data;
@@ -16,7 +19,15 @@ public class Page<T> {
         return data;
     }
 
+    public void setData(Collection<T> data) {
+        this.data = data;
+    }
+
     public long getTotalCount() {
         return totalCount;
+    }
+
+    public void setTotalCount(long totalCount) {
+        this.totalCount = totalCount;
     }
 }
