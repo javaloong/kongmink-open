@@ -3,6 +3,7 @@ package org.javaloong.kongmink.open.am.keycloak.internal.user;
 import org.javaloong.kongmink.open.common.model.Password;
 import org.javaloong.kongmink.open.common.model.user.User;
 import org.javaloong.kongmink.open.common.model.user.UserProfile;
+import org.javaloong.kongmink.open.common.user.UserConstants;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
@@ -15,13 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 public class UserMapper {
-
-    public static final String COMPANY_NAME_KEY = "companyName";
-    public static final String COMPANY_PROVINCE_KEY = "companyProvince";
-    public static final String COMPANY_CITY_KEY = "companyCity";
-    public static final String COMPANY_ADDRESS_KEY = "companyAddress";
-    public static final String CONTACT_NAME_KEY = "contactName";
-    public static final String CONTACT_PHONE_KEY = "contactPhone";
 
     public static User mapToUser(UserRepresentation userRepresentation) {
         User user = new User();
@@ -61,23 +55,23 @@ public class UserMapper {
 
     public static Map<String, List<String>> mapToUserAttributes(UserProfile userProfile) {
         Map<String, List<String>> attributes = new LinkedHashMap<>();
-        setUserAttribute(attributes, COMPANY_NAME_KEY, userProfile.getCompanyName());
-        setUserAttribute(attributes, COMPANY_PROVINCE_KEY, userProfile.getCompanyProvince());
-        setUserAttribute(attributes, COMPANY_CITY_KEY, userProfile.getCompanyCity());
-        setUserAttribute(attributes, COMPANY_ADDRESS_KEY, userProfile.getCompanyAddress());
-        setUserAttribute(attributes, CONTACT_NAME_KEY, userProfile.getContactName());
-        setUserAttribute(attributes, CONTACT_PHONE_KEY, userProfile.getContactPhone());
+        setUserAttribute(attributes, UserConstants.COMPANY_NAME_KEY, userProfile.getCompanyName());
+        setUserAttribute(attributes, UserConstants.COMPANY_PROVINCE_KEY, userProfile.getCompanyProvince());
+        setUserAttribute(attributes, UserConstants.COMPANY_CITY_KEY, userProfile.getCompanyCity());
+        setUserAttribute(attributes, UserConstants.COMPANY_ADDRESS_KEY, userProfile.getCompanyAddress());
+        setUserAttribute(attributes, UserConstants.CONTACT_NAME_KEY, userProfile.getContactName());
+        setUserAttribute(attributes, UserConstants.CONTACT_PHONE_KEY, userProfile.getContactPhone());
         return attributes;
     }
 
     public static UserProfile mapToUserProfile(Map<String, List<String>> attributes) {
         UserProfile userProfile = new UserProfile();
-        userProfile.setCompanyName(getUserAttribute(attributes, COMPANY_NAME_KEY));
-        userProfile.setCompanyProvince(getUserAttribute(attributes, COMPANY_PROVINCE_KEY));
-        userProfile.setCompanyCity(getUserAttribute(attributes, COMPANY_CITY_KEY));
-        userProfile.setCompanyAddress(getUserAttribute(attributes, COMPANY_ADDRESS_KEY));
-        userProfile.setContactName(getUserAttribute(attributes, CONTACT_NAME_KEY));
-        userProfile.setContactPhone(getUserAttribute(attributes, CONTACT_PHONE_KEY));
+        userProfile.setCompanyName(getUserAttribute(attributes, UserConstants.COMPANY_NAME_KEY));
+        userProfile.setCompanyProvince(getUserAttribute(attributes, UserConstants.COMPANY_PROVINCE_KEY));
+        userProfile.setCompanyCity(getUserAttribute(attributes, UserConstants.COMPANY_CITY_KEY));
+        userProfile.setCompanyAddress(getUserAttribute(attributes, UserConstants.COMPANY_ADDRESS_KEY));
+        userProfile.setContactName(getUserAttribute(attributes, UserConstants.CONTACT_NAME_KEY));
+        userProfile.setContactPhone(getUserAttribute(attributes, UserConstants.CONTACT_PHONE_KEY));
         return userProfile;
     }
 
