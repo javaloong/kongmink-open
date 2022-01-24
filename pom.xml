@@ -18,6 +18,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
 
+        <bnd.version>5.3.0</bnd.version>
         <osgi.version>7.0.0</osgi.version>
         <osgi.tx.control.version>1.0.0</osgi.tx.control.version>
         <felix.framework.version>6.0.5</felix.framework.version>
@@ -41,6 +42,13 @@
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
         <keycloak.version>16.1.0</keycloak.version>
         <resteasy.version>3.15.3.Final</resteasy.version>
+        <shiro.version>1.7.1</shiro.version>
+        <pac4j.version>4.5.4</pac4j.version>
+        <pac4j.jax.rs.version>4.0.0</pac4j.jax.rs.version>
+        <pac4j.buji.version>5.0.1</pac4j.buji.version>
+        <minidev.verison>2.4.7</minidev.verison>
+        <nimbus.oidc.sdk.version>8.36.2</nimbus.oidc.sdk.version>
+        <nimbus.jose.jwt.version>8.23</nimbus.jose.jwt.version>
         <junit.version>5.7.2</junit.version>
         <junit.servers.version>2.0.0</junit.servers.version>
         <mockito.version>4.1.0</mockito.version>
@@ -51,6 +59,7 @@
         <h2.version>1.4.200</h2.version>
         <pax.exam.version>4.13.4</pax.exam.version>
         <pax.url.version>2.6.7</pax.url.version>
+        <pax.tinybundles.version>3.0.0</pax.tinybundles.version>
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.9</logback.version>
     </properties>
@@ -236,6 +245,61 @@
                 <version>${resteasy.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-jaxrs</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-core</artifactId>
+                <version>${pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-http</artifactId>
+                <version>${pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-oidc</artifactId>
+                <version>${pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.buji</groupId>
+                <artifactId>buji-pac4j</artifactId>
+                <version>${pac4j.buji.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.minidev</groupId>
+                <artifactId>accessors-smart</artifactId>
+                <version>${minidev.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.minidev</groupId>
+                <artifactId>json-smart</artifactId>
+                <version>${minidev.verison}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>oauth2-oidc-sdk</artifactId>
+                <version>${nimbus.oidc.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus.jose.jwt.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
@@ -344,6 +408,18 @@
                 <groupId>org.ops4j.pax.url</groupId>
                 <artifactId>pax-url-wrap</artifactId>
                 <version>${pax.url.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.tinybundles</groupId>
+                <artifactId>tinybundles</artifactId>
+                <version>${pax.tinybundles.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>biz.aQute.bnd</groupId>
+                <artifactId>biz.aQute.bndlib</artifactId>
+                <version>${bnd.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
