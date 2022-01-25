@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.service;
 
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.common.model.client.Client;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.service.model.ComplexClient;
 
 import java.util.Collection;

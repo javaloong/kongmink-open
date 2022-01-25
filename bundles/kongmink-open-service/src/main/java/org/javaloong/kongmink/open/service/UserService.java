@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.service;
 
-import org.javaloong.kongmink.open.common.model.user.User;
-import org.javaloong.kongmink.open.common.model.user.UserEmail;
-import org.javaloong.kongmink.open.common.model.user.UserPassword;
-import org.javaloong.kongmink.open.common.model.user.UserProfile;
+import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.user.UserEmail;
+import org.javaloong.kongmink.open.common.user.UserPassword;
+import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.service.model.ComplexUser;
 
 import java.util.Optional;

@@ -1,10 +1,10 @@
 package org.javaloong.kongmink.open.service.internal;
 
 import org.javaloong.kongmink.open.am.user.UserProvider;
-import org.javaloong.kongmink.open.common.model.user.User;
-import org.javaloong.kongmink.open.common.model.user.UserEmail;
-import org.javaloong.kongmink.open.common.model.user.UserPassword;
-import org.javaloong.kongmink.open.common.model.user.UserProfile;
+import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.user.UserEmail;
+import org.javaloong.kongmink.open.common.user.UserPassword;
+import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.javaloong.kongmink.open.service.UserService;

@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.common.model.user;
+package org.javaloong.kongmink.open.common.user;
 
 public class UserEmail {
 

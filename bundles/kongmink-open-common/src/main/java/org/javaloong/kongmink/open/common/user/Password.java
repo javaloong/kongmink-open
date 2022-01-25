@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.common.model;
+package org.javaloong.kongmink.open.common.user;
 
 public class Password {
 

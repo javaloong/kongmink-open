@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.rest.auth.internal;
 
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.common.model.client.Client;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.user.User;
 import org.junit.Test;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.tinybundles.core.InnerClassStrategy;

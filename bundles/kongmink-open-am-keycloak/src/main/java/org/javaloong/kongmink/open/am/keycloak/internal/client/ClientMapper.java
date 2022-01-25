@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.client;
 
-import org.javaloong.kongmink.open.common.model.client.Client;
+import org.javaloong.kongmink.open.common.client.Client;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.modelmapper.ModelMapper;

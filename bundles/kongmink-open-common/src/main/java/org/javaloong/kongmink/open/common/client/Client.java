@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.common.model.client;
+package org.javaloong.kongmink.open.common.client;
 
 import java.util.List;
 

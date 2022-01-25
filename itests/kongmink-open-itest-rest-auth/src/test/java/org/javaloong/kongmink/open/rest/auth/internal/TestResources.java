@@ -2,8 +2,8 @@ package org.javaloong.kongmink.open.rest.auth.internal;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.javaloong.kongmink.open.common.model.client.Client;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;

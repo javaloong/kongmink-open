@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.model;
 
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.user.User;
 
 public class ComplexUser extends User {
 

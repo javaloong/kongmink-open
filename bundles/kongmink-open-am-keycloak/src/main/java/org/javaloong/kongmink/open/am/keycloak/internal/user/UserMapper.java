@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.user;
 
-import org.javaloong.kongmink.open.common.model.Password;
-import org.javaloong.kongmink.open.common.model.user.User;
-import org.javaloong.kongmink.open.common.model.user.UserProfile;
+import org.javaloong.kongmink.open.common.user.Password;
+import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.common.user.UserConstants;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;

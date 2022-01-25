@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.core.model.UserDto;
 import org.javaloong.kongmink.open.service.UserService;
 import org.javaloong.kongmink.open.service.model.ComplexUser;

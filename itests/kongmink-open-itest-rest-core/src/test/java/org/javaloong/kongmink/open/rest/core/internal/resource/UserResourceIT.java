@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.common.model.user.UserEmail;
-import org.javaloong.kongmink.open.common.model.user.UserPassword;
-import org.javaloong.kongmink.open.common.model.user.UserProfile;
+import org.javaloong.kongmink.open.common.user.UserEmail;
+import org.javaloong.kongmink.open.common.user.UserPassword;
+import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;

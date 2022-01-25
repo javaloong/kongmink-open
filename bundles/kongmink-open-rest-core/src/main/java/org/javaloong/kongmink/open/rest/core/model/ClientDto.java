@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.rest.core.model;
 
-import org.javaloong.kongmink.open.common.model.client.Client;
+import org.javaloong.kongmink.open.common.client.Client;
 
 import javax.validation.constraints.NotEmpty;
 

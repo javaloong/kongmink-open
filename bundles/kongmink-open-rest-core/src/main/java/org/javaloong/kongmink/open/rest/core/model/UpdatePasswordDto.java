@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.model;
 
-import org.javaloong.kongmink.open.common.model.user.User;
-import org.javaloong.kongmink.open.common.model.user.UserPassword;
+import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.user.UserPassword;
 
 import javax.validation.constraints.NotEmpty;
 

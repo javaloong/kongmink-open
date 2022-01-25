@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.model;
 
-import org.javaloong.kongmink.open.common.model.client.Client;
+import org.javaloong.kongmink.open.common.client.Client;
 
 import java.time.LocalDateTime;
 

@@ -7,7 +7,7 @@ import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.junit.AfterClass;

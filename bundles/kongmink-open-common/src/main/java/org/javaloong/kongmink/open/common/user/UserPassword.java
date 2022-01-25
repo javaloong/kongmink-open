@@ -1,6 +1,4 @@
-package org.javaloong.kongmink.open.common.model.user;
-
-import org.javaloong.kongmink.open.common.model.Password;
+package org.javaloong.kongmink.open.common.user;
 
 public class UserPassword extends Password {
 

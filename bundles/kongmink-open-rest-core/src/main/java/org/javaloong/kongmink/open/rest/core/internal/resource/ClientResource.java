@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.common.model.user.User;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.model.ClientDto;
 import org.javaloong.kongmink.open.service.ClientService;
