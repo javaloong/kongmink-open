@@ -9,7 +9,7 @@ public class DummyOidcAuthenticator implements Authenticator<TokenCredentials> {
 
     @Override
     public void validate(TokenCredentials credentials, WebContext context) {
-        String token = credentials.getToken().trim();
+        String token = credentials.getToken();
         if("user1_token".equals(token)) {
             credentials.setUserProfile(createUser1Profile());
         }
