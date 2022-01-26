@@ -15,16 +15,19 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
     String serverUrl() default "http://localhost:8080/auth";
 
-    String realm() default "open-admin";
+    String realm() default "kongmink-open";
 
     String clientId() default "keycloak-admin";
 
     String clientSecret() default "keycloak-admin-secret";
 }
 
-@Component(service = KeycloakAdminClient.class)
+@Component(service = KeycloakAdminClient.class,
+        configurationPid = KeycloakAdminClient.KEYCLOAK_USER_CONFIGURATION_PID)
 @Designate(ocd = KeycloakAdminClientConfiguration.class)
 public class KeycloakAdminClient {
+
+    public static final String KEYCLOAK_USER_CONFIGURATION_PID = "org.javaloong.kongmink.open.am.keycloak.user";
 
     private final Keycloak keycloak;
     private final RealmResource realmResource;

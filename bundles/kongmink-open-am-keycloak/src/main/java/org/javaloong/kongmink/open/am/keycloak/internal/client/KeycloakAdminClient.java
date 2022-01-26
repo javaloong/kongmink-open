@@ -22,9 +22,12 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     String clientSecret() default "keycloak-admin-secret";
 }
 
-@Component(service = KeycloakAdminClient.class)
+@Component(service = KeycloakAdminClient.class,
+        configurationPid = KeycloakAdminClient.KEYCLOAK_CLIENT_CONFIGURATION_PID)
 @Designate(ocd = KeycloakAdminClientConfiguration.class)
 public class KeycloakAdminClient {
+
+    public static final String KEYCLOAK_CLIENT_CONFIGURATION_PID = "org.javaloong.kongmink.open.am.keycloak.client";
 
     private final Keycloak keycloak;
     private final RealmResource realmResource;

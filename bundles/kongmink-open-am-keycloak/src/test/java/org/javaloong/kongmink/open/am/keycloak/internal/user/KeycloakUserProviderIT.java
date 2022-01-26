@@ -28,7 +28,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
     static EmbeddedJettyConfiguration jettyConfiguration() {
         return EmbeddedJettyConfiguration.builder()
                 .withOverrideDescriptor("src/test/resources/web.xml")
-                .withProperty(KeycloakServerProperties.REALM_CONFIGURATION_PATH, "open-admin-realm.json")
+                .withProperty(KeycloakServerProperties.REALM_CONFIGURATION_PATH, "kongmink-open-realm.json")
                 .build();
     }
 

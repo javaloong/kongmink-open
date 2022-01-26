@@ -1,5 +1,5 @@
 {
-  "realm": "open-admin",
+  "realm": "kongmink-open",
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": false,
@@ -13,7 +13,7 @@
       "enabled": true,
       "serviceAccountClientId": "keycloak-admin",
       "realmRoles": [
-        "default-roles-open-admin"
+        "default-roles-kongmink-open"
       ],
       "clientRoles": {
         "realm-management": [
