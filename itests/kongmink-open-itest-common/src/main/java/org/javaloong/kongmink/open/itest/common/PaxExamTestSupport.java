@@ -3,7 +3,6 @@ package org.javaloong.kongmink.open.itest.common;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
-import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.osgi.framework.BundleContext;
@@ -20,7 +19,7 @@ import static org.ops4j.pax.exam.Constants.START_LEVEL_TEST_BUNDLE;
 import static org.ops4j.pax.exam.CoreOptions.*;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.configurationFolder;
 
-@RunWith(PaxExam.class)
+@RunWith(ExtPaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 public abstract class PaxExamTestSupport {
 
@@ -170,6 +169,14 @@ public abstract class PaxExamTestSupport {
 
     protected Option ariesJaxRSWhiteboardJackson() {
         return composite(
+                jackson(),
+                mavenBundle("org.apache.aries.jax.rs", "org.apache.aries.jax.rs.jackson", "2.0.1")
+                        .startLevel(START_LEVEL_TEST_BUNDLE - 1)
+        );
+    }
+
+    protected Option jackson() {
+        return composite(
                 mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.12.5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.12.5")
@@ -187,8 +194,6 @@ public abstract class PaxExamTestSupport {
                 mavenBundle("com.fasterxml.jackson.module", "jackson-module-jaxb-annotations", "2.12.5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.yaml", "snakeyaml", "1.27")
-                        .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.aries.jax.rs", "org.apache.aries.jax.rs.jackson", "2.0.1")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1)
         );
     }
