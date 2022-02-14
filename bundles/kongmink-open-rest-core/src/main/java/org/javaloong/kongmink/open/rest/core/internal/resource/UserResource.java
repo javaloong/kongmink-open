@@ -1,10 +1,12 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
+import org.javaloong.kongmink.open.rest.core.security.Roles;
 import org.javaloong.kongmink.open.service.UserService;
 import org.javaloong.kongmink.open.service.model.ComplexUser;
 import org.osgi.service.component.annotations.Component;
@@ -36,6 +38,7 @@ public class UserResource {
     @Reference
     UserService userService;
 
+    @RequiresRoles(Roles.MANAGE_ACCOUNT)
     @Path("/profile")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
@@ -44,6 +47,7 @@ public class UserResource {
         return Response.noContent().build();
     }
 
+    @RequiresRoles(Roles.MANAGE_ACCOUNT)
     @Path("/password")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
@@ -52,6 +56,7 @@ public class UserResource {
         return Response.noContent().build();
     }
 
+    @RequiresRoles(Roles.MANAGE_ACCOUNT)
     @Path("/email")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT

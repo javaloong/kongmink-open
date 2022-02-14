@@ -1,9 +1,11 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.model.ClientDto;
+import org.javaloong.kongmink.open.rest.core.security.Roles;
 import org.javaloong.kongmink.open.service.ClientService;
 import org.javaloong.kongmink.open.service.model.ComplexClient;
 import org.osgi.service.component.annotations.Component;
@@ -26,6 +28,7 @@ import java.util.Optional;
 @JaxrsName(ClientResource.RESOURCE_NAME)
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
+@RequiresRoles(Roles.MANAGE_CLIENTS)
 @Path("/clients")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientResource {
