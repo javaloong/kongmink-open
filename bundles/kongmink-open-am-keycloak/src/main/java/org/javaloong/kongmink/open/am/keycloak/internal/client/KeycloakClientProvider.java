@@ -2,10 +2,10 @@ package org.javaloong.kongmink.open.am.keycloak.internal.client;
 
 import org.javaloong.kongmink.open.am.client.ClientException;
 import org.javaloong.kongmink.open.am.client.ClientProvider;
+import org.javaloong.kongmink.open.am.keycloak.internal.JAXRSClientUtils;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientResource;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientsResource;
 import org.javaloong.kongmink.open.common.client.Client;
-import org.keycloak.admin.client.CreatedResponseUtil;
-import org.keycloak.admin.client.resource.ClientResource;
-import org.keycloak.admin.client.resource.ClientsResource;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -18,15 +18,15 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-@Component(service = ClientProvider.class, immediate = true)
+@Component(service = ClientProvider.class)
 public class KeycloakClientProvider implements ClientProvider {
 
     private static final Logger log = LoggerFactory.getLogger(KeycloakClientProvider.class);
 
-    private final KeycloakAdminClient adminClient;
+    private final KeycloakClientAdminClient adminClient;
 
     @Activate
-    public KeycloakClientProvider(@Reference KeycloakAdminClient adminClient) {
+    public KeycloakClientProvider(@Reference KeycloakClientAdminClient adminClient) {
         this.adminClient = adminClient;
     }
 
@@ -59,7 +59,7 @@ public class KeycloakClientProvider implements ClientProvider {
         if (response.getStatusInfo().equals(Response.Status.CREATED)) {
             log.info("Response Location: " + response.getLocation());
         }
-        String id = CreatedResponseUtil.getCreatedId(response);
+        String id = JAXRSClientUtils.getCreatedId(response);
         return findById(id).orElseThrow();
     }
 

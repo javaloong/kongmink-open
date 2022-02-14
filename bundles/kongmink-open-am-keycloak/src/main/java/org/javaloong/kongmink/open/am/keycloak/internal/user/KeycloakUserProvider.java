@@ -1,15 +1,15 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.user;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaloong.kongmink.open.am.keycloak.internal.JAXRSClientUtils;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.UserResource;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.UsersResource;
 import org.javaloong.kongmink.open.am.user.UserException;
 import org.javaloong.kongmink.open.am.user.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
-import org.keycloak.admin.client.CreatedResponseUtil;
-import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.osgi.service.component.annotations.Activate;
@@ -23,15 +23,15 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
-@Component(service = UserProvider.class, immediate = true)
+@Component(service = UserProvider.class)
 public class KeycloakUserProvider implements UserProvider {
 
     private static final Logger log = LoggerFactory.getLogger(KeycloakUserProvider.class);
 
-    private final KeycloakAdminClient adminClient;
+    private final KeycloakUserAdminClient adminClient;
 
     @Activate
-    public KeycloakUserProvider(@Reference KeycloakAdminClient adminClient) {
+    public KeycloakUserProvider(@Reference KeycloakUserAdminClient adminClient) {
         this.adminClient = adminClient;
     }
 
@@ -78,7 +78,7 @@ public class KeycloakUserProvider implements UserProvider {
         if (response.getStatusInfo().equals(Response.Status.CREATED)) {
             log.info("Response Location: " + response.getLocation());
         }
-        String userId = CreatedResponseUtil.getCreatedId(response);
+        String userId = JAXRSClientUtils.getCreatedId(response);
         user.setId(userId);
         return user;
     }

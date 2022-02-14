@@ -32,7 +32,7 @@ public class KeycloakClientProviderIT extends EmbeddedKeycloakTestSupport {
 
     @BeforeEach
     public void setUp(EmbeddedJetty jetty) {
-        KeycloakAdminClient adminClient = new KeycloakAdminClient(createAdminClientConfig(jetty));
+        KeycloakClientAdminClient adminClient = new KeycloakClientAdminClient(createAdminClientConfig(jetty));
         clientProvider = new KeycloakClientProvider(adminClient);
     }
 
@@ -123,9 +123,9 @@ public class KeycloakClientProviderIT extends EmbeddedKeycloakTestSupport {
         });
     }
 
-    private KeycloakAdminClientConfiguration createAdminClientConfig(EmbeddedJetty jetty) {
+    private KeycloakClientAdminClientConfiguration createAdminClientConfig(EmbeddedJetty jetty) {
         Map<String, Object> props = new HashMap<>();
         props.put("serverUrl", jetty.getUrl() + "auth");
-        return Converters.standardConverter().convert(props).to(KeycloakAdminClientConfiguration.class);
+        return Converters.standardConverter().convert(props).to(KeycloakClientAdminClientConfiguration.class);
     }
 }

@@ -18,6 +18,7 @@
     </properties>
 
     <modules>
+        <module>kongmink-open-itest-am-keycloak</module>
         <module>kongmink-open-itest-common</module>
         <module>kongmink-open-itest-rest-auth</module>
         <module>kongmink-open-itest-rest-core</module>

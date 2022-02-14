@@ -55,6 +55,7 @@
         <assertj.version>3.20.2</assertj.version>
         <awaitility.version>3.1.6</awaitility.version>
         <rest.assured.version>4.4.0</rest.assured.version>
+        <wiremock.version>2.27.2</wiremock.version>
         <database.rider.version>1.32.0</database.rider.version>
         <h2.version>1.4.200</h2.version>
         <pax.exam.version>4.13.4</pax.exam.version>
@@ -174,6 +175,16 @@
                 <artifactId>cxf-rt-rs-extension-providers</artifactId>
                 <version>${cxf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-rs-client</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-rs-security-oauth2</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
 			<dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
@@ -218,31 +229,6 @@
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.keycloak</groupId>
-                <artifactId>keycloak-admin-client</artifactId>
-                <version>${keycloak.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-client</artifactId>
-                <version>${resteasy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-servlet-initializer</artifactId>
-                <version>${resteasy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-jackson2-provider</artifactId>
-                <version>${resteasy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-jaxb-provider</artifactId>
-                <version>${resteasy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.shiro</groupId>
@@ -366,6 +352,12 @@
                 <groupId>io.rest-assured</groupId>
                 <artifactId>json-path</artifactId>
                 <version>${rest.assured.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock</artifactId>
+                <version>${wiremock.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

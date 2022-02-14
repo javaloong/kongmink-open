@@ -1,5 +1,6 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.client;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.javaloong.kongmink.open.common.client.Client;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.representations.idm.ClientRepresentation;
@@ -52,27 +53,27 @@ public class ClientMapper {
     private static List<String> getGrantTypes(ClientRepresentation clientRepresentation) {
         Set<String> grantTypes = new HashSet<>();
         // Authorization Code
-        if (clientRepresentation.isStandardFlowEnabled()) {
+        if (BooleanUtils.isTrue(clientRepresentation.isStandardFlowEnabled())) {
             grantTypes.add(OAuth2Constants.AUTHORIZATION_CODE);
         }
         // Client Credentials
-        if (clientRepresentation.isServiceAccountsEnabled()) {
+        if (BooleanUtils.isTrue(clientRepresentation.isServiceAccountsEnabled())) {
             grantTypes.add(OAuth2Constants.CLIENT_CREDENTIALS);
         }
         // Password Grant
-        if (clientRepresentation.isDirectAccessGrantsEnabled()) {
+        if (BooleanUtils.isTrue(clientRepresentation.isDirectAccessGrantsEnabled())) {
             grantTypes.add(OAuth2Constants.PASSWORD);
         }
         // Implicit Flow
-        if (clientRepresentation.isImplicitFlowEnabled()) {
+        if (BooleanUtils.isTrue(clientRepresentation.isImplicitFlowEnabled())) {
             grantTypes.add(OAuth2Constants.IMPLICIT);
         }
         // Device Code
-        if (Boolean.parseBoolean(clientRepresentation.getAttributes().getOrDefault(OAUTH2_DEVICE_AUTHORIZATION_GRANT_ENABLED, "false"))) {
+        if (BooleanUtils.toBoolean(getClientAttributes(clientRepresentation).getOrDefault(OAUTH2_DEVICE_AUTHORIZATION_GRANT_ENABLED, "false"))) {
             grantTypes.add(OAuth2Constants.DEVICE_CODE_GRANT_TYPE);
         }
         // Refresh Token
-        if (Boolean.parseBoolean(clientRepresentation.getAttributes().getOrDefault(USE_REFRESH_TOKEN, "false"))) {
+        if (BooleanUtils.toBoolean(getClientAttributes(clientRepresentation).getOrDefault(USE_REFRESH_TOKEN, "false"))) {
             grantTypes.add(OAuth2Constants.REFRESH_TOKEN);
         }
         return new ArrayList<>(grantTypes);
