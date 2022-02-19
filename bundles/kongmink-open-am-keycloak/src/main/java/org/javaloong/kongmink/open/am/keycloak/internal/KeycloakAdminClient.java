@@ -11,12 +11,30 @@ import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
 import org.apache.cxf.rs.security.oauth2.common.ClientAccessToken;
 import org.apache.cxf.rs.security.oauth2.grants.clientcred.ClientCredentialsGrant;
 import org.apache.cxf.transport.http.HTTPConduitConfigurer;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmResource;
+import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmsResource;
 
 import static java.lang.Thread.currentThread;
 
 public abstract class KeycloakAdminClient {
 
     public static final String TOKEN_URI_FORMAT = "%s/realms/%s/protocol/openid-connect/token";
+
+    private final Object lock = new Object();
+
+    private RealmResource realmResource;
+
+    public RealmResource getRealmResource(Config config) {
+        if (realmResource == null) {
+            synchronized (lock) {
+                if (realmResource == null) {
+                    RealmsResource realmsResource = createJAXRSResource(config, RealmsResource.class);
+                    realmResource = realmsResource.realm(config.getRealm());
+                }
+            }
+        }
+        return realmResource;
+    }
 
     public <T> T createJAXRSResource(Config config, Class<T> cls) {
         Bus bus = getBus();

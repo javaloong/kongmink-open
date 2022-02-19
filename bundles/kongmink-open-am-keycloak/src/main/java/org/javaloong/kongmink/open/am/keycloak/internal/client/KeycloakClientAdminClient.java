@@ -1,10 +1,8 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.client;
 
-import org.javaloong.kongmink.open.am.keycloak.internal.KeycloakAdminClient;
 import org.javaloong.kongmink.open.am.keycloak.internal.Config;
+import org.javaloong.kongmink.open.am.keycloak.internal.KeycloakAdminClient;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientsResource;
-import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmResource;
-import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmsResource;
 import org.keycloak.OAuth2Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -30,17 +28,15 @@ public class KeycloakClientAdminClient extends KeycloakAdminClient {
 
     public static final String KEYCLOAK_CLIENT_CONFIGURATION_PID = "org.javaloong.kongmink.open.am.keycloak.client";
 
-    private final RealmResource realmResource;
+    private final Config config;
 
     @Activate
     public KeycloakClientAdminClient(KeycloakClientAdminClientConfiguration adminClientConfiguration) {
-        Config config = createConfig(adminClientConfiguration);
-        RealmsResource realmsResource = createJAXRSResource(config, RealmsResource.class);
-        realmResource = realmsResource.realm(config.getRealm());
+        this.config = createConfig(adminClientConfiguration);
     }
 
     public ClientsResource getClientsResource() {
-        return realmResource.clients();
+        return getRealmResource(config).clients();
     }
 
     private Config createConfig(KeycloakClientAdminClientConfiguration configuration) {
