@@ -44,10 +44,10 @@
     <feature name="kongmink-open-data-jpa-xa-h2" version="${project.version}">
         <config name="org.apache.aries.tx.control.jpa.xa-h2">
             osgi.jdbc.driver.class=org.h2.Driver
-            osgi.unit.name=kmOpen
+            osgi.unit.name=km-open
             url=jdbc:h2:./data/kongmink_open
             aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-            javax.persistence.schema-generation.database.action=create
+            javax.persistence.schema-generation.database.action=drop-and-create
         </config>
         <feature>pax-jdbc-h2</feature>
         <feature>kongmink-open-data-jpa</feature>
@@ -57,7 +57,7 @@
     <feature name="kongmink-open-data-jpa-xa-mysql" version="${project.version}">
         <config name="org.apache.aries.tx.control.jpa.xa-mysql">
             osgi.jdbc.driver.class=com.mysql.jdbc.Driver
-            osgi.unit.name=kmOpen
+            osgi.unit.name=km-open
             url=jdbc:mysql://localhost:3306/kongmink_open?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
             user=root
             password=
@@ -73,7 +73,7 @@
     <feature name="kongmink-open-data-jpa-xa-psql" version="${project.version}">
         <config name="org.apache.aries.tx.control.jpa.xa-psql">
             osgi.jdbc.driver.class=org.postgresql.Driver
-            osgi.unit.name=kmOpen
+            osgi.unit.name=km-open
             url=jdbc:postgresql://localhost:5432/kongmink_open
             user=postgres
             password=postgres
