@@ -129,6 +129,18 @@
         <bundle>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.jackson/${aries.jax.rs.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-jax-rs-whiteboard-openapi" version="${project.version}">
+        <bundle dependency="true">mvn:org.apache.geronimo.specs/geronimo-validation_2.0_spec/1.1</bundle>
+        <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons.lang3.version}</bundle>
+        <bundle dependency="true">mvn:io.github.classgraph/classgraph/4.8.117</bundle>
+        <bundle dependency="true">mvn:io.swagger.core.v3/swagger-annotations/${swagger.v3.version}</bundle>
+        <bundle dependency="true">mvn:io.swagger.core.v3/swagger-models/${swagger.v3.version}</bundle>
+        <bundle dependency="true">mvn:io.swagger.core.v3/swagger-core/${swagger.v3.version}</bundle>
+        <bundle dependency="true">mvn:io.swagger.core.v3/swagger-integration/${swagger.v3.version}</bundle>
+        <bundle dependency="true">mvn:io.swagger.core.v3/swagger-jaxrs2/${swagger.v3.version}</bundle>
+        <bundle>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.openapi.resource/${aries.jax.rs.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-rest-core" version="${project.version}">
         <feature>kongmink-open-bean-validation</feature>
         <feature>kongmink-open-jax-rs-whiteboard</feature>
@@ -164,11 +176,18 @@
         <bundle>mvn:org.pac4j/pac4j-oidc/${pac4j.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-rest-openapi" version="${project.version}">
+        <feature>kongmink-open-jax-rs-whiteboard-openapi</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-openapi/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-resource-server" version="${project.version}">
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-am-keycloak</feature>
         <feature>kongmink-open-service</feature>
         <feature>kongmink-open-rest-core</feature>
+        <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>
         <feature>kongmink-open-rest-auth-oidc</feature>
     </feature>

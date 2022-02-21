@@ -1,5 +1,6 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
@@ -29,6 +30,7 @@ import java.util.Optional;
 @JaxrsName(UserResource.RESOURCE_NAME)
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
+@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {

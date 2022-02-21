@@ -12,4 +12,6 @@ public class RESTConstants {
     public static final String BASE_PATH = "/api";
 
     public static final String SECURITY_BASIC_AUTH = "basicAuth";
+
+    public static final String SECURITY_BEARER_AUTH = "bearerAuth";
 }

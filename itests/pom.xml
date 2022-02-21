@@ -23,6 +23,7 @@
         <module>kongmink-open-itest-karaf</module>
         <module>kongmink-open-itest-rest-auth</module>
         <module>kongmink-open-itest-rest-core</module>
+        <module>kongmink-open-itest-rest-openapi</module>
         <module>kongmink-open-itest-service</module>
     </modules>
 
