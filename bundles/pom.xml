@@ -25,6 +25,7 @@
         <module>kongmink-open-rest-auth</module>
         <module>kongmink-open-rest-core</module>
         <module>kongmink-open-rest-openapi</module>
+        <module>kongmink-open-rest-swagger-ui</module>
         <module>kongmink-open-service</module>
     </modules>
 

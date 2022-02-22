@@ -53,6 +53,7 @@
         <nimbus.oidc.sdk.version>8.36.2</nimbus.oidc.sdk.version>
         <nimbus.jose.jwt.version>8.23</nimbus.jose.jwt.version>
         <swagger.v3.version>2.1.12</swagger.v3.version>
+        <swagger.ui.version>3.52.5</swagger.ui.version>
         <junit.version>5.7.2</junit.version>
         <junit.servers.version>2.0.0</junit.servers.version>
         <mockito.version>4.1.0</mockito.version>

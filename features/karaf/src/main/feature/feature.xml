@@ -182,6 +182,11 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-openapi/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-rest-swagger-ui" version="${project.version}">
+        <feature>pax-web-war</feature>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-swagger-ui/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-resource-server" version="${project.version}">
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-am-keycloak</feature>
