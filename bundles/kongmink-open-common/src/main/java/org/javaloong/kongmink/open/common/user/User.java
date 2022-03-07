@@ -1,6 +1,9 @@
 package org.javaloong.kongmink.open.common.user;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 
 public class User {
 
@@ -13,6 +16,8 @@ public class User {
     private UserProfile profile;
 
     private LocalDateTime createdTimestamp;
+
+    private Map<String, Object> attributes = Collections.emptyMap();
 
     public String getId() {
         return id;
@@ -76,5 +81,26 @@ public class User {
 
     public void setCreatedTimestamp(LocalDateTime createdTimestamp) {
         this.createdTimestamp = createdTimestamp;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User that = (User) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

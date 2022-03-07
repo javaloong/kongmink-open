@@ -1,6 +1,7 @@
 package org.javaloong.kongmink.open.common.client;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Client {
 
@@ -120,5 +121,18 @@ public class Client {
 
     public void setGrantTypes(List<String> grantTypes) {
         this.grantTypes = grantTypes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client that = (Client) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
