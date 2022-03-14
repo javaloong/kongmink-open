@@ -19,6 +19,7 @@
 
     <modules>
         <module>kongmink-open-itest-am-keycloak</module>
+        <module>kongmink-open-itest-apim-gravitee</module>
         <module>kongmink-open-itest-common</module>
         <module>kongmink-open-itest-karaf</module>
         <module>kongmink-open-itest-rest-auth</module>

@@ -37,10 +37,12 @@
         <jakarta.xml.bind.version>2.3.3</jakarta.xml.bind.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>
         <javassist.version>3.27.0-GA</javassist.version>
+        <caffeine.version>2.9.3</caffeine.version>
         <commons.lang3.version>3.11</commons.lang3.version>
         <cxf.version>3.4.5</cxf.version>
         <jackson.version>2.12.5</jackson.version>
         <modelmapper.version>2.4.2</modelmapper.version>
+        <modelmapper.jsr310.version>1.2.2</modelmapper.jsr310.version>
         <hibernate.version>5.2.18.Final</hibernate.version>
         <hibernate.jpa-2.1-api.verison>1.0.2.Final</hibernate.jpa-2.1-api.verison>
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
@@ -168,6 +170,11 @@
                 <version>${javassist.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
@@ -221,6 +228,11 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
                 <version>${modelmapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper-module-jsr310</artifactId>
+                <version>${modelmapper.jsr310.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
