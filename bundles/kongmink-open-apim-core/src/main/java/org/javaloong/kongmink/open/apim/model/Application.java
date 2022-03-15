@@ -9,8 +9,8 @@ public class Application {
     private String name;
     private String description;
     private String picture;
-    private String type;
     private String clientId;
+    private String clientType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -46,20 +46,20 @@ public class Application {
         this.picture = picture;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getClientId() {
         return clientId;
     }
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public String getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(String clientType) {
+        this.clientType = clientType;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -37,7 +37,7 @@ public class BeanMapper {
         modelMapper.typeMap(ApplicationEntity.class, Application.class)
                 .addMappings(mapper -> {
                     mapper.map(src -> src.getSettings().getApp().getClientId(), Application::setClientId);
-                    mapper.map(src -> src.getSettings().getApp().getType(), Application::setType);
+                    mapper.map(src -> src.getSettings().getApp().getType(), Application::setClientType);
                 });
         modelMapper.typeMap(CategoryEntity.class, Category.class)
                 .addMappings(new PropertyMap<>() {

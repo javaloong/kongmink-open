@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
 import org.javaloong.kongmink.open.apim.model.Application;
-import org.javaloong.kongmink.open.common.client.ClientType;
+import org.javaloong.kongmink.open.common.model.Page;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -46,13 +46,13 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
         Application application = new Application();
         application.setId("c5e00d43-ba8a-4422-a00d-43ba8a64221b");
         application.setName("test2");
-        application.setType(ClientType.WEB.getValue());
+        application.setClientType("WEB");
         applicationProvider.update(application);
         Optional<Application> result = applicationProvider.findById(application.getId());
         assertThat(result).hasValueSatisfying(app -> {
             assertThat(app)
                     .returns("test2", Application::getName)
-                    .returns(ClientType.WEB.getValue(), Application::getType);
+                    .returns("WEB", Application::getClientType);
         });
     }
 
@@ -64,12 +64,20 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
                 .isInstanceOf(ForbiddenException.class);
     }
 
+    @Test
+    public void findAll() {
+        Page<Application> result = applicationProvider.findAll(1, 10);
+        assertThat(result.getTotalCount()).isEqualTo(1);
+        assertThat(result.getData()).isNotEmpty().hasSize(1)
+                .extracting(Application::getName).contains("Default Application");
+    }
+
     private Application createApplication() {
         Application application = new Application();
         application.setName("test");
         application.setDescription("test description");
         application.setClientId("test-resource-server");
-        application.setType(ClientType.SERVICE.getValue());
+        application.setClientType("SERVICE");
         return application;
     }
 }

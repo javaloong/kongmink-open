@@ -6,7 +6,10 @@ import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntit
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewApplicationEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationResource;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationsResource;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.common.model.Page;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +55,14 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         applicationResource.deleteApplicationByApplicationId();
     }
 
+    @Override
+    public Page<Application> findAll(int page, int size) {
+        PaginationParam paginationParam = createPaginationParam(page, size);
+        DataResponse<ApplicationEntity> dataResponse = client.getApplicationsResource().getApplications(
+                paginationParam, false, null);
+        return ApplicationMapper.mapToPaginationApplications(dataResponse);
+    }
+
     private ApplicationResource getApplicationResource(String id) {
         return client.getApplicationsResource().getApplicationResource(id);
     }
@@ -62,5 +73,12 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         } catch (NotFoundException ex) {
             return Optional.empty();
         }
+    }
+
+    private PaginationParam createPaginationParam(int page, int size) {
+        PaginationParam paginationParam = new PaginationParam();
+        paginationParam.setPage(page);
+        paginationParam.setSize(size);
+        return paginationParam;
     }
 }
