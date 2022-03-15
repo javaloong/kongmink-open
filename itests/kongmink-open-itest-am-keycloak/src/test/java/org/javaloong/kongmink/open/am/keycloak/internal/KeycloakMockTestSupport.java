@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.ops4j.pax.exam.Constants.START_LEVEL_SYSTEM_BUNDLES;
 import static org.ops4j.pax.exam.CoreOptions.*;
 
-public class KeycloakMockTestSupport extends PaxExamTestSupport {
+public abstract class KeycloakMockTestSupport extends PaxExamTestSupport {
 
     @BeforeOsgi
     public static void startServers() {

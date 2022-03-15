@@ -1,12 +1,11 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.client;
+package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import com.github.mjeanroy.junit.servers.annotations.TestServerConfiguration;
 import com.github.mjeanroy.junit.servers.jetty.EmbeddedJetty;
 import com.github.mjeanroy.junit.servers.jetty.EmbeddedJettyConfiguration;
-import org.javaloong.kongmink.open.am.client.ClientException;
-import org.javaloong.kongmink.open.am.client.ClientProvider;
+import org.javaloong.kongmink.open.am.ClientProvider;
 import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties;
-import org.javaloong.kongmink.open.am.keycloak.internal.EmbeddedKeycloakTestSupport;
+import org.javaloong.kongmink.open.am.exception.ClientException;
 import org.javaloong.kongmink.open.common.client.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

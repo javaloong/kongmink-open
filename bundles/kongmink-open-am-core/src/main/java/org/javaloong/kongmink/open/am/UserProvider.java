@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.user;
+package org.javaloong.kongmink.open.am;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;

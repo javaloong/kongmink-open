@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.user;
+package org.javaloong.kongmink.open.am.keycloak.internal.mapper;
 
 import org.javaloong.kongmink.open.common.user.Password;
 import org.javaloong.kongmink.open.common.user.User;

@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.client;
+package org.javaloong.kongmink.open.am;
 
 import org.javaloong.kongmink.open.common.client.Client;
 

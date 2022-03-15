@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.client;
+package org.javaloong.kongmink.open.am.keycloak.internal.mapper;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.javaloong.kongmink.open.common.client.Client;

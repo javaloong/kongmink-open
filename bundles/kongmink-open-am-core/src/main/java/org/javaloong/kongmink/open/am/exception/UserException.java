@@ -1,11 +1,11 @@
-package org.javaloong.kongmink.open.am.user;
+package org.javaloong.kongmink.open.am.exception;
 
 import org.javaloong.kongmink.open.common.exception.ErrorCodeException;
 
 public class UserException extends ErrorCodeException {
 
     public static final String USERNAME_EXISTS = "UsernameExists";
-    public static final String EMAIL_EXISTS = "emailExists";
+    public static final String EMAIL_EXISTS = "EmailExists";
     public static final String PASSWORD_NOT_MATCH = "PasswordNotMatch";
 
     public static UserException usernameExistsException() {

@@ -1,11 +1,11 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.user;
+package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import org.apache.commons.lang3.StringUtils;
-import org.javaloong.kongmink.open.am.keycloak.internal.JAXRSClientUtils;
+import org.javaloong.kongmink.open.am.keycloak.internal.mapper.UserMapper;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.UserResource;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.UsersResource;
-import org.javaloong.kongmink.open.am.user.UserException;
-import org.javaloong.kongmink.open.am.user.UserProvider;
+import org.javaloong.kongmink.open.am.exception.UserException;
+import org.javaloong.kongmink.open.am.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;

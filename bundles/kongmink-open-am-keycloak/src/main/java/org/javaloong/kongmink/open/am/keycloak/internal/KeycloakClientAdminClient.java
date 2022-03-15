@@ -1,7 +1,5 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.client;
+package org.javaloong.kongmink.open.am.keycloak.internal;
 
-import org.javaloong.kongmink.open.am.keycloak.internal.Config;
-import org.javaloong.kongmink.open.am.keycloak.internal.KeycloakAdminClient;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientsResource;
 import org.keycloak.OAuth2Constants;
 import org.osgi.service.component.annotations.Activate;

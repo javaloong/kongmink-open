@@ -1,12 +1,11 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.user;
+package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import com.github.mjeanroy.junit.servers.annotations.TestServerConfiguration;
 import com.github.mjeanroy.junit.servers.jetty.EmbeddedJetty;
 import com.github.mjeanroy.junit.servers.jetty.EmbeddedJettyConfiguration;
+import org.javaloong.kongmink.open.am.UserProvider;
 import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties;
-import org.javaloong.kongmink.open.am.keycloak.internal.EmbeddedKeycloakTestSupport;
-import org.javaloong.kongmink.open.am.user.UserException;
-import org.javaloong.kongmink.open.am.user.UserProvider;
+import org.javaloong.kongmink.open.am.exception.UserException;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;

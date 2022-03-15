@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.internal;
 
-import org.javaloong.kongmink.open.am.client.ClientProvider;
+import org.javaloong.kongmink.open.am.ClientProvider;
 import org.javaloong.kongmink.open.common.client.Client;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.data.UserRepository;
