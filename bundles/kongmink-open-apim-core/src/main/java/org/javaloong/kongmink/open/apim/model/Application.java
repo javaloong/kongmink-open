@@ -1,5 +1,8 @@
 package org.javaloong.kongmink.open.apim.model;
 
+import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
+import org.javaloong.kongmink.open.common.application.ApplicationType;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,8 +12,8 @@ public class Application {
     private String name;
     private String description;
     private String picture;
-    private String clientId;
-    private String clientType;
+    private ApplicationType applicationType;
+    private ApplicationSettings settings;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -46,20 +49,20 @@ public class Application {
         this.picture = picture;
     }
 
-    public String getClientId() {
-        return clientId;
+    public ApplicationType getApplicationType() {
+        return applicationType;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setApplicationType(ApplicationType applicationType) {
+        this.applicationType = applicationType;
     }
 
-    public String getClientType() {
-        return clientType;
+    public ApplicationSettings getSettings() {
+        return settings;
     }
 
-    public void setClientType(String clientType) {
-        this.clientType = clientType;
+    public void setSettings(ApplicationSettings settings) {
+        this.settings = settings;
     }
 
     public LocalDateTime getCreatedAt() {

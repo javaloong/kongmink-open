@@ -1,8 +1,6 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 
-import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.CategoryEntity;
-import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.Category;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -34,11 +32,6 @@ public class BeanMapper {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setPropertyCondition(Conditions.isNotNull());
-        modelMapper.typeMap(ApplicationEntity.class, Application.class)
-                .addMappings(mapper -> {
-                    mapper.map(src -> src.getSettings().getApp().getClientId(), Application::setClientId);
-                    mapper.map(src -> src.getSettings().getApp().getType(), Application::setClientType);
-                });
         modelMapper.typeMap(CategoryEntity.class, Category.class)
                 .addMappings(new PropertyMap<>() {
                     @Override

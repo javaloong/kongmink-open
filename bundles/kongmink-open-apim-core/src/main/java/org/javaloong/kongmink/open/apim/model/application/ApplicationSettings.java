@@ -1,13 +1,8 @@
-package org.javaloong.kongmink.open.apim.gravitee.internal.model.application;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package org.javaloong.kongmink.open.apim.model.application;
 
 public class ApplicationSettings {
 
-    @JsonProperty("app")
     private SimpleApplicationSettings app;
-
-    @JsonProperty("oauth")
     private OAuthClientSettings oauth;
 
     public SimpleApplicationSettings getApp() {
