@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-apim-core</artifactId>
+            <artifactId>kongmink-open-apim-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

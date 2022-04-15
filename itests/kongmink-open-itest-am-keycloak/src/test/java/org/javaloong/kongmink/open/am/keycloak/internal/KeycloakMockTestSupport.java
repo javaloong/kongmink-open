@@ -43,7 +43,7 @@ public abstract class KeycloakMockTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.apache.commons", "commons-lang3").versionAsInProject(),
                 mavenBundle("org.modelmapper", "modelmapper").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-am-core").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-am-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-am-keycloak").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()

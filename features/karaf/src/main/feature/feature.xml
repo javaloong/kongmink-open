@@ -85,24 +85,21 @@
         <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-am-core" version="${project.version}">
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-am-core/${project.version}</bundle>
-    </feature>
-
     <feature name="kongmink-open-am-keycloak" version="${project.version}">
-        <feature>kongmink-open-am-core</feature>
         <feature>cxf-rs-security-oauth2</feature>
         <bundle dependency="true">mvn:org.keycloak/keycloak-common/${keycloak.version}</bundle>
         <bundle dependency="true">mvn:org.keycloak/keycloak-core/${keycloak.version}</bundle>
         <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons.lang3.version}</bundle>
         <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-am-keycloak/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-service" version="${project.version}">
-        <feature>kongmink-open-am-core</feature>
         <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-service-impl/${project.version}</bundle>

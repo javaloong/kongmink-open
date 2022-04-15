@@ -14,10 +14,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>kongmink-open-am-core</module>
+        <module>kongmink-open-am-api</module>
         <module>kongmink-open-am-embedded-keycloak</module>
         <module>kongmink-open-am-keycloak</module>
-        <module>kongmink-open-apim-core</module>
+        <module>kongmink-open-apim-api</module>
         <module>kongmink-open-apim-gravitee</module>
         <module>kongmink-open-bean-validator</module>
         <module>kongmink-open-common</module>
