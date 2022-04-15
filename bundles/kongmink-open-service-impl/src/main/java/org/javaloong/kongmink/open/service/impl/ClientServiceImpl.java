@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.service.internal;
+package org.javaloong.kongmink.open.service.impl;
 
 import org.javaloong.kongmink.open.am.ClientProvider;
 import org.javaloong.kongmink.open.common.model.Page;

@@ -29,6 +29,6 @@ public class KarafIntegrationTest extends KarafTestSupport {
 
     @Test
     public void testKarafFeatures() throws Exception {
-        installAndAssertFeature("kongmink-open-resource-server-h2");
+        installAndAssertFeature("kongmink-open-rest-server-h2");
     }
 }

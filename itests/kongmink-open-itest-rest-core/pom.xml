@@ -19,12 +19,6 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-data</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
 		<dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest-core</artifactId>

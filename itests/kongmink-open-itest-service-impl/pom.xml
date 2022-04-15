@@ -10,7 +10,7 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kongmink-open-itest-service</artifactId>
+    <artifactId>kongmink-open-itest-service-impl</artifactId>
 
     <dependencies>
         <dependency>
@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-service</artifactId>
+            <artifactId>kongmink-open-service-impl</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

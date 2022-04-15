@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.service.internal;
+package org.javaloong.kongmink.open.service.impl;
 
 import org.javaloong.kongmink.open.am.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;

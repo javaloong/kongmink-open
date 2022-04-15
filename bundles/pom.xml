@@ -29,6 +29,7 @@
         <module>kongmink-open-rest-openapi</module>
         <module>kongmink-open-rest-swagger-ui</module>
         <module>kongmink-open-service</module>
+		<module>kongmink-open-service-impl</module>
     </modules>
 
 </project>

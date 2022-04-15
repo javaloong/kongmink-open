@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.service.internal;
+package org.javaloong.kongmink.open.service.impl;
 
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
 import org.ops4j.pax.exam.Option;
@@ -23,6 +23,7 @@ public abstract class AbstractServiceTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-data").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-data-jpa").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service-impl").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
         );
