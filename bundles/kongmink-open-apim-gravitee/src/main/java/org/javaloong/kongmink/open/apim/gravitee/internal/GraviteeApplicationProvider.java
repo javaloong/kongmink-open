@@ -4,11 +4,15 @@ import org.javaloong.kongmink.open.apim.ApplicationProvider;
 import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApplicationMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewApplicationEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationAnalyticsResource;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationResource;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationsResource;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.AnalyticsParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.apim.model.analytics.Analytics;
+import org.javaloong.kongmink.open.apim.model.analytics.query.AnalyticsQuery;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -25,6 +29,16 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
     @Activate
     public GraviteeApplicationProvider(@Reference GraviteePortalClient client) {
         this.client = client;
+    }
+
+    @Override
+    public <T extends Analytics> T getAnalytics(String applicationId, AnalyticsQuery analyticsQuery,
+                                                Class<T> analyticsClass) {
+        ApplicationAnalyticsResource applicationAnalyticsResource = getApplicationResource(applicationId)
+                .getApplicationAnalyticsResource();
+        AnalyticsParam analyticsParam = createAnalyticsParam(analyticsQuery);
+        return applicationAnalyticsResource.hits(analyticsParam)
+                .readEntity(analyticsClass);
     }
 
     @Override
@@ -73,6 +87,20 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         } catch (NotFoundException ex) {
             return Optional.empty();
         }
+    }
+
+    private AnalyticsParam createAnalyticsParam(AnalyticsQuery analyticsQuery) {
+        AnalyticsParam analyticsParam = new AnalyticsParam();
+        analyticsParam.setFrom(analyticsQuery.getFrom());
+        analyticsParam.setTo(analyticsQuery.getTo());
+        analyticsParam.setInterval(analyticsQuery.getInterval());
+        analyticsParam.setQuery(analyticsQuery.getQuery());
+        analyticsParam.setField(analyticsParam.getField());
+        analyticsParam.setType(analyticsQuery.getType().name());
+        analyticsParam.setRanges(analyticsQuery.getRanges());
+        analyticsParam.setAggs(analyticsQuery.getAggregations());
+        analyticsParam.setOrder(analyticsQuery.getOrder());
+        return analyticsParam;
     }
 
     private PaginationParam createPaginationParam(int page, int size) {

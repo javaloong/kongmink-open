@@ -2,6 +2,12 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.apim.model.analytics.HistogramAnalytics;
+import org.javaloong.kongmink.open.apim.model.analytics.HitsAnalytics;
+import org.javaloong.kongmink.open.apim.model.analytics.StatsAnalytics;
+import org.javaloong.kongmink.open.apim.model.analytics.TopHitsAnalytics;
+import org.javaloong.kongmink.open.apim.model.analytics.query.AnalyticsQuery;
+import org.javaloong.kongmink.open.apim.model.analytics.query.AnalyticsType;
 import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
 import org.javaloong.kongmink.open.apim.model.application.OAuthClientSettings;
 import org.javaloong.kongmink.open.apim.model.application.SimpleApplicationSettings;
@@ -14,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.ForbiddenException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +34,64 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
     @BeforeEach
     public void setUp() {
         applicationProvider = new GraviteeApplicationProvider(createPortalClient());
+    }
+
+    @Test
+    public void getHistogramAnalytics() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        AnalyticsQuery analyticsQuery = new AnalyticsQuery();
+        analyticsQuery.setType(AnalyticsType.DATE_HISTO);
+        analyticsQuery.setFrom(new Date().getTime());
+        analyticsQuery.setTo(analyticsQuery.getFrom() + 30000);
+        analyticsQuery.setInterval(1000);
+        analyticsQuery.setAggregations("avg:response-time;avg:api-response-time");
+        HistogramAnalytics analytics = applicationProvider.getAnalytics(applicationId,
+                analyticsQuery, HistogramAnalytics.class);
+        assertThat(analytics).isNotNull();
+    }
+
+    @Test
+    public void getTopHitsAnalytics() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        AnalyticsQuery analyticsQuery = new AnalyticsQuery();
+        analyticsQuery.setType(AnalyticsType.GROUP_BY);
+        analyticsQuery.setFrom(new Date().getTime());
+        analyticsQuery.setTo(analyticsQuery.getFrom() + 30000);
+        analyticsQuery.setInterval(1000);
+        analyticsQuery.setField("api");
+        analyticsQuery.setRanges("100:199;200:299;300:399;400:499;500:599");
+        analyticsQuery.setOrder("order:-response-time");
+        TopHitsAnalytics analytics = applicationProvider.getAnalytics(applicationId,
+                analyticsQuery, TopHitsAnalytics.class);
+        assertThat(analytics).isNotNull();
+    }
+
+    @Test
+    public void getHitsAnalytics() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        AnalyticsQuery analyticsQuery = new AnalyticsQuery();
+        analyticsQuery.setType(AnalyticsType.COUNT);
+        analyticsQuery.setFrom(new Date().getTime());
+        analyticsQuery.setTo(analyticsQuery.getFrom() + 30000);
+        analyticsQuery.setInterval(1000);
+        analyticsQuery.setQuery("api:e0e75fa9-3fd7-4584-a75f-a93fd7558400");
+        HitsAnalytics analytics = applicationProvider.getAnalytics(applicationId,
+                analyticsQuery, HitsAnalytics.class);
+        assertThat(analytics).isNotNull();
+    }
+
+    @Test
+    public void getStatsAnalytics() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        AnalyticsQuery analyticsQuery = new AnalyticsQuery();
+        analyticsQuery.setType(AnalyticsType.STATS);
+        analyticsQuery.setFrom(new Date().getTime());
+        analyticsQuery.setTo(analyticsQuery.getFrom() + 30000);
+        analyticsQuery.setInterval(1000);
+        analyticsQuery.setField("api");
+        StatsAnalytics analytics = applicationProvider.getAnalytics(applicationId,
+                analyticsQuery, StatsAnalytics.class);
+        assertThat(analytics).isNotNull();
     }
 
     @Test

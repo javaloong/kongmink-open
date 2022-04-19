@@ -30,4 +30,7 @@ public interface ApplicationResource {
     @Path("background")
     @Produces({ MediaType.WILDCARD, MediaType.APPLICATION_JSON })
     Response getBackgroundByApplicationId();
+
+    @Path("analytics")
+    ApplicationAnalyticsResource getApplicationAnalyticsResource();
 }
