@@ -1,9 +1,11 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.LogEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewApplicationEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.apim.model.ApplicationLog;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.modelmapper.TypeToken;
 
@@ -28,5 +30,16 @@ public class ApplicationMapper {
         };
         Collection<Application> data = BeanMapper.map(dataResponse.getData(), typeToken.getType());
         return new Page<>(data, dataResponse.getPaginationTotal());
+    }
+
+    public static ApplicationLog mapToLog(LogEntity logEntity) {
+        return BeanMapper.map(logEntity, ApplicationLog.class);
+    }
+
+    public static Page<ApplicationLog> mapToPaginationLogs(DataResponse<?> dataResponse) {
+        TypeToken<Collection<ApplicationLog>> typeToken = new TypeToken<>() {
+        };
+        Collection<ApplicationLog> data = BeanMapper.map(dataResponse.getData(), typeToken.getType());
+        return new Page<>(data, dataResponse.getDataTotal());
     }
 }

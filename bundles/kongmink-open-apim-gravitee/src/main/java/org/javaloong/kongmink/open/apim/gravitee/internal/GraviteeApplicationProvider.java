@@ -3,16 +3,17 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
 import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApplicationMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.LogEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewApplicationEntity;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationAnalyticsResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApplicationsResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.AnalyticsParam;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.LogsParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.apim.model.ApplicationLog;
 import org.javaloong.kongmink.open.apim.model.analytics.Analytics;
 import org.javaloong.kongmink.open.apim.model.analytics.query.AnalyticsQuery;
+import org.javaloong.kongmink.open.apim.model.log.query.LogQuery;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -29,16 +30,6 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
     @Activate
     public GraviteeApplicationProvider(@Reference GraviteePortalClient client) {
         this.client = client;
-    }
-
-    @Override
-    public <T extends Analytics> T getAnalytics(String applicationId, AnalyticsQuery analyticsQuery,
-                                                Class<T> analyticsClass) {
-        ApplicationAnalyticsResource applicationAnalyticsResource = getApplicationResource(applicationId)
-                .getApplicationAnalyticsResource();
-        AnalyticsParam analyticsParam = createAnalyticsParam(analyticsQuery);
-        return applicationAnalyticsResource.hits(analyticsParam)
-                .readEntity(analyticsClass);
     }
 
     @Override
@@ -77,6 +68,35 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         return ApplicationMapper.mapToPaginationApplications(dataResponse);
     }
 
+    @Override
+    public ApplicationLog getLog(String applicationId, String logId, Long timestamp) {
+        ApplicationLogsResource applicationLogsResource = getApplicationResource(applicationId)
+                .getApplicationLogsResource();
+        LogEntity logEntity = applicationLogsResource.applicationLog(logId, timestamp);
+        return ApplicationMapper.mapToLog(logEntity);
+    }
+
+    @Override
+    public Page<ApplicationLog> getLogs(String applicationId, LogQuery logQuery, int page, int size) {
+        ApplicationLogsResource applicationLogsResource = getApplicationResource(applicationId)
+                .getApplicationLogsResource();
+        PaginationParam paginationParam = createPaginationParam(page, size);
+        LogsParam logsParam = createLogsParam(logQuery);
+        DataResponse<LogEntity> dataResponse = applicationLogsResource.applicationLogs(
+                paginationParam, logsParam);
+        return ApplicationMapper.mapToPaginationLogs(dataResponse);
+    }
+
+    @Override
+    public <T extends Analytics> T getAnalytics(String applicationId, AnalyticsQuery analyticsQuery,
+                                                Class<T> analyticsClass) {
+        ApplicationAnalyticsResource applicationAnalyticsResource = getApplicationResource(applicationId)
+                .getApplicationAnalyticsResource();
+        AnalyticsParam analyticsParam = createAnalyticsParam(analyticsQuery);
+        return applicationAnalyticsResource.hits(analyticsParam)
+                .readEntity(analyticsClass);
+    }
+
     private ApplicationResource getApplicationResource(String id) {
         return client.getApplicationsResource().getApplicationResource(id);
     }
@@ -87,6 +107,16 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         } catch (NotFoundException ex) {
             return Optional.empty();
         }
+    }
+
+    private LogsParam createLogsParam(LogQuery logQuery) {
+        LogsParam logsParam = new LogsParam();
+        logsParam.setFrom(logQuery.getFrom());
+        logsParam.setTo(logQuery.getTo());
+        logsParam.setQuery(logQuery.getQuery());
+        logsParam.setField(logQuery.getField());
+        logsParam.setOrder(logQuery.getOrder());
+        return logsParam;
     }
 
     private AnalyticsParam createAnalyticsParam(AnalyticsQuery analyticsQuery) {
