@@ -3,15 +3,14 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 import org.javaloong.kongmink.open.apim.ApiProvider;
 import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApiMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApiEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.PageEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.PlanEntity;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApiMetricsResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApiPlansResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.ApiResource;
-import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
+import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.ApisParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.ApiMetrics;
+import org.javaloong.kongmink.open.apim.model.ApiPage;
 import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.osgi.service.component.annotations.Activate;
@@ -26,6 +25,7 @@ import java.util.Optional;
 @Component(service = ApiProvider.class)
 public class GraviteeApiProvider implements ApiProvider {
 
+    private static final String INCLUDE_CONTENT = "content";
     private static final String INCLUDE_PLANS = "plans";
 
     private final GraviteePortalClient client;
@@ -41,6 +41,24 @@ public class GraviteeApiProvider implements ApiProvider {
         ApiMetrics apiMetrics = apiMetricsResource.getApiMetricsByApiId();
         apiMetrics.setId(apiId);
         return apiMetrics;
+    }
+
+    @Override
+    public ApiPage getPage(String apiId, String pageId, String lang) {
+        ApiPageResource apiPageResource = getApiResource(apiId).getApiPagesResource()
+                .getApiPageResource(pageId);
+        List<String> include = Collections.singletonList(INCLUDE_CONTENT);
+        PageEntity pageEntity = apiPageResource.getPageByApiIdAndPageId(lang, include);
+        return ApiMapper.mapToApiPage(pageEntity);
+    }
+
+    @Override
+    public Page<ApiPage> getPages(String apiId, String lang, String parent, int page, int size) {
+        ApiPagesResource apiPagesResource = getApiResource(apiId).getApiPagesResource();
+        PaginationParam paginationParam = createPaginationParam(page, size);
+        DataResponse<PageEntity> dataResponse = apiPagesResource.getPagesByApiId(
+                lang, paginationParam, false, parent);
+        return ApiMapper.mapToPaginationApiPages(dataResponse);
     }
 
     @Override

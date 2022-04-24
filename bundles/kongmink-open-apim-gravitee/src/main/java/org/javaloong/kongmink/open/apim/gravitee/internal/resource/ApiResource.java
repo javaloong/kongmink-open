@@ -29,6 +29,9 @@ public interface ApiResource {
     @Path("metrics")
     ApiMetricsResource getApiMetricsResource();
 
+    @Path("pages")
+    ApiPagesResource getApiPagesResource();
+
     @Path("plans")
     ApiPlansResource getApiPlansResource();
 }

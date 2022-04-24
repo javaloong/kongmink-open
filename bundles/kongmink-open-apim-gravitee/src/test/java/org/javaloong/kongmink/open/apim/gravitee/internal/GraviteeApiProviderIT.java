@@ -3,6 +3,7 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 import org.javaloong.kongmink.open.apim.ApiProvider;
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.ApiMetrics;
+import org.javaloong.kongmink.open.apim.model.ApiPage;
 import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,23 @@ public class GraviteeApiProviderIT extends GraviteePortalClientTestSupport {
         String apiId = "167f6b66-da50-4c39-bf6b-66da505c391a";
         ApiMetrics apiMetrics = apiProvider.getMetrics(apiId);
         assertThat(apiMetrics).returns(1, ApiMetrics::getSubscribers);
+    }
+
+    @Test
+    public void getPage() {
+        String apiId = "167f6b66-da50-4c39-bf6b-66da505c391a";
+        String pageId = "9d574190-f95b-4b18-9741-90f95bfb1844";
+        ApiPage apiPage = apiProvider.getPage(apiId, pageId, null);
+        assertThat(apiPage).isNotNull().returns("Swagger", ApiPage::getName);
+    }
+
+    @Test
+    public void getPages() {
+        String apiId = "167f6b66-da50-4c39-bf6b-66da505c391a";
+        Page<ApiPage> result = apiProvider.getPages(apiId, null, null, 1, 10);
+        assertThat(result.getTotalCount()).isGreaterThan(1);
+        assertThat(result.getData()).isNotEmpty()
+                .extracting(ApiPage::getName).contains("Swagger");
     }
 
     @Test
