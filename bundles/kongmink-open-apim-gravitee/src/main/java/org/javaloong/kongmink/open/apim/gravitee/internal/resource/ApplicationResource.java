@@ -36,4 +36,7 @@ public interface ApplicationResource {
 
     @Path("analytics")
     ApplicationAnalyticsResource getApplicationAnalyticsResource();
+
+    @Path("keys")
+    ApplicationKeysResource getApplicationKeysResource();
 }

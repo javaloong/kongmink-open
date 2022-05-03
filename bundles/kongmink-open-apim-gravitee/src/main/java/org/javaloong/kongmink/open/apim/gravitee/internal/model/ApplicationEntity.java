@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.apim.gravitee.internal.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.application.ApplicationSettings;
+import org.javaloong.kongmink.open.apim.model.ApiKeyMode;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ public class ApplicationEntity {
     private String id;
     private String name;
     private String description;
+    private String domain;
     private String applicationType;
     private Boolean hasClientId;
     private UserEntity owner;
@@ -22,6 +24,8 @@ public class ApplicationEntity {
     private List<GroupEntity> groups;
     private String picture;
     private String background;
+    @JsonProperty("api_key_mode")
+    private ApiKeyMode apiKeyMode;
     private ApplicationSettings settings;
 
     public String getId() {
@@ -46,6 +50,14 @@ public class ApplicationEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getApplicationType() {
@@ -110,6 +122,14 @@ public class ApplicationEntity {
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    public ApiKeyMode getApiKeyMode() {
+        return apiKeyMode;
+    }
+
+    public void setApiKeyMode(ApiKeyMode apiKeyMode) {
+        this.apiKeyMode = apiKeyMode;
     }
 
     public ApplicationSettings getSettings() {

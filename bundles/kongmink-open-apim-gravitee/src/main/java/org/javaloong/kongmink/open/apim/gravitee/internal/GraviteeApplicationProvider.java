@@ -1,14 +1,17 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
+import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApiKeyMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApplicationMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApplicationEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.KeyEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.LogEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewApplicationEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.AnalyticsParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.LogsParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
+import org.javaloong.kongmink.open.apim.model.ApiKey;
 import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.ApplicationLog;
 import org.javaloong.kongmink.open.apim.model.analytics.Analytics;
@@ -95,6 +98,21 @@ public class GraviteeApplicationProvider implements ApplicationProvider {
         AnalyticsParam analyticsParam = createAnalyticsParam(analyticsQuery);
         return applicationAnalyticsResource.hits(analyticsParam)
                 .readEntity(analyticsClass);
+    }
+
+    @Override
+    public ApiKey renewSharedKey(String applicationId) {
+        ApplicationKeysResource applicationKeysResource = getApplicationResource(applicationId)
+                .getApplicationKeysResource();
+        KeyEntity keyEntity = applicationKeysResource.renewSharedKey();
+        return ApiKeyMapper.mapToApiKey(keyEntity);
+    }
+
+    @Override
+    public void revokeKey(String applicationId, String apiKey) {
+        ApplicationKeysResource applicationKeysResource = getApplicationResource(applicationId)
+                .getApplicationKeysResource();
+        applicationKeysResource.revokeKeySubscription(apiKey);
     }
 
     private ApplicationResource getApplicationResource(String id) {

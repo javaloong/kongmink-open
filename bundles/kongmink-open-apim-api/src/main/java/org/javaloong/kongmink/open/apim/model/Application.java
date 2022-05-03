@@ -13,6 +13,7 @@ public class Application {
     private String description;
     private String picture;
     private ApplicationType applicationType;
+    private ApiKeyMode apiKeyMode;
     private ApplicationSettings settings;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -55,6 +56,14 @@ public class Application {
 
     public void setApplicationType(ApplicationType applicationType) {
         this.applicationType = applicationType;
+    }
+
+    public ApiKeyMode getApiKeyMode() {
+        return apiKeyMode;
+    }
+
+    public void setApiKeyMode(ApiKeyMode apiKeyMode) {
+        this.apiKeyMode = apiKeyMode;
     }
 
     public ApplicationSettings getSettings() {

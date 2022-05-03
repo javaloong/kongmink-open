@@ -1,6 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
+import org.javaloong.kongmink.open.apim.model.ApiKey;
 import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.ApplicationLog;
 import org.javaloong.kongmink.open.apim.model.analytics.HistogramAnalytics;
@@ -225,5 +226,19 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
         StatsAnalytics analytics = applicationProvider.getAnalytics(applicationId,
                 analyticsQuery, StatsAnalytics.class);
         assertThat(analytics).isNotNull();
+    }
+
+    @Test
+    public void renewSharedKey() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        ApiKey apiKey = applicationProvider.renewSharedKey(applicationId);
+        assertThat(apiKey).isNotNull();
+    }
+
+    @Test
+    public void revokeKey() {
+        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String apiKey = "c9d063f4-bfc1-4ea7-9063-f4bfc19ea750";
+        applicationProvider.revokeKey(applicationId, apiKey);
     }
 }

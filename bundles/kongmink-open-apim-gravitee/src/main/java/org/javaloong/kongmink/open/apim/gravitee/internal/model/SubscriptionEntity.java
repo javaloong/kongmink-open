@@ -30,7 +30,7 @@ public class SubscriptionEntity {
     @JsonProperty("subscribed_by")
     private String subscribedBy;
     private SubscriptionStatus status;
-    private List<Key> keys = null;
+    private List<KeyEntity> keys = null;
 
     public String getId() {
         return id;
@@ -144,11 +144,11 @@ public class SubscriptionEntity {
         this.status = status;
     }
 
-    public List<Key> getKeys() {
+    public List<KeyEntity> getKeys() {
         return keys;
     }
 
-    public void setKeys(List<Key> keys) {
+    public void setKeys(List<KeyEntity> keys) {
         this.keys = keys;
     }
 

@@ -1,15 +1,15 @@
 package org.javaloong.kongmink.open.apim.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class ApiKey {
 
     private String id;
-    private String api;
-    private String application;
-    private String plan;
     private String key;
+    private Application application;
+    private List<Subscription> subscriptions;
     private Boolean paused;
     private Boolean revoked;
     private Boolean expired;
@@ -25,36 +25,28 @@ public class ApiKey {
         this.id = id;
     }
 
-    public String getApi() {
-        return api;
-    }
-
-    public void setApi(String api) {
-        this.api = api;
-    }
-
-    public String getApplication() {
-        return application;
-    }
-
-    public void setApplication(String application) {
-        this.application = application;
-    }
-
-    public String getPlan() {
-        return plan;
-    }
-
-    public void setPlan(String plan) {
-        this.plan = plan;
-    }
-
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 
     public Boolean getPaused() {
