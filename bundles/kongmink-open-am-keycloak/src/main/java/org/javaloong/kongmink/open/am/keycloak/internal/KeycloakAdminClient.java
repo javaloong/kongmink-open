@@ -1,10 +1,14 @@
 package org.javaloong.kongmink.open.am.keycloak.internal;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.common.classloader.ClassLoaderUtils;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
+import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
+import org.apache.cxf.jaxrs.utils.ExceptionUtils;
 import org.apache.cxf.rs.security.oauth2.client.BearerAuthSupplier;
 import org.apache.cxf.rs.security.oauth2.client.Consumer;
 import org.apache.cxf.rs.security.oauth2.client.OAuthClientUtils;
@@ -13,6 +17,10 @@ import org.apache.cxf.rs.security.oauth2.grants.clientcred.ClientCredentialsGran
 import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmResource;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.RealmsResource;
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Constructor;
 
 import static java.lang.Thread.currentThread;
 
@@ -44,7 +52,8 @@ public abstract class KeycloakAdminClient {
         JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
         bean.setAddress(config.getServerUrl());
         bean.setResourceClass(cls);
-        bean.setProvider(new JacksonJsonProvider());
+        bean.setProvider(new JacksonJsonProvider(createObjectMapper()));
+        bean.setProvider(new RestClientExceptionMapper());
         return bean.create(cls);
     }
 
@@ -56,6 +65,12 @@ public abstract class KeycloakAdminClient {
         } finally {
             currentThread().setContextClassLoader(ldr);
         }
+    }
+
+    private ObjectMapper createObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper;
     }
 
     private BearerAuthSupplier createBearerAuthSupplier(Config config) {
@@ -75,5 +90,37 @@ public abstract class KeycloakAdminClient {
         grant.setClientId(consumer.getClientId());
         grant.setClientSecret(consumer.getClientSecret());
         return OAuthClientUtils.getAccessToken(tokenUri, consumer, grant, true);
+    }
+
+    static class RestClientExceptionMapper implements ResponseExceptionMapper<Exception> {
+
+        @Override
+        public Exception fromResponse(Response response) {
+            int status = response.getStatus();
+            if (status >= 400) {
+                String message = response.readEntity(String.class);
+                return toWebApplicationException(
+                        new RestClientException(message), response);
+            }
+            return null;
+        }
+
+        private WebApplicationException toWebApplicationException(Throwable cause, Response response) {
+            try {
+                final Class<?> exceptionClass = ExceptionUtils.getWebApplicationExceptionClass(response,
+                        WebApplicationException.class);
+                final Constructor<?> ctr = exceptionClass.getConstructor(Response.class, Throwable.class);
+                return (WebApplicationException) ctr.newInstance(response, cause);
+            } catch (Throwable ex) {
+                return new WebApplicationException(cause, response);
+            }
+        }
+    }
+
+    static class RestClientException extends RuntimeException {
+
+        RestClientException(String message) {
+            super(message);
+        }
     }
 }

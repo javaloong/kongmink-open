@@ -8,19 +8,24 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.common.classloader.ClassLoaderUtils;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
+import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.utils.ExceptionUtils;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.apache.cxf.transport.http.auth.HttpAuthSupplier;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.TokenEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
-import org.javaloong.kongmink.open.apim.gravitee.internal.model.TokenEntity;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Constructor;
 import java.net.URI;
 
 import static java.lang.Thread.currentThread;
@@ -107,6 +112,7 @@ public class GraviteePortalClient {
         bean.setAddress(config.serverUrl());
         bean.setResourceClass(cls);
         bean.setProvider(new JacksonJsonProvider(createObjectMapper()));
+        bean.setProvider(new RestClientExceptionMapper());
         return bean.create(cls, varValues);
     }
 
@@ -141,6 +147,38 @@ public class GraviteePortalClient {
             }
 
             return "Bearer " + tokenExchange().getToken();
+        }
+    }
+
+    static class RestClientExceptionMapper implements ResponseExceptionMapper<Exception> {
+
+        @Override
+        public Exception fromResponse(Response response) {
+            int status = response.getStatus();
+            if (status >= 400) {
+                String message = response.readEntity(String.class);
+                return toWebApplicationException(
+                        new RestClientException(message), response);
+            }
+            return null;
+        }
+
+        private WebApplicationException toWebApplicationException(Throwable cause, Response response) {
+            try {
+                final Class<?> exceptionClass = ExceptionUtils.getWebApplicationExceptionClass(response,
+                        WebApplicationException.class);
+                final Constructor<?> ctr = exceptionClass.getConstructor(Response.class, Throwable.class);
+                return (WebApplicationException) ctr.newInstance(response, cause);
+            } catch (Throwable ex) {
+                return new WebApplicationException(cause, response);
+            }
+        }
+    }
+
+    static class RestClientException extends RuntimeException {
+
+        RestClientException(String message) {
+            super(message);
         }
     }
 }

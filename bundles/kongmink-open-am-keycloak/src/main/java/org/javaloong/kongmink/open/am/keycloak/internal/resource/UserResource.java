@@ -5,6 +5,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -14,12 +15,12 @@ public interface UserResource {
     UserRepresentation toRepresentation();
 
     @PUT
-    void update(UserRepresentation userRepresentation);
+    Response update(UserRepresentation userRepresentation);
 
     @DELETE
-    void remove();
+    Response remove();
 
     @PUT
     @Path("reset-password")
-    void resetPassword(CredentialRepresentation credentialRepresentation);
+    Response resetPassword(CredentialRepresentation credentialRepresentation);
 }

@@ -15,11 +15,11 @@ public interface ApplicationResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    void updateApplicationByApplicationId(ApplicationEntity application);
+    Response updateApplicationByApplicationId(ApplicationEntity application);
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    void deleteApplicationByApplicationId();
+    Response deleteApplicationByApplicationId();
 
     @GET
     @Path("picture")

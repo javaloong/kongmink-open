@@ -28,8 +28,4 @@ public interface UsersResource {
 
     @Path("{id}")
     UserResource get(@PathParam("id") String id);
-
-    @Path("{id}")
-    @DELETE
-    Response delete(@PathParam("id") String id);
 }

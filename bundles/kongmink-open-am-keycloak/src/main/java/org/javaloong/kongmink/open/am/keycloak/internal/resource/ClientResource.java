@@ -5,6 +5,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public interface ClientResource {
 
@@ -14,10 +15,10 @@ public interface ClientResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    void update(ClientRepresentation clientRepresentation);
+    Response update(ClientRepresentation clientRepresentation);
 
     @DELETE
-    void remove();
+    Response remove();
 
     @POST
     @Path("client-secret")
