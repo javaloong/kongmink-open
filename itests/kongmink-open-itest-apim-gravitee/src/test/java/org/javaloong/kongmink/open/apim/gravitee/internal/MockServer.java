@@ -15,13 +15,14 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import static org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse.METADATA_DATA_KEY;
 import static org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse.METADATA_DATA_TOTAL_KEY;
 
-
 public class MockServer {
 
-    private static final WireMockServer wireMockServer = new WireMockServer(options().port(8083));
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static void start() {
+    static WireMockServer wireMockServer;
+
+    public static void start(int port) {
+        wireMockServer = new WireMockServer(options().port(port));
         wireMockServer.start();
         initServer();
     }
@@ -61,7 +62,9 @@ public class MockServer {
     }
 
     public static void stop() {
-        wireMockServer.stop();
+        if (wireMockServer != null) {
+            wireMockServer.stop();
+        }
     }
 
     private static String writeValueAsString(Object value) {

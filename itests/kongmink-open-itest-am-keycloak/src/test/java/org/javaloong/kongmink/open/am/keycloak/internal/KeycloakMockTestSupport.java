@@ -3,23 +3,42 @@ package org.javaloong.kongmink.open.am.keycloak.internal;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
 import org.javaloong.kongmink.open.itest.common.annotation.AfterOsgi;
 import org.javaloong.kongmink.open.itest.common.annotation.BeforeOsgi;
+import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.OptionUtils;
 
 import java.util.Map;
 
 import static org.ops4j.pax.exam.Constants.START_LEVEL_SYSTEM_BUNDLES;
-import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.CoreOptions.composite;
+import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 
 public abstract class KeycloakMockTestSupport extends PaxExamTestSupport {
 
+    private static int serverPort;
+
     @BeforeOsgi
     public static void startServers() {
-        MockServer.start();
+        MockServer.start(serverPort);
     }
 
     @AfterOsgi
     public static void stopServers() {
         MockServer.stop();
+    }
+
+    @Configuration
+    public Option[] config() {
+        serverPort = getAvailablePort(9090, 9999);
+        return OptionUtils.combine(super.config(),
+                newConfiguration(KeycloakUserAdminClient.KEYCLOAK_USER_CONFIGURATION_PID)
+                        .put("serverUrl", String.format("http://localhost:%s/auth", serverPort))
+                        .asOption(),
+                newConfiguration(KeycloakClientAdminClient.KEYCLOAK_CLIENT_CONFIGURATION_PID)
+                        .put("serverUrl", String.format("http://localhost:%s/auth", serverPort))
+                        .asOption()
+        );
     }
 
     @Override

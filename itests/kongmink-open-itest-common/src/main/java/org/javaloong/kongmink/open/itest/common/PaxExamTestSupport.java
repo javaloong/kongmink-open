@@ -10,6 +10,7 @@ import org.osgi.framework.ServiceReference;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -39,6 +40,18 @@ public abstract class PaxExamTestSupport {
     BundleContext bundleContext;
 
     Map<String, Boolean> configurationSettings = defaultSettings();
+
+    public static int getAvailablePort(int min, int max) {
+        for (int i = min; i <= max; i++) {
+            try (ServerSocket socket = new ServerSocket(i)) {
+                return socket.getLocalPort();
+            } catch (Exception e) {
+                System.err.println("Port " + i + " not available, trying next one");
+                // try next port
+            }
+        }
+        throw new IllegalStateException("Can't find available network ports");
+    }
 
     public static <T> T getService(BundleContext bundleContext, Class<T> type) {
         ServiceReference<T> serviceReference = bundleContext.getServiceReference(type);

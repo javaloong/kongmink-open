@@ -13,29 +13,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 public class MockServer {
 
-    private static final WireMockServer wireMockServer = new WireMockServer();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static void start() {
+    static WireMockServer wireMockServer;
+
+    public static void start(int port) {
+        wireMockServer = new WireMockServer(options().port(port));
         wireMockServer.start();
         initServer();
     }
 
     private static void initServer() {
         // OIDC Token
-        stubFor(post(urlMatching(".*/protocol/openid-connect/token"))
+        wireMockServer.stubFor(post(urlMatching(".*/protocol/openid-connect/token"))
                 .willReturn(aResponse().withBody(writeValueAsString(createAccessToken()))));
         // User
-        stubFor(get(urlMatching(".*/users/1"))
+        wireMockServer.stubFor(get(urlMatching(".*/users/1"))
                 .withHeader(HttpHeaders.AUTHORIZATION, matching("Bearer test_access_token"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .withBody(writeValueAsString(createUserRepresentation()))));
         // Client
-        stubFor(get(urlMatching(".*/clients/1"))
+        wireMockServer.stubFor(get(urlMatching(".*/clients/1"))
                 .withHeader(HttpHeaders.AUTHORIZATION, matching("Bearer test_access_token"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
@@ -43,7 +46,9 @@ public class MockServer {
     }
 
     public static void stop() {
-        wireMockServer.stop();
+        if (wireMockServer != null) {
+            wireMockServer.stop();
+        }
     }
 
     private static String writeValueAsString(Object value) {
