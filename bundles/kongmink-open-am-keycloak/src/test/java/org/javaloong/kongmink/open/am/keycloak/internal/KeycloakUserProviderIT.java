@@ -6,6 +6,7 @@ import com.github.mjeanroy.junit.servers.jetty.EmbeddedJettyConfiguration;
 import org.javaloong.kongmink.open.am.UserProvider;
 import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties;
 import org.javaloong.kongmink.open.am.exception.UserException;
+import org.javaloong.kongmink.open.am.keycloak.internal.exception.NotImplementedException;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
@@ -82,13 +83,16 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
 
     @Test
     public void updateUserPassword() {
-        String userId = "30f3efcc-c3ff-43f8-9b9a-ec3d8d9f6bc9";
-        UserPassword userPassword = new UserPassword();
-        userPassword.setUserId(userId);
-        userPassword.setPassword("11111111");
-        userPassword.setPasswordNew("22222222");
-        userPassword.setPasswordConfirm("22222222");
-        userProvider.updatePassword(userPassword);
+        NotImplementedException exception = assertThrows(NotImplementedException.class, () -> {
+            String userId = "30f3efcc-c3ff-43f8-9b9a-ec3d8d9f6bc9";
+            UserPassword userPassword = new UserPassword();
+            userPassword.setUserId(userId);
+            userPassword.setPassword("11111111");
+            userPassword.setPasswordNew("22222222");
+            userPassword.setPasswordConfirm("22222222");
+            userProvider.updatePassword(userPassword);
+        });
+        assertThat(exception.getMessage()).isEqualTo("HTTP 501 Not Implemented");
     }
 
     @Test
@@ -104,7 +108,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
     @Test
     public void updateUserEmail() {
         String userId = "45e4c8f8-98bc-43c0-93e8-1a2a3aec6bf7";
-        String email = "user2@example.com";
+        String email = "user22@example.com";
         UserEmail userEmail = new UserEmail(userId, email);
         userProvider.updateEmail(userEmail);
         Optional<User> result = userProvider.findById(userId);

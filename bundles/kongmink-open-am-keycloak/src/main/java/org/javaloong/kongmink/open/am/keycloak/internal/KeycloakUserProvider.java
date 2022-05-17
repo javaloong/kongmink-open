@@ -1,16 +1,16 @@
 package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaloong.kongmink.open.am.UserProvider;
+import org.javaloong.kongmink.open.am.exception.UserException;
+import org.javaloong.kongmink.open.am.keycloak.internal.exception.NotImplementedException;
 import org.javaloong.kongmink.open.am.keycloak.internal.mapper.UserMapper;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.UserResource;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.UsersResource;
-import org.javaloong.kongmink.open.am.exception.UserException;
-import org.javaloong.kongmink.open.am.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
-import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,11 +95,7 @@ public class KeycloakUserProvider implements UserProvider {
 
     @Override
     public void updatePassword(UserPassword userPassword) {
-        Optional<UserResource> userResource = getUserResource(userPassword.getUserId());
-        userResource.map(UserResource::toRepresentation).ifPresent(user ->
-                verifyPassword(user.getUsername(), userPassword.getPassword()));
-        CredentialRepresentation passwordCredential = UserMapper.mapToPasswordCredential(userPassword);
-        userResource.ifPresent(resource -> resource.resetPassword(passwordCredential));
+        throw new NotImplementedException();
     }
 
     @Override
@@ -145,8 +141,5 @@ public class KeycloakUserProvider implements UserProvider {
         if (result.isPresent()) {
             throw UserException.emailExistsException();
         }
-    }
-
-    private void verifyPassword(String username, String password) {
     }
 }
