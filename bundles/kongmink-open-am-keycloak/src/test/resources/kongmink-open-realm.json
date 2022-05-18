@@ -28,6 +28,7 @@
       "username": "user1",
       "enabled": true,
       "email": "user1@example.com",
+      "emailVerified": true,
       "credentials": [
         {
           "type": "password",
@@ -41,6 +42,7 @@
       "username": "user2",
       "enabled": true,
       "email": "user2@example.com",
+      "emailVerified": true,
       "credentials": [
         {
           "type": "password",
@@ -54,6 +56,7 @@
       "username": "user3",
       "enabled": true,
       "email": "user3@example.com",
+      "emailVerified": false,
       "credentials": [
         {
           "type": "password",

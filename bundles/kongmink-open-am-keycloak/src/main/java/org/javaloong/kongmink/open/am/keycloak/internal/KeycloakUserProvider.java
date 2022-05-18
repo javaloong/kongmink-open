@@ -106,6 +106,7 @@ public class KeycloakUserProvider implements UserProvider {
             if (!userEmail.getEmail().equalsIgnoreCase(userRepresentation.getEmail())) {
                 verifyEmail(userEmail.getEmail());
                 userRepresentation.setEmail(userEmail.getEmail());
+                userRepresentation.setEmailVerified(false);
                 resource.update(userRepresentation);
             }
         });
