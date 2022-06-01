@@ -46,7 +46,7 @@
         <hibernate.version>5.2.18.Final</hibernate.version>
         <hibernate.jpa-2.1-api.verison>1.0.2.Final</hibernate.jpa-2.1-api.verison>
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
-        <keycloak.version>16.1.0</keycloak.version>
+        <keycloak.version>18.0.0</keycloak.version>
         <resteasy.version>3.15.3.Final</resteasy.version>
         <shiro.version>1.7.1</shiro.version>
         <pac4j.version>4.5.4</pac4j.version>
