@@ -2,22 +2,22 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApiProvider;
 import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.ApiMapper;
+import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.CategoryMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApiEntity;
+import org.javaloong.kongmink.open.apim.gravitee.internal.model.CategoryEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.PageEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.PlanEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.ApisParam;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.ApiPage;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.NotFoundException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +70,13 @@ public class GraviteeApiProvider implements ApiProvider {
     }
 
     @Override
+    public Collection<Category> getCategories() {
+        ApisParam apisParam = new ApisParam();
+        DataResponse<CategoryEntity> dataResponse = client.getApisResource().listCategories(apisParam);
+        return CategoryMapper.mapToCategories(dataResponse.getData());
+    }
+
+    @Override
     public Optional<Api> findById(String id) {
         ApiResource apiResource = getApiResource(id);
         List<String> include = Collections.singletonList(INCLUDE_PLANS);
@@ -77,9 +84,10 @@ public class GraviteeApiProvider implements ApiProvider {
     }
 
     @Override
-    public Page<Api> findAll(int page, int size) {
+    public Page<Api> findAll(String category, int page, int size) {
         PaginationParam paginationParam = createPaginationParam(page, size);
         ApisParam apisParam = new ApisParam();
+        apisParam.setCategory(category);
         DataResponse<ApiEntity> dataResponse = client.getApisResource().getApis(paginationParam, apisParam);
         return ApiMapper.mapToPaginationApis(dataResponse);
     }

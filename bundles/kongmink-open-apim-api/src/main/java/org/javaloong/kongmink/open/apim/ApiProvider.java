@@ -1,11 +1,9 @@
 package org.javaloong.kongmink.open.apim;
 
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.ApiPage;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public interface ApiProvider {
@@ -18,9 +16,11 @@ public interface ApiProvider {
 
     Page<Plan> getPlans(String apiId, int page, int size);
 
+    Collection<Category> getCategories();
+
     Optional<Api> findById(String id);
 
-    Page<Api> findAll(int page, int size);
+    Page<Api> findAll(String category, int page, int size);
 
     Page<Api> search(String query, int page, int size);
 }

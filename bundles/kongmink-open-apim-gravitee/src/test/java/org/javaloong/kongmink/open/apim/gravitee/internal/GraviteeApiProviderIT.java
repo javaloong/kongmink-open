@@ -1,15 +1,13 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApiProvider;
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.ApiPage;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,6 +56,12 @@ public class GraviteeApiProviderIT extends GraviteePortalClientTestSupport {
     }
 
     @Test
+    public void getCategories() {
+        Collection<Category> result = apiProvider.getCategories();
+        assertThat(result).isNotEmpty().hasSize(1);
+    }
+
+    @Test
     public void findById() {
         String id = "167f6b66-da50-4c39-bf6b-66da505c391a";
         Optional<Api> result = apiProvider.findById(id);
@@ -66,7 +70,7 @@ public class GraviteeApiProviderIT extends GraviteePortalClientTestSupport {
 
     @Test
     public void findAll() {
-        Page<Api> result = apiProvider.findAll(1, 10);
+        Page<Api> result = apiProvider.findAll(null,1, 10);
         assertThat(result.getTotalCount()).isEqualTo(1);
         assertThat(result.getData()).isNotEmpty().hasSize(1)
                 .extracting(Api::getName).contains("Swagger Petstore - OpenAPI 3.0");
