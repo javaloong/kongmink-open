@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ApiProvider {
 
+    Collection<Category> getCategories();
+
     ApiMetrics getMetrics(String apiId);
 
     ApiPage getPage(String apiId, String pageId, String lang);
@@ -15,8 +17,6 @@ public interface ApiProvider {
     Page<ApiPage> getPages(String apiId, String lang, String parent, int page, int size);
 
     Page<Plan> getPlans(String apiId, int page, int size);
-
-    Collection<Category> getCategories();
 
     Optional<Api> findById(String id);
 

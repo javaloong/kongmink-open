@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.common.mapper.TypeRef;
 import org.javaloong.kongmink.open.apim.model.Api;
+import org.javaloong.kongmink.open.apim.model.ApiMetrics;
 import org.javaloong.kongmink.open.apim.model.Category;
 import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
@@ -106,6 +107,20 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
     }
 
     @Test
+    public void getMetrics_ShouldReturnHttpStatusOk() {
+        ApiMetrics apiMetrics = createApiMetrics("1");
+        when(apiService.getMetrics(anyString())).thenReturn(apiMetrics);
+        ApiMetrics result = get("/apis/{id}/metrics", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(ApiMetrics.class);
+        assertThat(result)
+                .returns(apiMetrics.getId(), ApiMetrics::getId)
+                .returns(apiMetrics.getHits(), ApiMetrics::getHits)
+                .returns(apiMetrics.getSubscribers(), ApiMetrics::getSubscribers)
+                .returns(apiMetrics.getHealth(), ApiMetrics::getHealth);
+    }
+
+    @Test
     public void getPlans_ShouldReturnHttpStatusOk() {
         when(apiService.getPlans(anyString(), anyInt(), anyInt())).thenReturn(createPlans());
         Page<Plan> page = given().param("size", 2)
@@ -152,6 +167,15 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
         apis.add(createApi("1", "api1", "1.0.0", Collections.singletonList("Officials Apis")));
         apis.add(createApi("2", "api2", "2.1.0", Collections.singletonList("Partner Apis")));
         return new Page<>(apis, 3);
+    }
+
+    private ApiMetrics createApiMetrics(String id) {
+        ApiMetrics apiMetrics = new ApiMetrics();
+        apiMetrics.setId(id);
+        apiMetrics.setHits(0);
+        apiMetrics.setSubscribers(0);
+        apiMetrics.setHealth(0);
+        return apiMetrics;
     }
 
     private Plan createPlan(String id, String name, Plan.Security security, Plan.Validation validation) {

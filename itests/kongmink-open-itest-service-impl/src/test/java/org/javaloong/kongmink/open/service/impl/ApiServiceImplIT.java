@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.service.impl;
 
 import org.javaloong.kongmink.open.apim.ApiProvider;
 import org.javaloong.kongmink.open.apim.model.Api;
+import org.javaloong.kongmink.open.apim.model.ApiMetrics;
 import org.javaloong.kongmink.open.apim.model.Category;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.service.ApiService;
@@ -51,6 +52,9 @@ public class ApiServiceImplIT extends AbstractServiceTestSupport {
         when(apiProvider.getPlans(anyString(), anyInt(), anyInt())).thenReturn(new Page<>());
         apiService.getPlans("1", 1, 10);
         verify(apiProvider).getPlans("1", 1, 10);
+        when(apiProvider.getMetrics(anyString())).thenReturn(new ApiMetrics());
+        apiService.getMetrics("1");
+        verify(apiProvider).getMetrics("1");
     }
 
     private Collection<Category> createCategories() {

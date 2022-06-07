@@ -36,6 +36,13 @@ public class GraviteeApiProvider implements ApiProvider {
     }
 
     @Override
+    public Collection<Category> getCategories() {
+        ApisParam apisParam = new ApisParam();
+        DataResponse<CategoryEntity> dataResponse = client.getApisResource().listCategories(apisParam);
+        return CategoryMapper.mapToCategories(dataResponse.getData());
+    }
+
+    @Override
     public ApiMetrics getMetrics(String apiId) {
         ApiMetricsResource apiMetricsResource = getApiResource(apiId).getApiMetricsResource();
         ApiMetrics apiMetrics = apiMetricsResource.getApiMetricsByApiId();
@@ -67,13 +74,6 @@ public class GraviteeApiProvider implements ApiProvider {
         ApiPlansResource apiPlansResource = getApiResource(apiId).getApiPlansResource();
         DataResponse<PlanEntity> dataResponse = apiPlansResource.getApiPlansByApiId(paginationParam);
         return ApiMapper.mapToPaginationPlans(dataResponse);
-    }
-
-    @Override
-    public Collection<Category> getCategories() {
-        ApisParam apisParam = new ApisParam();
-        DataResponse<CategoryEntity> dataResponse = client.getApisResource().listCategories(apisParam);
-        return CategoryMapper.mapToCategories(dataResponse.getData());
     }
 
     @Override
