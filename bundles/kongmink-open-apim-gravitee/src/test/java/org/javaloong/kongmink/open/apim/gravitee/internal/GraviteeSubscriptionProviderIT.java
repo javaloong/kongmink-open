@@ -39,7 +39,7 @@ public class GraviteeSubscriptionProviderIT extends GraviteePortalClientTestSupp
         String apiId = "167f6b66-da50-4c39-bf6b-66da505c391a";
         List<SubscriptionStatus> statuses = Arrays.asList(SubscriptionStatus.ACCEPTED,
                 SubscriptionStatus.PENDING, SubscriptionStatus.PAUSED);
-        Page<Subscription> result = subscriptionProvider.findAllByApi(apiId, statuses, 1, 10);
+        Page<Subscription> result = subscriptionProvider.findAll(apiId, null, statuses, 1, 10);
         assertThat(result.getTotalCount()).isEqualTo(1);
         assertThat(result.getData()).hasSize(1)
                 .extracting(Subscription::getApi).isNotEmpty();
@@ -50,7 +50,7 @@ public class GraviteeSubscriptionProviderIT extends GraviteePortalClientTestSupp
         String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
         List<SubscriptionStatus> statuses = Arrays.asList(SubscriptionStatus.ACCEPTED,
                 SubscriptionStatus.PENDING, SubscriptionStatus.PAUSED);
-        Page<Subscription> result = subscriptionProvider.findAllByApplication(applicationId, statuses, 1, 10);
+        Page<Subscription> result = subscriptionProvider.findAll(null, applicationId, statuses, 1, 10);
         assertThat(result.getTotalCount()).isEqualTo(1);
         assertThat(result.getData()).hasSize(1)
                 .extracting(Subscription::getApi).isNotEmpty();
@@ -60,7 +60,7 @@ public class GraviteeSubscriptionProviderIT extends GraviteePortalClientTestSupp
     public void findAll() {
         List<SubscriptionStatus> statuses = Arrays.asList(SubscriptionStatus.ACCEPTED,
                 SubscriptionStatus.PENDING, SubscriptionStatus.PAUSED);
-        Page<Subscription> result = subscriptionProvider.findAll(statuses, 1, 10);
+        Page<Subscription> result = subscriptionProvider.findAll(null, null, statuses, 1, 10);
         assertThat(result.getTotalCount()).isEqualTo(1);
         assertThat(result.getData()).hasSize(1)
                 .extracting(Subscription::getApi).isNotEmpty();
@@ -71,6 +71,12 @@ public class GraviteeSubscriptionProviderIT extends GraviteePortalClientTestSupp
         Subscription newSubscription = subscriptionProvider.create(createSubscription());
         assertThat(newSubscription)
                 .extracting(Subscription::getId).isNotNull();
+    }
+
+    @Test
+    public void close() {
+        String id = "846157c5-d6fc-440d-a157-c5d6fc740ddb";
+        subscriptionProvider.close(id);
     }
 
     @Test

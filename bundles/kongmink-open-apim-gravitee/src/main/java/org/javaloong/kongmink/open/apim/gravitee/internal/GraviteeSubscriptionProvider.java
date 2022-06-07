@@ -42,22 +42,8 @@ public class GraviteeSubscriptionProvider implements SubscriptionProvider {
     }
 
     @Override
-    public Page<Subscription> findAllByApi(String apiId, List<SubscriptionStatus> statuses, int page, int size) {
-        return findAll(apiId, null, statuses, page, size);
-    }
-
-    @Override
-    public Page<Subscription> findAllByApplication(String applicationId, List<SubscriptionStatus> statuses, int page, int size) {
-        return findAll(null, applicationId, statuses, page, size);
-    }
-
-    @Override
-    public Page<Subscription> findAll(List<SubscriptionStatus> statuses, int page, int size) {
-        return findAll(null, null, statuses, page, size);
-    }
-
-    private Page<Subscription> findAll(String apiId, String applicationId, List<SubscriptionStatus> statuses,
-                                       int page, int size) {
+    public Page<Subscription> findAll(String apiId, String applicationId,
+                                      List<SubscriptionStatus> statuses, int page, int size) {
         PaginationParam paginationParam = createPaginationParam(page, size);
         DataResponse<SubscriptionEntity> dataResponse = client.getSubscriptionsResource()
                 .getSubscriptions(apiId, applicationId, statuses, paginationParam);
@@ -70,6 +56,12 @@ public class GraviteeSubscriptionProvider implements SubscriptionProvider {
         SubscriptionEntity subscriptionEntity = client.getSubscriptionsResource()
                 .createSubscription(newSubscriptionEntity);
         return SubscriptionMapper.mapToSubscription(subscriptionEntity);
+    }
+
+    @Override
+    public void close(String id) {
+        SubscriptionResource subscriptionResource = getSubscriptionResource(id);
+        subscriptionResource.closeSubscription();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.apim;
+package org.javaloong.kongmink.open.service;
 
 import org.javaloong.kongmink.open.apim.model.ApiKey;
 import org.javaloong.kongmink.open.apim.model.Subscription;
@@ -8,7 +8,7 @@ import org.javaloong.kongmink.open.common.model.Page;
 import java.util.List;
 import java.util.Optional;
 
-public interface SubscriptionProvider {
+public interface SubscriptionService {
 
     Optional<Subscription> findById(String id);
 

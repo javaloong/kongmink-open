@@ -3,6 +3,7 @@ package org.javaloong.kongmink.open.service.impl;
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.apim.model.Subscription;
 import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
 import org.javaloong.kongmink.open.apim.model.application.OAuthClientSettings;
 import org.javaloong.kongmink.open.apim.model.application.SimpleApplicationSettings;
@@ -61,6 +62,14 @@ public abstract class TestUtils {
         oauthSettings.setRedirectUris(redirectUris);
         applicationSettings.setOauth(oauthSettings);
         return applicationSettings;
+    }
+
+    public static Subscription createSubscription(String id, String application, String plan) {
+        Subscription subscription = new Subscription();
+        subscription.setId(id);
+        subscription.setApplication(application);
+        subscription.setPlan(plan);
+        return subscription;
     }
 
     public static Client createClient(String id, String name) {
