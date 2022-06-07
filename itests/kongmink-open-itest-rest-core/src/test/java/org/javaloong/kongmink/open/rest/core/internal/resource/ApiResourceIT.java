@@ -3,6 +3,7 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 import io.restassured.common.mapper.TypeRef;
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.service.ApiService;
 import org.junit.BeforeClass;
@@ -104,6 +105,24 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
                 });
     }
 
+    @Test
+    public void getPlans_ShouldReturnHttpStatusOk() {
+        when(apiService.getPlans(anyString(), anyInt(), anyInt())).thenReturn(createPlans());
+        Page<Plan> page = given().param("size", 2)
+                .get("/apis/{id}/plans", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(new TypeRef<Page<Plan>>() {
+                });
+        assertThat(page).isNotNull()
+                .returns(3L, Page::getTotalCount)
+                .extracting(Page::getData)
+                .satisfies(data -> {
+                    assertThat(data).hasSize(2)
+                            .extracting(Plan::getName)
+                            .containsExactly("plan1", "plan2");
+                });
+    }
+
     private Category createCategory(String id, String name) {
         Category category = new Category();
         category.setId(id);
@@ -133,5 +152,21 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
         apis.add(createApi("1", "api1", "1.0.0", Collections.singletonList("Officials Apis")));
         apis.add(createApi("2", "api2", "2.1.0", Collections.singletonList("Partner Apis")));
         return new Page<>(apis, 3);
+    }
+
+    private Plan createPlan(String id, String name, Plan.Security security, Plan.Validation validation) {
+        Plan plan = new Plan();
+        plan.setId(id);
+        plan.setName(name);
+        plan.setSecurity(security);
+        plan.setValidation(validation);
+        return plan;
+    }
+
+    private Page<Plan> createPlans() {
+        List<Plan> plans = new ArrayList<>();
+        plans.add(createPlan("1", "plan1", Plan.Security.API_KEY, Plan.Validation.AUTO));
+        plans.add(createPlan("2", "plan2", Plan.Security.OAUTH2, Plan.Validation.MANUAL));
+        return new Page<>(plans, 3);
     }
 }

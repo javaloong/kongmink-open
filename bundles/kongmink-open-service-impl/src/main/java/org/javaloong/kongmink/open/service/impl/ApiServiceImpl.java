@@ -3,6 +3,7 @@ package org.javaloong.kongmink.open.service.impl;
 import org.javaloong.kongmink.open.apim.ApiProvider;
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.service.ApiService;
@@ -21,6 +22,11 @@ public class ApiServiceImpl implements ApiService {
     @Override
     public Collection<Category> getCategories() {
         return apiProvider.getCategories();
+    }
+
+    @Override
+    public Page<Plan> getPlans(String apiId, int page, int size) {
+        return apiProvider.getPlans(apiId, page, size);
     }
 
     @Override

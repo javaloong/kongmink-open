@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import org.javaloong.kongmink.open.apim.model.Api;
 import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.apim.model.Plan;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.service.ApiService;
@@ -62,6 +63,15 @@ public class ApiResource {
                                @DefaultValue("1") @QueryParam("page") int page,
                                @DefaultValue("10") @QueryParam("size") int size) {
         Page<Api> result = apiService.search(query, page, size);
+        return Response.ok(result).build();
+    }
+
+    @GET
+    @Path("/{id}/plans")
+    public Response getPlans(@PathParam("id") String id,
+                             @DefaultValue("1") @QueryParam("page") int page,
+                             @DefaultValue("10") @QueryParam("size") int size) {
+        Page<Plan> result = apiService.getPlans(id, page, size);
         return Response.ok(result).build();
     }
 }

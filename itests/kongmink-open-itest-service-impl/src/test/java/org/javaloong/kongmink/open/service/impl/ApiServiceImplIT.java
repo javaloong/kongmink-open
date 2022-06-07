@@ -48,6 +48,9 @@ public class ApiServiceImplIT extends AbstractServiceTestSupport {
         when(apiProvider.search(nullable(String.class), anyInt(), anyInt())).thenReturn(new Page<>());
         apiService.search(null, 1, 10);
         verify(apiProvider).search(null, 1, 10);
+        when(apiProvider.getPlans(anyString(), anyInt(), anyInt())).thenReturn(new Page<>());
+        apiService.getPlans("1", 1, 10);
+        verify(apiProvider).getPlans("1", 1, 10);
     }
 
     private Collection<Category> createCategories() {
