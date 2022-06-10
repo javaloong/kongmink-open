@@ -1,9 +1,6 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.Category;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.service.ApiService;
@@ -16,6 +13,7 @@ import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsName;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsResource;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
@@ -43,6 +41,42 @@ public class ApiResource {
     }
 
     @GET
+    @Path("/{id}/metrics")
+    public Response getMetrics(@PathParam("id") String id) {
+        ApiMetrics result = apiService.getMetrics(id);
+        return Response.ok(result).build();
+    }
+
+    @GET
+    @Path("/{id}/pages/{pageId}")
+    public Response getApiPage(@HeaderParam(HttpHeaders.ACCEPT_LANGUAGE) String acceptLang,
+                               @PathParam("id") String id,
+                               @PathParam("pageId") String pageId) {
+        ApiPage result = apiService.getPage(id, pageId, acceptLang);
+        return Response.ok(result).build();
+    }
+
+    @GET
+    @Path("/{id}/pages")
+    public Response getApiPages(@HeaderParam(HttpHeaders.ACCEPT_LANGUAGE) String acceptLang,
+                                @PathParam("id") String id,
+                                @QueryParam("parent") String parent,
+                                @DefaultValue("1") @QueryParam("page") int page,
+                                @DefaultValue("10") @QueryParam("size") int size) {
+        Page<ApiPage> result = apiService.getPages(id, acceptLang, parent, page, size);
+        return Response.ok(result).build();
+    }
+
+    @GET
+    @Path("/{id}/plans")
+    public Response getPlans(@PathParam("id") String id,
+                             @DefaultValue("1") @QueryParam("page") int page,
+                             @DefaultValue("10") @QueryParam("size") int size) {
+        Page<Plan> result = apiService.getPlans(id, page, size);
+        return Response.ok(result).build();
+    }
+
+    @GET
     @Path("/{id}")
     public Response getApi(@PathParam("id") String id) {
         Optional<Api> result = apiService.findById(id);
@@ -64,22 +98,6 @@ public class ApiResource {
                                @DefaultValue("1") @QueryParam("page") int page,
                                @DefaultValue("10") @QueryParam("size") int size) {
         Page<Api> result = apiService.search(query, page, size);
-        return Response.ok(result).build();
-    }
-
-    @GET
-    @Path("/{id}/metrics")
-    public Response getMetrics(@PathParam("id") String id) {
-        ApiMetrics result = apiService.getMetrics(id);
-        return Response.ok(result).build();
-    }
-
-    @GET
-    @Path("/{id}/plans")
-    public Response getPlans(@PathParam("id") String id,
-                             @DefaultValue("1") @QueryParam("page") int page,
-                             @DefaultValue("10") @QueryParam("size") int size) {
-        Page<Plan> result = apiService.getPlans(id, page, size);
         return Response.ok(result).build();
     }
 }

@@ -1,9 +1,6 @@
 package org.javaloong.kongmink.open.service.impl;
 
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.Application;
-import org.javaloong.kongmink.open.apim.model.Category;
-import org.javaloong.kongmink.open.apim.model.Subscription;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
 import org.javaloong.kongmink.open.apim.model.application.OAuthClientSettings;
 import org.javaloong.kongmink.open.apim.model.application.SimpleApplicationSettings;
@@ -23,6 +20,15 @@ public abstract class TestUtils {
         category.setId(id);
         category.setName(name);
         return category;
+    }
+
+    public static ApiPage createApiPage(String id, String name, String content, ApiPage.Type type) {
+        ApiPage apiPage = new ApiPage();
+        apiPage.setId(id);
+        apiPage.setName(name);
+        apiPage.setContent(content);
+        apiPage.setType(type);
+        return apiPage;
     }
 
     public static Api createApi(String id, String name, String version, String category) {

@@ -1,10 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.common.mapper.TypeRef;
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.Category;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.service.ApiService;
 import org.junit.BeforeClass;
@@ -14,6 +11,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -48,6 +46,72 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
                     .extracting(Category::getName)
                     .containsExactly("Officials Apis", "Partner Apis");
         });
+    }
+
+    @Test
+    public void getMetrics_ShouldReturnHttpStatusOk() {
+        ApiMetrics apiMetrics = createApiMetrics("1");
+        when(apiService.getMetrics(anyString())).thenReturn(apiMetrics);
+        ApiMetrics result = get("/apis/{id}/metrics", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(ApiMetrics.class);
+        assertThat(result)
+                .returns(apiMetrics.getId(), ApiMetrics::getId)
+                .returns(apiMetrics.getHits(), ApiMetrics::getHits)
+                .returns(apiMetrics.getSubscribers(), ApiMetrics::getSubscribers)
+                .returns(apiMetrics.getHealth(), ApiMetrics::getHealth);
+    }
+
+    @Test
+    public void getApiPage_ShouldReturnHttpStatusOk() {
+        ApiPage apiPage = createApiPage("1", "page1", "content1", ApiPage.Type.MARKDOWN);
+        when(apiService.getPage(anyString(), anyString(), anyString())).thenReturn(apiPage);
+        ApiPage result = given().header(HttpHeaders.ACCEPT_LANGUAGE, "en")
+                .get("/apis/{id}/pages/{pageId}", "1", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(ApiPage.class);
+        assertThat(result)
+                .returns(apiPage.getId(), ApiPage::getId)
+                .returns(apiPage.getName(), ApiPage::getName)
+                .returns(apiPage.getContent(), ApiPage::getContent)
+                .returns(apiPage.getType(), ApiPage::getType);
+    }
+
+    @Test
+    public void getApiPages_ShouldReturnHttpStatusOk() {
+        when(apiService.getPages(anyString(), anyString(), nullable(String.class), anyInt(), anyInt())).thenReturn(createApiPages());
+        Page<ApiPage> page = given().header(HttpHeaders.ACCEPT_LANGUAGE, "en")
+                .param("size", 2)
+                .get("/apis/{id}/pages", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(new TypeRef<Page<ApiPage>>() {
+                });
+        assertThat(page).isNotNull()
+                .returns(3L, Page::getTotalCount)
+                .extracting(Page::getData)
+                .satisfies(data -> {
+                    assertThat(data).hasSize(2)
+                            .extracting(ApiPage::getName)
+                            .containsExactly("page1", "page2");
+                });
+    }
+
+    @Test
+    public void getPlans_ShouldReturnHttpStatusOk() {
+        when(apiService.getPlans(anyString(), anyInt(), anyInt())).thenReturn(createPlans());
+        Page<Plan> page = given().param("size", 2)
+                .get("/apis/{id}/plans", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(new TypeRef<Page<Plan>>() {
+                });
+        assertThat(page).isNotNull()
+                .returns(3L, Page::getTotalCount)
+                .extracting(Page::getData)
+                .satisfies(data -> {
+                    assertThat(data).hasSize(2)
+                            .extracting(Plan::getName)
+                            .containsExactly("plan1", "plan2");
+                });
     }
 
     @Test
@@ -106,38 +170,6 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
                 });
     }
 
-    @Test
-    public void getMetrics_ShouldReturnHttpStatusOk() {
-        ApiMetrics apiMetrics = createApiMetrics("1");
-        when(apiService.getMetrics(anyString())).thenReturn(apiMetrics);
-        ApiMetrics result = get("/apis/{id}/metrics", "1").then().assertThat()
-                .statusCode(Response.Status.OK.getStatusCode())
-                .extract().as(ApiMetrics.class);
-        assertThat(result)
-                .returns(apiMetrics.getId(), ApiMetrics::getId)
-                .returns(apiMetrics.getHits(), ApiMetrics::getHits)
-                .returns(apiMetrics.getSubscribers(), ApiMetrics::getSubscribers)
-                .returns(apiMetrics.getHealth(), ApiMetrics::getHealth);
-    }
-
-    @Test
-    public void getPlans_ShouldReturnHttpStatusOk() {
-        when(apiService.getPlans(anyString(), anyInt(), anyInt())).thenReturn(createPlans());
-        Page<Plan> page = given().param("size", 2)
-                .get("/apis/{id}/plans", "1").then().assertThat()
-                .statusCode(Response.Status.OK.getStatusCode())
-                .extract().as(new TypeRef<Page<Plan>>() {
-                });
-        assertThat(page).isNotNull()
-                .returns(3L, Page::getTotalCount)
-                .extracting(Page::getData)
-                .satisfies(data -> {
-                    assertThat(data).hasSize(2)
-                            .extracting(Plan::getName)
-                            .containsExactly("plan1", "plan2");
-                });
-    }
-
     private Category createCategory(String id, String name) {
         Category category = new Category();
         category.setId(id);
@@ -150,6 +182,47 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
         categories.add(createCategory("1", "Officials Apis"));
         categories.add(createCategory("2", "Partner Apis"));
         return categories;
+    }
+
+    private ApiMetrics createApiMetrics(String id) {
+        ApiMetrics apiMetrics = new ApiMetrics();
+        apiMetrics.setId(id);
+        apiMetrics.setHits(0);
+        apiMetrics.setSubscribers(0);
+        apiMetrics.setHealth(0);
+        return apiMetrics;
+    }
+
+    private ApiPage createApiPage(String id, String name, String content, ApiPage.Type type) {
+        ApiPage apiPage = new ApiPage();
+        apiPage.setId(id);
+        apiPage.setName(name);
+        apiPage.setContent(content);
+        apiPage.setType(type);
+        return apiPage;
+    }
+
+    private Page<ApiPage> createApiPages() {
+        List<ApiPage> apiPages = new ArrayList<>();
+        apiPages.add(createApiPage("1", "page1", "content1", ApiPage.Type.MARKDOWN));
+        apiPages.add(createApiPage("2", "page2", "content2", ApiPage.Type.MARKDOWN));
+        return new Page<>(apiPages, 3);
+    }
+
+    private Plan createPlan(String id, String name, Plan.Security security, Plan.Validation validation) {
+        Plan plan = new Plan();
+        plan.setId(id);
+        plan.setName(name);
+        plan.setSecurity(security);
+        plan.setValidation(validation);
+        return plan;
+    }
+
+    private Page<Plan> createPlans() {
+        List<Plan> plans = new ArrayList<>();
+        plans.add(createPlan("1", "plan1", Plan.Security.API_KEY, Plan.Validation.AUTO));
+        plans.add(createPlan("2", "plan2", Plan.Security.OAUTH2, Plan.Validation.MANUAL));
+        return new Page<>(plans, 3);
     }
 
     private Api createApi(String id, String name, String version, List<String> categories) {
@@ -167,30 +240,5 @@ public class ApiResourceIT extends AbstractResourceTestSupport {
         apis.add(createApi("1", "api1", "1.0.0", Collections.singletonList("Officials Apis")));
         apis.add(createApi("2", "api2", "2.1.0", Collections.singletonList("Partner Apis")));
         return new Page<>(apis, 3);
-    }
-
-    private ApiMetrics createApiMetrics(String id) {
-        ApiMetrics apiMetrics = new ApiMetrics();
-        apiMetrics.setId(id);
-        apiMetrics.setHits(0);
-        apiMetrics.setSubscribers(0);
-        apiMetrics.setHealth(0);
-        return apiMetrics;
-    }
-
-    private Plan createPlan(String id, String name, Plan.Security security, Plan.Validation validation) {
-        Plan plan = new Plan();
-        plan.setId(id);
-        plan.setName(name);
-        plan.setSecurity(security);
-        plan.setValidation(validation);
-        return plan;
-    }
-
-    private Page<Plan> createPlans() {
-        List<Plan> plans = new ArrayList<>();
-        plans.add(createPlan("1", "plan1", Plan.Security.API_KEY, Plan.Validation.AUTO));
-        plans.add(createPlan("2", "plan2", Plan.Security.OAUTH2, Plan.Validation.MANUAL));
-        return new Page<>(plans, 3);
     }
 }
