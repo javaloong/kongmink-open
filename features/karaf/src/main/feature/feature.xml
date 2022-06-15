@@ -105,10 +105,21 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-am-keycloak/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-apim-gravitee" version="${project.version}">
+        <feature>cxf-rs-security-oauth2</feature>
+        <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
+        <bundle dependency="true">wrap:mvn:org.modelmapper/modelmapper-module-jsr310/${modelmapper.jsr310.version}</bundle>
+        <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-apim-gravitee/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-service" version="${project.version}">
         <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-service-impl/${project.version}</bundle>
@@ -199,6 +210,7 @@
     <feature name="kongmink-open-rest-server" version="${project.version}">
         <feature>kongmink-open-account-keycloak</feature>
         <feature>kongmink-open-am-keycloak</feature>
+        <feature>kongmink-open-apim-gravitee</feature>
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-service</feature>
         <feature>kongmink-open-rest-core</feature>
