@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>kongmink-open-account-api</module>
         <module>kongmink-open-am-api</module>
         <module>kongmink-open-am-embedded-keycloak</module>
         <module>kongmink-open-am-keycloak</module>
