@@ -4,25 +4,8 @@
   "sslRequired": "external",
   "registrationAllowed": false,
   "directGrantFlow": "direct grant",
-  "requiredCredentials": [
-    "password"
-  ],
+  "requiredCredentials": ["password"],
   "users": [
-    {
-      "username": "service-account-keycloak-admin",
-      "enabled": true,
-      "serviceAccountClientId": "keycloak-admin",
-      "realmRoles": [
-        "default-roles-kongmink-open"
-      ],
-      "clientRoles": {
-        "realm-management": [
-          "query-users",
-          "view-users",
-          "manage-users"
-        ]
-      }
-    },
     {
       "id": "30f3efcc-c3ff-43f8-9b9a-ec3d8d9f6bc9",
       "username": "user1",
@@ -35,7 +18,14 @@
           "value": "11111111"
         }
       ],
-      "createdTimestamp": 1639981692277
+      "createdTimestamp": 1639981692277,
+      "requiredActions": [],
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+        "account": ["manage-account", "view-profile"]
+      },
+      "notBefore": 0,
+      "groups": []
     },
     {
       "id": "45e4c8f8-98bc-43c0-93e8-1a2a3aec6bf7",
@@ -49,7 +39,14 @@
           "value": "11111111"
         }
       ],
-      "createdTimestamp": 1639981692277
+      "createdTimestamp": 1639981692277,
+      "requiredActions": [],
+      "realmRoles": ["offline_access", "uma_authorization"],
+      "clientRoles": {
+        "account": ["manage-account", "view-profile"]
+      },
+      "notBefore": 0,
+      "groups": []
     },
     {
       "id": "13fb1f16-6986-433b-b56a-c2815c5858cc",
@@ -68,22 +65,21 @@
   ],
   "clients": [
     {
-      "clientId": "keycloak-admin",
+      "clientId": "keycloak-account",
       "surrogateAuthRequired": false,
       "enabled": true,
-      "clientAuthenticatorType" : "client-secret",
-      "secret": "keycloak-admin-secret",
+      "clientAuthenticatorType": "client-secret",
       "redirectUris": [],
       "webOrigins": [],
-      "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": true,
-      "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
       "protocol": "openid-connect",
-      "attributes" : { },
-      "authenticationFlowBindingOverrides" : { },
-      "fullScopeAllowed" : true,
-      "defaultClientScopes" : [ "web-origins", "roles", "profile", "email" ],
-      "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+      "attributes": {},
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "defaultClientScopes": ["web-origins", "roles", "profile", "email"],
+      "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     }
   ]
 }

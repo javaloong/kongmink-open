@@ -1,15 +1,10 @@
-package org.javaloong.kongmink.open.am.keycloak.internal.mapper;
+package org.javaloong.kongmink.open.account.keycloak.internal.mapper;
 
-import org.javaloong.kongmink.open.common.user.Password;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.common.user.UserConstants;
-import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.javaloong.kongmink.open.common.user.UserProfile;
+import org.keycloak.representations.account.UserRepresentation;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,10 +18,8 @@ public class UserMapper {
         user.setUsername(userRepresentation.getUsername());
         user.setEmail(userRepresentation.getEmail());
         user.setEmailVerified(userRepresentation.isEmailVerified());
-        user.setEnabled(userRepresentation.isEnabled());
+        user.setEnabled(true);
         user.setProfile(mapToUserProfile(userRepresentation));
-        user.setCreatedTimestamp(LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(userRepresentation.getCreatedTimestamp()), ZoneId.systemDefault()));
         return user;
     }
 
@@ -34,23 +27,10 @@ public class UserMapper {
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername(user.getUsername());
         userRepresentation.setEmail(user.getEmail());
-        userRepresentation.setEnabled(user.isEnabled());
-        if (user.getPassword() != null) {
-            userRepresentation.setCredentials(
-                    Collections.singletonList(mapToPasswordCredential(user.getPassword())));
-        }
         if (user.getProfile() != null) {
             userRepresentation.setAttributes(mapToUserAttributes(user.getProfile()));
         }
         return userRepresentation;
-    }
-
-    public static CredentialRepresentation mapToPasswordCredential(Password password) {
-        CredentialRepresentation passwordCredential = new CredentialRepresentation();
-        passwordCredential.setTemporary(false);
-        passwordCredential.setType(CredentialRepresentation.PASSWORD);
-        passwordCredential.setValue(password.getPasswordNew());
-        return passwordCredential;
     }
 
     public static Map<String, List<String>> mapToUserAttributes(UserProfile userProfile) {

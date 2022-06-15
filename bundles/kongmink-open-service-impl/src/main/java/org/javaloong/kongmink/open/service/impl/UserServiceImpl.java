@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.impl;
 
-import org.javaloong.kongmink.open.am.UserProvider;
+import org.javaloong.kongmink.open.account.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
@@ -15,7 +15,7 @@ import org.osgi.service.transaction.control.TransactionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Component(service = UserService.class)
 public class UserServiceImpl implements UserService {
@@ -30,13 +30,17 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
+    public ComplexUser get(User user) {
+        User result = userProvider.getUser();
+        return ComplexUser.fromUser(result);
+    }
+
+    @Override
     public ComplexUser create(User user) {
-        User result = userProvider.create(user);
-        log.debug("User {} successfully created", result.getId());
         return transactionControl.required(() -> {
-            userRepository.create(mapToUserEntity(user));
+            UserEntity result = userRepository.create(mapToUserEntity(user));
             log.debug("User {} successfully added to repository", result.getId());
-            return ComplexUser.fromUser(result);
+            return mapToComplexUser(result, user);
         });
     }
 
@@ -67,41 +71,18 @@ public class UserServiceImpl implements UserService {
         log.debug("User {} email successfully updated", userEmail.getUserId());
     }
 
-    @Override
-    public void delete(String id) {
-        transactionControl.required(() -> {
-            userRepository.delete(id);
-            log.debug("User {} successfully removed from repository", id);
-            userProvider.delete(id);
-            log.debug("User {} successfully deleted", id);
-            return null;
-        });
-    }
-
-    @Override
-    public Optional<ComplexUser> findById(String id) {
-        return transactionControl.supports(() -> userRepository.findById(id).map(entity -> {
-            Optional<User> result = userProvider.findById(id);
-            return result.map(ComplexUser::fromUser).orElse(null);
-        }));
-    }
-
-    @Override
-    public Optional<ComplexUser> findByUsername(String username) {
-         return userProvider.findByUsername(username).map(ComplexUser::fromUser);
-    }
-
-    @Override
-    public Optional<ComplexUser> findByEmail(String email) {
-        return userProvider.findByEmail(email).map(ComplexUser::fromUser);
-    }
-
     private UserEntity mapToUserEntity(User user) {
         UserEntity entity = new UserEntity();
         entity.setId(user.getId());
         entity.setUsername(user.getUsername());
         entity.setEnabled(user.isEnabled());
-        entity.setCreatedDate(user.getCreatedTimestamp());
+        entity.setCreatedDate(LocalDateTime.now());
         return entity;
+    }
+
+    private ComplexUser mapToComplexUser(UserEntity userEntity, User user) {
+        ComplexUser complexUser = ComplexUser.fromUser(user);
+        complexUser.setCreatedTimestamp(userEntity.getCreatedDate());
+        return complexUser;
     }
 }

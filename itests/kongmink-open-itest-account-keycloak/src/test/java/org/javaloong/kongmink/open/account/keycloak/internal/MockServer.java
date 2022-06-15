@@ -1,14 +1,12 @@
-package org.javaloong.kongmink.open.am.keycloak.internal;
+package org.javaloong.kongmink.open.account.keycloak.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import org.keycloak.representations.idm.ClientRepresentation;
+import org.keycloak.representations.account.UserRepresentation;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -26,15 +24,12 @@ public class MockServer {
     }
 
     private static void initServer() {
-        // OIDC Token
-        wireMockServer.stubFor(post(urlMatching(".*/protocol/openid-connect/token"))
-                .willReturn(aResponse().withBody(writeValueAsString(createAccessToken()))));
-        // Client
-        wireMockServer.stubFor(get(urlMatching(".*/clients/1"))
+        // User
+        wireMockServer.stubFor(get(urlPathMatching(".*/account"))
                 .withHeader(HttpHeaders.AUTHORIZATION, matching("Bearer test_access_token"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                        .withBody(writeValueAsString(createClientRepresentation()))));
+                        .withBody(writeValueAsString(createUserRepresentation()))));
     }
 
     public static void stop() {
@@ -51,20 +46,11 @@ public class MockServer {
         }
     }
 
-    private static Map<String, Object> createAccessToken() {
-        Map<String, Object> token = new HashMap<>();
-        token.put("access_token", "test_access_token");
-        token.put("expires_in", 600);
-        token.put("refresh_token", "test_refresh_token");
-        token.put("refresh_expires_in", 1800);
-        token.put("token_type", "bearer");
-        return token;
-    }
-
-    private static ClientRepresentation createClientRepresentation() {
-        ClientRepresentation clientRepresentation = new ClientRepresentation();
-        clientRepresentation.setId("1");
-        clientRepresentation.setClientId("example-client");
-        return clientRepresentation;
+    private static UserRepresentation createUserRepresentation() {
+        UserRepresentation userRepresentation = new UserRepresentation();
+        userRepresentation.setId("1");
+        userRepresentation.setUsername("user1");
+        userRepresentation.setEmailVerified(false);
+        return userRepresentation;
     }
 }

@@ -85,6 +85,15 @@
         <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-account-keycloak" version="${project.version}">
+        <feature>cxf-rs-security-oauth2</feature>
+        <bundle dependency="true">mvn:org.keycloak/keycloak-common/${keycloak.version}</bundle>
+        <bundle dependency="true">mvn:org.keycloak/keycloak-core/${keycloak.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-account-api/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-account-keycloak/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-am-keycloak" version="${project.version}">
         <feature>cxf-rs-security-oauth2</feature>
         <bundle dependency="true">mvn:org.keycloak/keycloak-common/${keycloak.version}</bundle>
@@ -188,6 +197,7 @@
     </feature>
 
     <feature name="kongmink-open-rest-server" version="${project.version}">
+        <feature>kongmink-open-account-keycloak</feature>
         <feature>kongmink-open-am-keycloak</feature>
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-service</feature>

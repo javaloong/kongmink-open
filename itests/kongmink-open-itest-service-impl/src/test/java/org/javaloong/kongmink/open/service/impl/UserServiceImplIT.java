@@ -1,7 +1,10 @@
 package org.javaloong.kongmink.open.service.impl;
 
-import org.javaloong.kongmink.open.am.UserProvider;
+import org.javaloong.kongmink.open.account.UserProvider;
 import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.user.UserEmail;
+import org.javaloong.kongmink.open.common.user.UserPassword;
+import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.service.UserService;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,13 +13,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import javax.inject.Inject;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserServiceImplIT extends AbstractServiceTestSupport {
 
@@ -34,14 +33,28 @@ public class UserServiceImplIT extends AbstractServiceTestSupport {
     @Test
     public void testCRUD() {
         User user = TestUtils.createUser("1", "user1");
-        when(userProvider.create(any(User.class))).thenReturn(user);
+        when(userProvider.getUser()).thenReturn(user);
+        userService.get(user);
+        verify(userProvider).getUser();
         userService.create(user);
         user.setUsername("user11");
         userService.save(user);
-        when(userProvider.findById(anyString())).thenReturn(Optional.of(user));
-        assertThat(userService.findById("1")).isPresent();
-        doNothing().when(userProvider).delete(anyString());
-        userService.delete("1");
-        assertThat(userService.findById(anyString())).isEmpty();
+        doNothing().when(userProvider).updateProfile(any(UserProfile.class));
+        UserProfile userProfile = new UserProfile();
+        userProfile.setCompanyName("company1");
+        userService.updateProfile(userProfile);
+        verify(userProvider).updateProfile(userProfile);
+        doNothing().when(userProvider).updateEmail(any(UserEmail.class));
+        UserEmail userEmail = new UserEmail();
+        userEmail.setEmail("user1@test.com");
+        userService.updateEmail(userEmail);
+        verify(userProvider).updateEmail(userEmail);
+        doNothing().when(userProvider).updatePassword(any(UserPassword.class));
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("111111");
+        userPassword.setPasswordNew("222222");
+        userPassword.setPasswordConfirm("222222");
+        userService.updatePassword(userPassword);
+        verify(userProvider).updatePassword(userPassword);
     }
 }

@@ -23,7 +23,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 @Component(service = UserResource.class)
 @JaxrsResource
@@ -69,7 +68,7 @@ public class UserResource {
 
     @GET
     public Response getUser(@Context User user) {
-        Optional<ComplexUser> result = userService.findById(user.getId());
-        return result.map(u -> Response.ok(u).build()).orElseThrow(ForbiddenException::new);
+        ComplexUser result = userService.get(user);
+        return Response.ok(result).build();
     }
 }

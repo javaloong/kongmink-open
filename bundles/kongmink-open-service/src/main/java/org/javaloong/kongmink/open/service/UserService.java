@@ -6,9 +6,9 @@ import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.service.model.ComplexUser;
 
-import java.util.Optional;
-
 public interface UserService {
+
+    ComplexUser get(User user);
 
     ComplexUser create(User user);
 
@@ -19,12 +19,4 @@ public interface UserService {
     void updatePassword(UserPassword userPassword);
 
     void updateEmail(UserEmail userEmail);
-
-    void delete(String id);
-
-    Optional<ComplexUser> findById(String id);
-
-    Optional<ComplexUser> findByUsername(String username);
-
-    Optional<ComplexUser> findByEmail(String email);
 }

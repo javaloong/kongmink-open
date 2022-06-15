@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.am.keycloak.internal;
+package org.javaloong.kongmink.open.account.keycloak.internal;
 
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
 import org.javaloong.kongmink.open.itest.common.annotation.AfterOsgi;
@@ -32,7 +32,7 @@ public abstract class KeycloakMockTestSupport extends PaxExamTestSupport {
     public Option[] config() {
         serverPort = getAvailablePort(9090, 9999);
         return OptionUtils.combine(super.config(),
-                newConfiguration(KeycloakClientAdminClient.KEYCLOAK_CLIENT_CONFIGURATION_PID)
+                newConfiguration(KeycloakAccountClient.KEYCLOAK_ACCOUNT_CONFIGURATION_PID)
                         .put("serverUrl", String.format("http://localhost:%s/auth", serverPort))
                         .asOption()
         );
@@ -56,11 +56,9 @@ public abstract class KeycloakMockTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.apache.cxf", "cxf-rt-rs-security-oauth2").versionAsInProject(),
                 mavenBundle("org.keycloak", "keycloak-common").versionAsInProject(),
                 mavenBundle("org.keycloak", "keycloak-core").versionAsInProject(),
-                mavenBundle("org.apache.commons", "commons-lang3").versionAsInProject(),
-                mavenBundle("org.modelmapper", "modelmapper").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-am-api").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-am-keycloak").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-account-api").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-account-keycloak").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
         );

@@ -6,7 +6,4 @@ public interface RealmResource {
 
     @Path("clients")
     ClientsResource clients();
-
-    @Path("users")
-    UsersResource users();
 }

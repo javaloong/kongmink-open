@@ -24,7 +24,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @Designate(ocd = KeycloakClientAdminClientConfiguration.class)
 public class KeycloakClientAdminClient extends KeycloakAdminClient {
 
-    public static final String KEYCLOAK_CLIENT_CONFIGURATION_PID = "org.javaloong.kongmink.open.am.keycloak.client";
+    public static final String KEYCLOAK_CLIENT_CONFIGURATION_PID = "org.javaloong.kongmink.open.am.keycloak";
 
     private final Config config;
 

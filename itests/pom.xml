@@ -18,6 +18,7 @@
     </properties>
 
     <modules>
+        <module>kongmink-open-itest-account-keycloak</module>
         <module>kongmink-open-itest-am-keycloak</module>
         <module>kongmink-open-itest-apim-gravitee</module>
         <module>kongmink-open-itest-common</module>

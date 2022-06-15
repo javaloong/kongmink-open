@@ -1,6 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.http.ContentType;
+import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
@@ -19,12 +20,11 @@ import org.osgi.framework.FrameworkUtil;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -88,7 +88,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
                 .put("/user/email").then().assertThat()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
                 .extract().body().jsonPath())
-                .returns("email",path -> path.get("errors[0].field"));
+                .returns("email", path -> path.get("errors[0].field"));
     }
 
     @Test
@@ -105,16 +105,9 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     }
 
     @Test
-    public void getUser_UserNotFound_ShouldReturnHttpStatusForbidden() {
-        when(userService.findById(anyString())).thenReturn(Optional.empty());
-        get("/user").then().assertThat()
-                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
-    }
-
-    @Test
     public void getUser_ShouldReturnHttpStatusOk() {
         ComplexUser complexUser = createComplexUser("1", "user1");
-        when(userService.findById(anyString())).thenReturn(Optional.of(complexUser));
+        when(userService.get(any(User.class))).thenReturn(complexUser);
         ComplexUser result = get("/user").then().assertThat()
                 .statusCode(Response.Status.OK.getStatusCode())
                 .extract().as(ComplexUser.class);
