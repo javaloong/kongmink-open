@@ -170,6 +170,9 @@
     </feature>
 
     <feature name="kongmink-open-rest-auth" version="${project.version}">
+        <config name="org.javaloong.kongmink.open.rest.auth.shiro">
+            shiro.ini.file=${karaf.etc}/shiro.ini
+        </config>
         <configfile finalname="${karaf.etc}/shiro.ini">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth/${project.version}/cfg/configuration</configfile>
         <feature>shiro-web</feature>
         <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/1.9.4</bundle>

@@ -9,5 +9,5 @@ public @interface ShiroConfiguration {
 
     String SHIRO_CONFIGURATION_PID = "org.javaloong.kongmink.open.rest.auth.shiro";
 
-    String shiro_ini_file() default "${karaf.etc}/shiro.ini";
+    String shiro_ini_file();
 }
