@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
-import org.javaloong.kongmink.open.rest.auth.credentials.authenticator.DummyOidcAuthenticator;
+import org.javaloong.kongmink.open.rest.auth.oidc.DummyOidcAuthenticator;
 import org.junit.BeforeClass;
 import org.ops4j.pax.exam.Option;
 import org.osgi.framework.Constants;

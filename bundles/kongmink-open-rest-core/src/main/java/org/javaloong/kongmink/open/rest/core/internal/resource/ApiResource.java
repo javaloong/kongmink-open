@@ -1,5 +1,6 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.javaloong.kongmink.open.apim.model.*;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.rest.RESTConstants;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @JaxrsName(ApiResource.RESOURCE_NAME)
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
+@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Path("/apis")
 @Produces(MediaType.APPLICATION_JSON)
 public class ApiResource {

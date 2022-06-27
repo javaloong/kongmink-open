@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.auth.credentials.authenticator;
+package org.javaloong.kongmink.open.rest.auth.oidc;
 
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.TokenCredentials;
