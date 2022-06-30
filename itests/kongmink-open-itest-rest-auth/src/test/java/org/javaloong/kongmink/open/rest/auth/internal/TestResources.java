@@ -36,7 +36,7 @@ public abstract class TestResources {
     @JaxrsResource
     @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
     @JSONRequired
-    @RequiresRoles("manage-client")
+    @RequiresRoles("manage-clients")
     @Path("/clients")
     @Produces(MediaType.APPLICATION_JSON)
     public static class TestClientResource {

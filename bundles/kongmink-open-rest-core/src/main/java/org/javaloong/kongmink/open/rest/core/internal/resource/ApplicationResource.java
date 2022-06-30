@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.apim.model.ApiKey;
 import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
@@ -52,7 +53,7 @@ public class ApplicationResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateApplication(@PathParam("id") String id, @Valid ApplicationDto applicationDto,
-                                 @Context User user) {
+                                      @Context User user) {
         applicationService.update(applicationDto.toApplication(id));
         return Response.noContent().build();
     }
@@ -74,10 +75,26 @@ public class ApplicationResource {
 
     @GET
     public Response getApplications(@DefaultValue("1") @QueryParam("page") int page,
-                               @DefaultValue("10") @QueryParam("size") int size,
-                               @Context User user) {
+                                    @DefaultValue("10") @QueryParam("size") int size,
+                                    @Context User user) {
         Page<Application> result = applicationService.findAll(user, page, size);
         return Response.ok(result).build();
+    }
+
+    @GET
+    @Path("/{id}/client-secret")
+    public Response getClientSecret(@PathParam("id") String id) {
+        ClientSecret result = applicationService.getClientSecret(id);
+        return Optional.ofNullable(result).map(clientSecret -> Response.ok(clientSecret).build())
+                .orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
+    }
+
+    @POST
+    @Path("/{id}/client-secret")
+    public Response regenerateClientSecret(@PathParam("id") String id) {
+        ClientSecret result = applicationService.regenerateClientSecret(id);
+        return Optional.ofNullable(result).map(clientSecret -> Response.ok(clientSecret).build())
+                .orElseGet(() -> Response.status(Response.Status.NOT_FOUND).build());
     }
 
     @POST

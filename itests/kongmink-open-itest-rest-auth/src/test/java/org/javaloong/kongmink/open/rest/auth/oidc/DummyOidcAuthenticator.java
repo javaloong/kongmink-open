@@ -27,7 +27,7 @@ public class DummyOidcAuthenticator implements Authenticator<TokenCredentials> {
         profile.addAttribute("preferred_username", "user1");
         profile.addAttribute("email", "user1@example.com");
         profile.addAttribute("email_verified", true);
-        profile.addAttribute("roles", new String[]{"manage-client"});
+        profile.addAttribute("roles", new String[]{"manage-clients"});
         profile.addAttribute("permissions", new String[]{"client:*"});
         return profile;
     }
@@ -38,7 +38,7 @@ public class DummyOidcAuthenticator implements Authenticator<TokenCredentials> {
         profile.addAttribute("preferred_username", "user2");
         profile.addAttribute("email", "user2@example.com");
         profile.addAttribute("email_verified", true);
-        profile.addAttribute("roles", new String[]{"manage-client"});
+        profile.addAttribute("roles", new String[]{"manage-clients"});
         profile.addAttribute("permissions", new String[]{"client:read"});
         return profile;
     }

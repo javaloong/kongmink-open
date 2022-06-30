@@ -7,6 +7,7 @@ import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
 import org.javaloong.kongmink.open.apim.model.application.OAuthClientSettings;
 import org.javaloong.kongmink.open.common.application.ApplicationType;
+import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.core.model.ApplicationDto;
@@ -141,6 +142,30 @@ public class ApplicationResourceIT extends AbstractResourceTestSupport {
                             .extracting(Application::getName)
                             .containsExactly("application1", "application2");
                 });
+    }
+
+    @Test
+    public void getClientSecret_ShouldReturnHttpStatusOk() {
+        ClientSecret clientSecret = new ClientSecret("client1", "secret1");
+        when(applicationService.getClientSecret(anyString())).thenReturn(clientSecret);
+        ClientSecret result = get("/applications/{id}/client-secret", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(ClientSecret.class);
+        assertThat(result)
+                .returns(clientSecret.getClientId(), ClientSecret::getClientId)
+                .returns(clientSecret.getSecret(), ClientSecret::getSecret);
+    }
+
+    @Test
+    public void regenerateClientSecret_ShouldReturnHttpStatusOk() {
+        ClientSecret clientSecret = new ClientSecret("client1", "secret2");
+        when(applicationService.regenerateClientSecret(anyString())).thenReturn(clientSecret);
+        ClientSecret result = post("/applications/{id}/client-secret", "1").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode())
+                .extract().as(ClientSecret.class);
+        assertThat(result)
+                .returns(clientSecret.getClientId(), ClientSecret::getClientId)
+                .returns(clientSecret.getSecret(), ClientSecret::getSecret);
     }
 
     @Test

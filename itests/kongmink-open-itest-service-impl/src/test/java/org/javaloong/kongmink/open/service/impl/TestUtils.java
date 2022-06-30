@@ -60,10 +60,13 @@ public abstract class TestUtils {
     }
 
     public static ApplicationSettings createOAuthApplicationSettings(
-            ApplicationType applicationType, List<String> grantTypes, List<String> redirectUris) {
+            ApplicationType applicationType, String clientId, String clientSecret,
+            List<String> grantTypes, List<String> redirectUris) {
         ApplicationSettings applicationSettings = new ApplicationSettings();
         OAuthClientSettings oauthSettings = new OAuthClientSettings();
         oauthSettings.setApplicationType(applicationType.toString());
+        oauthSettings.setClientId(clientId);
+        oauthSettings.setClientSecret(clientSecret);
         oauthSettings.setGrantTypes(grantTypes);
         oauthSettings.setRedirectUris(redirectUris);
         applicationSettings.setOauth(oauthSettings);
@@ -78,11 +81,11 @@ public abstract class TestUtils {
         return subscription;
     }
 
-    public static Client createClient(String id, String name) {
+    public static Client createClient(String id, String clientId, String name) {
         Client client = new Client();
         client.setId(id);
         client.setName(name);
-        client.setClientId(UUID.randomUUID().toString());
+        client.setClientId(clientId);
         return client;
     }
 
