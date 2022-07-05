@@ -1,22 +1,20 @@
-package org.javaloong.kongmink.open.rest.auth.oidc;
+package org.javaloong.kongmink.open.rest.auth.jwt;
 
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.TokenCredentials;
 import org.pac4j.core.credentials.authenticator.Authenticator;
 import org.pac4j.oidc.profile.OidcProfile;
 
-public class DummyOidcAuthenticator implements Authenticator<TokenCredentials> {
+public class DummyAuthenticator implements Authenticator<TokenCredentials> {
 
     @Override
     public void validate(TokenCredentials credentials, WebContext context) {
         String token = credentials.getToken();
-        if("user1_token".equals(token)) {
+        if ("user1_token".equals(token)) {
             credentials.setUserProfile(createUser1Profile());
-        }
-        else if("user2_token".equals(token)) {
+        } else if ("user2_token".equals(token)) {
             credentials.setUserProfile(createUser2Profile());
-        }
-        else {
+        } else {
             credentials.setUserProfile(createUser3Profile());
         }
     }

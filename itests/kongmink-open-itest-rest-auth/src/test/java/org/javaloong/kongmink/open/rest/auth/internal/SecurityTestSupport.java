@@ -6,7 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
-import org.javaloong.kongmink.open.rest.auth.oidc.DummyOidcAuthenticator;
+import org.javaloong.kongmink.open.rest.auth.jwt.DummyAuthenticator;
 import org.junit.BeforeClass;
 import org.ops4j.pax.exam.Option;
 import org.osgi.framework.Constants;
@@ -69,7 +69,7 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
 
     protected Option pac4jOidc() {
         return composite(
-                dummyOidcBundle(),
+                dummyAuthBundle(),
                 wrappedBundle(mavenBundle("com.github.stephenc.jcip", "jcip-annotations").versionAsInProject()),
                 mavenBundle("net.minidev", "accessors-smart").versionAsInProject(),
                 mavenBundle("net.minidev", "json-smart").versionAsInProject(),
@@ -78,16 +78,17 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
                 mavenBundle("com.nimbusds", "oauth2-oidc-sdk").versionAsInProject(),
                 mavenBundle("com.nimbusds", "nimbus-jose-jwt").versionAsInProject(),
                 mavenBundle("org.pac4j", "pac4j-http").versionAsInProject(),
+                mavenBundle("org.pac4j", "pac4j-jwt").versionAsInProject(),
                 mavenBundle("org.pac4j", "pac4j-oidc").versionAsInProject()
         );
     }
 
-    protected Option dummyOidcBundle() {
-        return BndDSOptions.fragmentBundle(DummyOidcAuthenticator.class.getSimpleName(),
-                bundle().add(DummyOidcAuthenticator.class)
-                .set(Constants.REQUIRE_CAPABILITY, String.format( // Fix osgi.ee=unknown
-                        "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=%s))\"", Runtime.version().feature()))
-                .set(Constants.FRAGMENT_HOST, "org.javaloong.kongmink.open.kongmink-open-rest-auth"));
+    protected Option dummyAuthBundle() {
+        return BndDSOptions.fragmentBundle(DummyAuthenticator.class.getSimpleName(),
+                bundle().add(DummyAuthenticator.class)
+                        .set(Constants.REQUIRE_CAPABILITY, String.format( // Fix osgi.ee=unknown
+                                "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=%s))\"", Runtime.version().feature()))
+                        .set(Constants.FRAGMENT_HOST, "org.javaloong.kongmink.open.kongmink-open-rest-auth"));
     }
 
     @Override

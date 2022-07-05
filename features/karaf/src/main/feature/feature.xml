@@ -196,6 +196,7 @@
         <bundle dependency="true">mvn:com.nimbusds/oauth2-oidc-sdk/${nimbus.oidc.sdk.version}</bundle>
         <bundle dependency="true">mvn:com.nimbusds/nimbus-jose-jwt/${nimbus.jose.jwt.version}</bundle>
         <bundle>mvn:org.pac4j/pac4j-http/${pac4j.version}</bundle>
+        <bundle>mvn:org.pac4j/pac4j-jwt/${pac4j.version}</bundle>
         <bundle>mvn:org.pac4j/pac4j-oidc/${pac4j.version}</bundle>
     </feature>
 
