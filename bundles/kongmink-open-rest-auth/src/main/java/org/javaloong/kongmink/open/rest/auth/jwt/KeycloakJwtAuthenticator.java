@@ -19,13 +19,15 @@ public class KeycloakJwtAuthenticator extends JwtAuthenticator {
         super.createJwtProfile(credentials, jwt, context);
 
         JwtProfile profile = (JwtProfile) credentials.getUserProfile();
-        OidcProfileDefinition<KeycloakOidcProfile> profileDefinition = new OidcProfileDefinition<>(x -> new KeycloakOidcProfile());
-        KeycloakOidcProfile keycloakOidcProfile = profileDefinition.newProfile();
-        AccessToken accessToken = new BearerAccessToken(jwt.getParsedString());
-        keycloakOidcProfile.setAccessToken(accessToken);
-        keycloakOidcProfile.addAttributes(profile.getAttributes());
-        keycloakOidcProfile.addAuthenticationAttributes(profile.getAuthenticationAttributes());
+        if (profile != null) {
+            OidcProfileDefinition<KeycloakOidcProfile> profileDefinition = new OidcProfileDefinition<>(x -> new KeycloakOidcProfile());
+            KeycloakOidcProfile keycloakOidcProfile = profileDefinition.newProfile();
+            AccessToken accessToken = new BearerAccessToken(jwt.getParsedString());
+            keycloakOidcProfile.setAccessToken(accessToken);
+            keycloakOidcProfile.addAttributes(profile.getAttributes());
+            keycloakOidcProfile.addAuthenticationAttributes(profile.getAuthenticationAttributes());
 
-        credentials.setUserProfile(keycloakOidcProfile);
+            credentials.setUserProfile(keycloakOidcProfile);
+        }
     }
 }
