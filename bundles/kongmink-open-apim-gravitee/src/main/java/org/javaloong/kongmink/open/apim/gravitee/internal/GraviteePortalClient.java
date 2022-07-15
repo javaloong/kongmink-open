@@ -41,7 +41,7 @@ import static java.lang.Thread.currentThread;
 
     long cacheExpireAfterAccess() default 600_000;
 
-    long cacheMaximumSize() default 10_1000;
+    long cacheMaximumSize() default 10_000;
 }
 
 @Component(service = GraviteePortalClient.class,
