@@ -116,8 +116,9 @@
     </feature>
 
     <feature name="kongmink-open-service" version="${project.version}">
-        <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
+        <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-account-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
@@ -183,6 +184,7 @@
         <bundle dependency="true">mvn:org.pac4j/pac4j-core/${pac4j.version}</bundle>
         <bundle dependency="true">wrap:mvn:io.buji/buji-pac4j/${pac4j.buji.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth/${project.version}</bundle>
     </feature>

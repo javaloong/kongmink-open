@@ -25,7 +25,7 @@ public class JpaUserRepository extends JpaRepositorySupport<UserEntity, String> 
     private CriteriaOrderCollector<UserEntity> defaultCriteriaOrder() {
         return (cb, entityRoot) -> {
             List<Order> orders = new ArrayList<>();
-            orders.add(cb.desc(entityRoot.get("createdDate")));
+            orders.add(cb.desc(entityRoot.get("createdAt")));
             return orders.toArray(new Order[0]);
         };
     }

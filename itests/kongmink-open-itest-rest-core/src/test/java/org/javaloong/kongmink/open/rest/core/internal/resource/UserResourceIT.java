@@ -9,7 +9,7 @@ import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
 import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.ComplexUser;
+import org.javaloong.kongmink.open.service.model.OPUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -106,18 +106,18 @@ public class UserResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void getUser_ShouldReturnHttpStatusOk() {
-        ComplexUser complexUser = createComplexUser("1", "user1");
-        when(userService.get(any(User.class))).thenReturn(complexUser);
-        ComplexUser result = get("/user").then().assertThat()
+        OPUser user = createUser("1", "user1");
+        when(userService.get(any(User.class))).thenReturn(user);
+        OPUser result = get("/user").then().assertThat()
                 .statusCode(Response.Status.OK.getStatusCode())
-                .extract().as(ComplexUser.class);
+                .extract().as(OPUser.class);
         assertThat(result).isNotNull()
-                .extracting(ComplexUser::getId, ComplexUser::getUsername)
-                .containsExactly(complexUser.getId(), complexUser.getUsername());
+                .extracting(OPUser::getId, OPUser::getUsername)
+                .containsExactly(user.getId(), user.getUsername());
     }
 
-    private ComplexUser createComplexUser(String id, String username) {
-        ComplexUser user = new ComplexUser();
+    private OPUser createUser(String id, String username) {
+        OPUser user = new OPUser();
         user.setId(id);
         user.setUsername(username);
         user.setCreatedTimestamp(LocalDateTime.now());

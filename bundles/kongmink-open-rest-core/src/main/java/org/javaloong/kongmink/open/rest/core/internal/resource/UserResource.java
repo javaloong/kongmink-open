@@ -7,7 +7,7 @@ import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
 import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.ComplexUser;
+import org.javaloong.kongmink.open.service.model.OPUser;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -63,7 +63,7 @@ public class UserResource {
 
     @GET
     public Response getUser(@Context User user) {
-        ComplexUser result = userService.get(user);
+        OPUser result = userService.get(user);
         return Response.ok(result).build();
     }
 }

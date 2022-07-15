@@ -1,9 +1,6 @@
 package org.javaloong.kongmink.open.data.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,8 +8,10 @@ import java.time.LocalDateTime;
 public class UserEntity extends AbstractEntity<String> {
 
     private String username;
-    private boolean enabled;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private long version;
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -35,21 +34,30 @@ public class UserEntity extends AbstractEntity<String> {
         this.username = username;
     }
 
-    @Column(name = "enabled", nullable = false)
-    public boolean isEnabled() {
-        return enabled;
+    @Column(name = "created_at", nullable = false)
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    @Column(name = "created_date", nullable = false)
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    @Column(name = "updated_at")
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Version
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

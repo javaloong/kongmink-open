@@ -21,6 +21,11 @@
         </dependency>
         <dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -6,6 +6,7 @@ import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.service.UserService;
+import org.javaloong.kongmink.open.service.model.OPUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -14,6 +15,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import javax.inject.Inject;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,24 +33,44 @@ public class UserServiceImplIT extends AbstractServiceTestSupport {
     UserService userService;
 
     @Test
-    public void testCRUD() {
+    public void testGetUser() {
         User user = TestUtils.createUser("1", "user1");
         when(userProvider.getUser()).thenReturn(user);
         userService.get(user);
         verify(userProvider).getUser();
-        userService.create(user);
-        user.setUsername("user11");
-        userService.save(user);
+    }
+
+    @Test
+    public void testLoadByUser() {
+        User user = TestUtils.createUser("1", "user1");
+        OPUser result1 = userService.loadByUser(user);
+        assertThat(result1).returns("user1", User::getUsername);
+        OPUser result2 = userService.loadByUser(user);
+        assertThat(result2).returns("user1", User::getUsername);
+        OPUser result3 = userService.loadByUser(user);
+        assertThat(result3).returns("user1", User::getUsername);
+    }
+
+    @Test
+    public void testUpdateProfile() {
         doNothing().when(userProvider).updateProfile(any(UserProfile.class));
         UserProfile userProfile = new UserProfile();
         userProfile.setCompanyName("company1");
         userService.updateProfile(userProfile);
         verify(userProvider).updateProfile(userProfile);
+    }
+
+    @Test
+    public void testUpdateEmail() {
         doNothing().when(userProvider).updateEmail(any(UserEmail.class));
         UserEmail userEmail = new UserEmail();
         userEmail.setEmail("user1@test.com");
         userService.updateEmail(userEmail);
         verify(userProvider).updateEmail(userEmail);
+    }
+
+    @Test
+    public void testUpdatePassword() {
         doNothing().when(userProvider).updatePassword(any(UserPassword.class));
         UserPassword userPassword = new UserPassword();
         userPassword.setPassword("111111");
