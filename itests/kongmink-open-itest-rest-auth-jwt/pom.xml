@@ -10,7 +10,7 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kongmink-open-itest-rest-auth</artifactId>
+    <artifactId>kongmink-open-itest-rest-auth-jwt</artifactId>
 
     <dependencies>
         <dependency>
@@ -21,7 +21,19 @@
         </dependency>
 		<dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-service</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest-auth</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-rest-auth-jwt</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -29,6 +41,11 @@
             <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-itest-common</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

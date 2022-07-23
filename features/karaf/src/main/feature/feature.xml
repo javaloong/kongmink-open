@@ -164,17 +164,12 @@
         <feature>kongmink-open-bean-validation</feature>
         <feature>kongmink-open-jax-rs-whiteboard</feature>
         <feature>kongmink-open-jax-rs-whiteboard-jackson</feature>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
+        <feature>kongmink-open-service</feature>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-core/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-rest-auth" version="${project.version}">
-        <config name="org.javaloong.kongmink.open.rest.auth.shiro">
-            shiro.ini.file=${karaf.etc}/shiro.ini
-        </config>
-        <configfile finalname="${karaf.etc}/shiro.ini">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth/${project.version}/cfg/configuration</configfile>
         <feature>shiro-web</feature>
         <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/1.9.4</bundle>
         <bundle dependency="true">mvn:commons-collections/commons-collections/3.2.2</bundle>
@@ -183,23 +178,24 @@
         <bundle dependency="true">mvn:org.apache.shiro/shiro-jaxrs/${shiro.version}</bundle>
         <bundle dependency="true">mvn:org.pac4j/pac4j-core/${pac4j.version}</bundle>
         <bundle dependency="true">wrap:mvn:io.buji/buji-pac4j/${pac4j.buji.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth/${project.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-rest-auth-oidc" version="${project.version}">
+    <feature name="kongmink-open-rest-auth-jwt" version="${project.version}">
+        <config name="org.javaloong.kongmink.open.rest.auth.shiro">
+            shiro.ini.file=${karaf.etc}/shiro.ini
+        </config>
+        <configfile finalname="${karaf.etc}/shiro.ini">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}/cfg/configuration</configfile>
+        <feature>kongmink-open-service</feature>
+        <feature>kongmink-open-rest-auth</feature>
         <bundle dependency="true">wrap:mvn:com.github.stephenc.jcip/jcip-annotations/1.0-1</bundle>
         <bundle dependency="true">mvn:net.minidev/json-smart/${minidev.verison}</bundle>
         <bundle dependency="true">mvn:net.minidev/accessors-smart/${minidev.verison}</bundle>
-        <bundle dependency="true">mvn:com.nimbusds/lang-tag/1.5</bundle>
-        <bundle dependency="true">mvn:com.nimbusds/content-type/2.1</bundle>
-        <bundle dependency="true">mvn:com.nimbusds/oauth2-oidc-sdk/${nimbus.oidc.sdk.version}</bundle>
         <bundle dependency="true">mvn:com.nimbusds/nimbus-jose-jwt/${nimbus.jose.jwt.version}</bundle>
+        <bundle dependency="true">mvn:org.pac4j/pac4j-jwt/${pac4j.version}</bundle>
         <bundle>mvn:org.pac4j/pac4j-http/${pac4j.version}</bundle>
-        <bundle>mvn:org.pac4j/pac4j-jwt/${pac4j.version}</bundle>
-        <bundle>mvn:org.pac4j/pac4j-oidc/${pac4j.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-rest-openapi" version="${project.version}">
@@ -222,7 +218,7 @@
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>
-        <feature>kongmink-open-rest-auth-oidc</feature>
+        <feature>kongmink-open-rest-auth-jwt</feature>
     </feature>
 
     <feature name="kongmink-open-rest-server-h2" version="${project.version}">

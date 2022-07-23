@@ -2,40 +2,20 @@ package org.javaloong.kongmink.open.rest.auth.internal;
 
 import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.common.client.Client;
-import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.OPUser;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.tinybundles.core.InnerClassStrategy;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
+import org.pac4j.core.profile.CommonProfile;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
 
 public class ShiroSecurityIT extends SecurityTestSupport {
-
-    @BeforeClass
-    public static void beforeClass() {
-        BundleContext context = FrameworkUtil.getBundle(ShiroSecurityIT.class).getBundleContext();
-        context.registerService(UserService.class, Mockito.mock(UserService.class), null);
-    }
-
-    @Inject
-    UserService userService;
 
     @Test
     public void testAuthenticatedNoAuthPresent() {
@@ -45,16 +25,14 @@ public class ShiroSecurityIT extends SecurityTestSupport {
 
     @Test
     public void testAuthenticatedAuthPresent() {
-        when(userService.loadByUser(any(User.class)))
-                .thenAnswer(invocation -> OPUser.fromUser(invocation.getArgument(0)));
         assertThat(given().auth().oauth2("user1_token")
                 .get("/user")
                 .then().assertThat()
                 .statusCode(Response.Status.OK.getStatusCode())
-                .extract().as(User.class))
-                .returns("1", User::getId)
-                .returns("user1", User::getUsername)
-                .returns("user1@example.com", User::getEmail);
+                .extract().as(CommonProfile.class))
+                .returns("1", CommonProfile::getId)
+                .returns("user1", CommonProfile::getUsername)
+                .returns("user1@example.com", CommonProfile::getEmail);
     }
 
     @Test

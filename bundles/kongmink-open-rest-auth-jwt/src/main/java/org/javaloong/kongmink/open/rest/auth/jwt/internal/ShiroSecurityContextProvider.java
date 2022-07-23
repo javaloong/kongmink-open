@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.auth.internal;
+package org.javaloong.kongmink.open.rest.auth.jwt.internal;
 
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.shiro.SecurityUtils;
@@ -6,9 +6,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.javaloong.kongmink.open.common.auth.SecurityContext;
 import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;
+import org.javaloong.kongmink.open.rest.auth.jwt.internal.mapper.UserMapper;
+import org.javaloong.kongmink.open.rest.auth.jwt.profile.JwtUserProfile;
 import org.osgi.service.component.annotations.Component;
-import org.pac4j.oidc.profile.OidcProfile;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -22,9 +22,9 @@ public class ShiroSecurityContextProvider implements SecurityContextProvider {
         if (principals != null) {
             final Pac4jPrincipal principal = principals.oneByType(Pac4jPrincipal.class);
             if (principal != null) {
-                OidcProfile oidcProfile = (OidcProfile) principal.getProfile();
-                User user = UserMapper.mapToUser(oidcProfile);
-                String accessToken = oidcProfile.getAccessToken().getValue();
+                JwtUserProfile profile = (JwtUserProfile) principal.getProfile();
+                User user = UserMapper.mapToUser(profile);
+                String accessToken = profile.getAccessToken();
                 return createSecurityContext(user, accessToken);
             }
         }

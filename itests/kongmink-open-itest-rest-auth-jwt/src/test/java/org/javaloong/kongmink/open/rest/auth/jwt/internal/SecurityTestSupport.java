@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.auth.internal;
+package org.javaloong.kongmink.open.rest.auth.jwt.internal;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,15 +7,12 @@ import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
-import org.javaloong.kongmink.open.rest.auth.DummyAuthenticator;
 import org.junit.BeforeClass;
 import org.ops4j.pax.exam.Option;
-import org.osgi.framework.Constants;
 
 import java.util.Map;
 
 import static org.ops4j.pax.exam.CoreOptions.*;
-import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
 
 public abstract class SecurityTestSupport extends PaxExamTestSupport {
 
@@ -44,8 +41,11 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
     protected Option testBundles() {
         return composite(shiro(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-auth").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-auth-jwt").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
         );
@@ -68,19 +68,15 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
 
     protected Option pac4j() {
         return composite(
-                dummyAuthBundle(),
+                wrappedBundle(mavenBundle("com.github.stephenc.jcip", "jcip-annotations").versionAsInProject()),
+                mavenBundle("net.minidev", "accessors-smart").versionAsInProject(),
+                mavenBundle("net.minidev", "json-smart").versionAsInProject(),
+                mavenBundle("com.nimbusds", "nimbus-jose-jwt").versionAsInProject(),
                 mavenBundle("org.pac4j", "pac4j-core").versionAsInProject(),
+                mavenBundle("org.pac4j", "pac4j-jwt").versionAsInProject(),
                 mavenBundle("org.pac4j", "pac4j-http").versionAsInProject(),
                 wrappedBundle(mavenBundle("io.buji", "buji-pac4j").versionAsInProject())
         );
-    }
-
-    protected Option dummyAuthBundle() {
-        return BndDSOptions.fragmentBundle(DummyAuthenticator.class.getSimpleName(),
-                bundle().add(DummyAuthenticator.class)
-                        .set(Constants.REQUIRE_CAPABILITY, String.format( // Fix osgi.ee=unknown
-                                "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=%s))\"", Runtime.version().feature()))
-                        .set(Constants.FRAGMENT_HOST, "org.javaloong.kongmink.open.kongmink-open-rest-auth"));
     }
 
     @Override
@@ -113,5 +109,9 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
                 mavenBundle("io.rest-assured", "rest-assured").versionAsInProject(),
                 mavenBundle("io.rest-assured", "rest-assured-common").versionAsInProject()
         );
+    }
+
+    protected String getAccessToken() {
+        return "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJEZklVSW5wMUlscTdCMHhfMC0tdjgxNjdHcm5pR2Y0eVVfdExKX0RtRnhVIn0.eyJleHAiOjE5NzQxMDExNzAsImlhdCI6MTY1ODQ4MTk3MCwianRpIjoiNjUyOGJkODQtMzY1Zi00NmRhLTgzYWEtOTc1M2MyYzMyYTU4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDkwL2F1dGgvcmVhbG1zL2tvbmdtaW5rLW9wZW4iLCJhdWQiOlsiZGV2ZWxvcGVyLWFjY291bnQiLCJhY2NvdW50Il0sInN1YiI6ImRhNzFhOTdlLTVjOTktNDg2OC1hMGEyLTY5MGZmMmE0NDU2MyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRldmVsb3Blci1wb3J0YWwiLCJzZXNzaW9uX3N0YXRlIjoiMjY3YmZhMTktMzUyMi00MWUwLTg2NjEtZjJmY2FhMjAyNDNhIiwiYWNyIjoiMSIsInJlc291cmNlX2FjY2VzcyI6eyJkZXZlbG9wZXItYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYXBwbGljYXRpb25zIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiIyNjdiZmExOS0zNTIyLTQxZTAtODY2MS1mMmZjYWEyMDI0M2EiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlcjEiLCJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIn0.HV6fu49mXUFdVVL9R1Z3i1Uss2c9gzq81r2I3dE7td6HI3wTNa1zUZl2vsm5sS-H6z7wLbuZtSaRdTLIOdOIEy-DcYuqcLBgY6SjRoLxf64mRmqzOsHb-hP2HnZ2_hE8jpdmCKYnmmvnMaOM5WBqrdRmI_yxbvLXK5byF5azuDbD6DdOEZ6OSLDyOfnR7lZI457fdkK5C-ckhAcaDcj6OAVKf_RB-BH0M-53_AIfoQuO0SwqTtm7R6lM-mcB1bSApeBCRDg_YR--4mIzyvXCgQvXzgUyWW1-uVA1W0FYzJSpLPe29Bp0_6HIqgF16AZ3LAb50hqdkkmX786WwSqBog";
     }
 }

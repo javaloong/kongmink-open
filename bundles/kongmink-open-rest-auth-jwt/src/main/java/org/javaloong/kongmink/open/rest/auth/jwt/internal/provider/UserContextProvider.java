@@ -1,18 +1,18 @@
-package org.javaloong.kongmink.open.rest.auth.internal.provider;
+package org.javaloong.kongmink.open.rest.auth.jwt.internal.provider;
 
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;
+import org.javaloong.kongmink.open.rest.auth.jwt.internal.mapper.UserMapper;
+import org.javaloong.kongmink.open.rest.auth.jwt.profile.JwtUserProfile;
 import org.javaloong.kongmink.open.service.UserService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationSelect;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsExtension;
-import org.pac4j.oidc.profile.OidcProfile;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -35,7 +35,7 @@ public class UserContextProvider implements ContextProvider<User> {
         if (principal == null) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
-        User user = UserMapper.mapToUser((OidcProfile) principal.getProfile());
+        User user = UserMapper.mapToUser((JwtUserProfile) principal.getProfile());
         return userService.loadByUser(user);
     }
 }

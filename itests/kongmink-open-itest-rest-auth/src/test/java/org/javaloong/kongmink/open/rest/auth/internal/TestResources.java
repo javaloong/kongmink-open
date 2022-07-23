@@ -1,9 +1,10 @@
 package org.javaloong.kongmink.open.rest.auth.internal;
 
+import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.javaloong.kongmink.open.common.client.Client;
-import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -15,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 public abstract class TestResources {
 
@@ -26,9 +28,11 @@ public abstract class TestResources {
     @Produces(MediaType.APPLICATION_JSON)
     public static class TestUserResource {
 
+        @RequiresUser
         @GET
-        public Response getUser(@Context User user) {
-            return Response.ok(user).build();
+        public Response getUser(@Context SecurityContext securityContext) {
+            Pac4jPrincipal principal = (Pac4jPrincipal) securityContext.getUserPrincipal();
+            return Response.ok(principal.getProfile()).build();
         }
     }
 
@@ -44,7 +48,7 @@ public abstract class TestResources {
         @RequiresPermissions("client:create")
         @Consumes(MediaType.APPLICATION_JSON)
         @POST
-        public Response createClient(Client client, @Context User user) {
+        public Response createClient(Client client) {
             return Response.ok(client).status(Response.Status.CREATED).build();
         }
 
@@ -52,22 +56,21 @@ public abstract class TestResources {
         @Path("/{id}")
         @Consumes(MediaType.APPLICATION_JSON)
         @PUT
-        public Response updateClient(@PathParam("id") String id, Client client,
-                                     @Context User user) {
+        public Response updateClient(@PathParam("id") String id, Client client) {
             return Response.noContent().build();
         }
 
         @RequiresPermissions("client:delete")
         @Path("/{id}")
         @DELETE
-        public Response deleteClient(@PathParam("id") String id, @Context User user) {
+        public Response deleteClient(@PathParam("id") String id) {
             return Response.noContent().build();
         }
 
         @RequiresPermissions("client:read")
         @GET
         @Path("/{id}")
-        public Response getClient(@PathParam("id") String id, @Context User user) {
+        public Response getClient(@PathParam("id") String id) {
             return Response.ok(dummyClient()).build();
         }
 

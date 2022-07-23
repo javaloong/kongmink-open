@@ -24,6 +24,7 @@
         <module>kongmink-open-itest-common</module>
         <module>kongmink-open-itest-karaf</module>
         <module>kongmink-open-itest-rest-auth</module>
+        <module>kongmink-open-itest-rest-auth-jwt</module>
         <module>kongmink-open-itest-rest-core</module>
         <module>kongmink-open-itest-rest-openapi</module>
         <module>kongmink-open-itest-service-impl</module>
