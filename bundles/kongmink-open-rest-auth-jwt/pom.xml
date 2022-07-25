@@ -26,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-rest</artifactId>
+            <artifactId>kongmink-open-rest-auth</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -64,6 +64,13 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Fragment-Host>
+                            org.javaloong.kongmink.open.kongmink-open-rest-auth
+                        </Fragment-Host>
+                    </instructions>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

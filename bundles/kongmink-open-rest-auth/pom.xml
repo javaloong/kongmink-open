@@ -58,9 +58,9 @@
                     <instructions>
                         <DynamicImport-Package>
                             org.pac4j.*,
-                            io.buji.pac4j.*,
-                            org.javaloong.kongmink.open.rest.auth.*
+                            io.buji.pac4j.*
                         </DynamicImport-Package>
+                        <Service-Component>OSGI-INF/*.xml</Service-Component>
                     </instructions>
                 </configuration>
             </plugin>

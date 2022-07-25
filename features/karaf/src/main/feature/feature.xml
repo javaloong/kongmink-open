@@ -195,7 +195,7 @@
         <bundle dependency="true">mvn:com.nimbusds/nimbus-jose-jwt/${nimbus.jose.jwt.version}</bundle>
         <bundle dependency="true">mvn:org.pac4j/pac4j-jwt/${pac4j.version}</bundle>
         <bundle>mvn:org.pac4j/pac4j-http/${pac4j.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
+        <bundle start="false">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-rest-openapi" version="${project.version}">
