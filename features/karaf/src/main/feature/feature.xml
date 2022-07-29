@@ -12,6 +12,14 @@
         <bundle start-level="20">mvn:org.javaloong.kongmink.open/kongmink-open-bean-validator/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-transaction" version="${project.version}">
+        <feature dependency="true">transaction-manager-geronimo</feature>
+        <requirement>
+            transaction-manager
+        </requirement>
+        <bundle>mvn:org.apache.aries.tx-control/tx-control-service-xa/1.0.1</bundle>
+    </feature>
+
     <feature name="kongmink-open-hibernate-orm" version="${project.version}">
         <!-- hibernate-orm feature installs osgi.core and osgi.compendium bundle (it should not), causing huge refresh -->
         <feature prerequisite="true">pax-url-wrap</feature>
@@ -31,10 +39,8 @@
     </feature>
 
     <feature name="kongmink-open-data-jpa" version="${project.version}">
-        <feature>transaction</feature>
-        <feature>jdbc</feature>
-        <feature dependency="true">aries-blueprint</feature>
         <feature version="[2,3)">jpa</feature>
+        <feature>kongmink-open-transaction</feature>
         <feature>kongmink-open-hibernate-orm</feature>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
