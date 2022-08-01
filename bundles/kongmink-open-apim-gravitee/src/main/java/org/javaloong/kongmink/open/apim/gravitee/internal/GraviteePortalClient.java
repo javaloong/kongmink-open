@@ -19,6 +19,7 @@ import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
 import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
@@ -59,6 +60,8 @@ public class GraviteePortalClient {
     GraviteeTokenManager tokenManager;
 
     EnvironmentsResource environmentsResource;
+
+    Bus bus;
 
     @Activate
     public GraviteePortalClient(GraviteePortalClientConfiguration portalClientConfiguration) {
@@ -105,10 +108,11 @@ public class GraviteePortalClient {
     }
 
     public <T> T createJAXRSResource(Class<T> cls, Object... varValues) {
-        Bus bus = getBus();
+        bus = createBus();
         HTTPConduitConfigurer httpConduitConfigurer = (name, address, c) -> c.setAuthSupplier(new BearerAuthSupplier());
         bus.setExtension(httpConduitConfigurer, HTTPConduitConfigurer.class);
         JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
+        bean.setBus(bus);
         bean.setAddress(config.serverUrl());
         bean.setResourceClass(cls);
         bean.setProvider(new JacksonJsonProvider(createObjectMapper()));
@@ -116,11 +120,11 @@ public class GraviteePortalClient {
         return bean.create(cls, varValues);
     }
 
-    private Bus getBus() {
+    private Bus createBus() {
         final ClassLoader ldr = currentThread().getContextClassLoader();
         ClassLoaderUtils.setThreadContextClassloader(getClass().getClassLoader());
         try {
-            return BusFactory.getThreadDefaultBus();
+            return BusFactory.newInstance().createBus();
         } finally {
             currentThread().setContextClassLoader(ldr);
         }
@@ -130,6 +134,11 @@ public class GraviteePortalClient {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper;
+    }
+
+    @Deactivate
+    public void deactivate() {
+        bus.shutdown(true);
     }
 
     class BearerAuthSupplier implements HttpAuthSupplier {

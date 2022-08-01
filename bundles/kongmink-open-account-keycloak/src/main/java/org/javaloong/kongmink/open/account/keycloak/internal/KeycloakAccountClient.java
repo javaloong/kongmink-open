@@ -18,6 +18,7 @@ import org.javaloong.kongmink.open.account.keycloak.internal.resource.AccountRes
 import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
@@ -51,6 +52,8 @@ public class KeycloakAccountClient {
 
     AccountRealmsResource accountRealmsResource;
 
+    Bus bus;
+
     @Activate
     public KeycloakAccountClient(KeycloakAccountClientConfiguration config) {
         this.config = config;
@@ -66,10 +69,11 @@ public class KeycloakAccountClient {
     }
 
     public <T> T createJAXRSResource(Class<T> cls, Object... varValues) {
-        Bus bus = getBus();
+        bus = createBus();
         HTTPConduitConfigurer httpConduitConfigurer = (name, address, c) -> c.setAuthSupplier(new BearerAuthSupplier());
         bus.setExtension(httpConduitConfigurer, HTTPConduitConfigurer.class);
         JAXRSClientFactoryBean bean = new JAXRSClientFactoryBean();
+        bean.setBus(bus);
         bean.setAddress(config.serverUrl());
         bean.setResourceClass(cls);
         bean.setProvider(new JacksonJsonProvider(createObjectMapper()));
@@ -77,11 +81,11 @@ public class KeycloakAccountClient {
         return bean.create(cls, varValues);
     }
 
-    private Bus getBus() {
+    private Bus createBus() {
         final ClassLoader ldr = currentThread().getContextClassLoader();
         ClassLoaderUtils.setThreadContextClassloader(getClass().getClassLoader());
         try {
-            return BusFactory.getThreadDefaultBus();
+            return BusFactory.newInstance().createBus();
         } finally {
             currentThread().setContextClassLoader(ldr);
         }
@@ -91,6 +95,11 @@ public class KeycloakAccountClient {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper;
+    }
+
+    @Deactivate
+    public void deactivate() {
+        bus.shutdown(true);
     }
 
     class BearerAuthSupplier implements HttpAuthSupplier {
