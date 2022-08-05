@@ -29,7 +29,7 @@ public class ValidationExceptionMapper extends AbstractExceptionMapper<Validatio
     protected List<Object> createErrors(ValidationException exception) {
         List<Object> errors = new ArrayList<>();
         if (exception instanceof ConstraintViolationException) {
-            errors = ((ConstraintViolationException)exception).getConstraintViolations().stream()
+            errors = ((ConstraintViolationException) exception).getConstraintViolations().stream()
                     .map(this::toValidationError)
                     .collect(Collectors.toList());
         }
@@ -42,7 +42,7 @@ public class ValidationExceptionMapper extends AbstractExceptionMapper<Validatio
     }
 
     @Override
-    protected String getMessage(ValidationException exception) {
+    protected String getMessage(Response.StatusType statusType, ValidationException exception) {
         StringBuilder sb = new StringBuilder("Validation failed.");
         if (exception instanceof ConstraintViolationException) {
             sb.append(" Error count: ");

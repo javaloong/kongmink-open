@@ -15,7 +15,10 @@ public abstract class AbstractExceptionMapper<E extends Throwable> implements Ex
                 .build();
     }
 
-    protected String getMessage(E exception) {
+    protected String getMessage(Response.StatusType statusType, E exception) {
+        if (statusType.getStatusCode() >= 500) {
+            return statusType.getReasonPhrase();
+        }
         return exception.getLocalizedMessage();
     }
 
@@ -23,7 +26,7 @@ public abstract class AbstractExceptionMapper<E extends Throwable> implements Ex
         return new Error(
                 statusType.getStatusCode(),
                 statusType.toEnum().name(),
-                getMessage(exception),
+                getMessage(statusType, exception),
                 createErrors(exception));
     }
 
