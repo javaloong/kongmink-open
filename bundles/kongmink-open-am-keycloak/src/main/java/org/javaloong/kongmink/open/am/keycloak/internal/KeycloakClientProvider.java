@@ -55,8 +55,8 @@ public class KeycloakClientProvider implements ClientProvider {
         ClientsResource clientsResource = adminClient.getClientsResource();
         ClientRepresentation clientRepresentation = ClientMapper.mapToClientRepresentation(client);
         Response response = clientsResource.create(clientRepresentation);
-        log.info("Response Code: " + response.getStatusInfo());
-        if (response.getStatusInfo().equals(Response.Status.CREATED)) {
+        log.info("Response Code: " + response.getStatusInfo().getStatusCode());
+        if (response.getStatusInfo().toEnum().equals(Response.Status.CREATED)) {
             log.info("Response Location: " + response.getLocation());
         }
         String id = JAXRSClientUtils.getCreatedId(response);
