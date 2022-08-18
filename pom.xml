@@ -41,8 +41,10 @@
         <commons.lang3.version>3.11</commons.lang3.version>
         <cxf.version>3.4.5</cxf.version>
         <jackson.version>2.12.5</jackson.version>
+        <snakeyaml.version>1.30</snakeyaml.version>
         <modelmapper.version>2.4.2</modelmapper.version>
         <modelmapper.jsr310.version>1.2.2</modelmapper.jsr310.version>
+        <liquibase.version>4.12.0</liquibase.version>
         <hibernate.version>5.2.18.Final</hibernate.version>
         <hibernate.jpa-2.1-api.verison>1.0.2.Final</hibernate.jpa-2.1-api.verison>
         <hibernate.validator.version>6.2.0.Final</hibernate.validator.version>
@@ -233,6 +235,11 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper-module-jsr310</artifactId>
                 <version>${modelmapper.jsr310.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
