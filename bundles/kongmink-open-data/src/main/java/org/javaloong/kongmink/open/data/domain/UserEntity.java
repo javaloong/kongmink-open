@@ -14,7 +14,7 @@ public class UserEntity extends AbstractEntity<String> {
     private long version;
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", length = 36)
     @Override
     public String getId() {
         return super.getId();
@@ -25,7 +25,7 @@ public class UserEntity extends AbstractEntity<String> {
         super.setId(s);
     }
 
-    @Column(name = "username", nullable = false, length = 100, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     public String getUsername() {
         return username;
     }

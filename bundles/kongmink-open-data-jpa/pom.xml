@@ -14,7 +14,10 @@
     <packaging>bundle</packaging>
 
     <properties>
-        <hsqldb.version>2.6.1</hsqldb.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <spring.boot.version>2.7.2</spring.boot.version>
+        <!-- 2.6.x is for JDK11+ -->
+        <hsqldb.version>2.5.2</hsqldb.version>
     </properties>
 
     <dependencies>
@@ -94,6 +97,8 @@
                             javax.persistence;version="[2,3)",
                             *
                         </Import-Package>
+                        <Liquibase-FilterEntityManagerFactory>(osgi.unit.name=km-open)</Liquibase-FilterEntityManagerFactory>
+                        <!--<Require-Capability>osgi.extender;filter:="(osgi.extender=org.javaloong.kongmink.open.liquibase)"</Require-Capability>-->
                         <_dsannotations-options>inherit</_dsannotations-options>
                     </instructions>
                 </configuration>
@@ -104,4 +109,51 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>liquibase</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>${liquibase.version}</version>
+                        <configuration>
+                            <changeLogFile>src/main/resources/OSGI-INF/liquibase/jpa-changelog-master.xml</changeLogFile>
+                            <diffChangeLogFile>src/main/resources/OSGI-INF/liquibase/changelog/jpa-changelog-${maven.build.timestamp}.xml</diffChangeLogFile>
+                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.liquibase.ext</groupId>
+                                <artifactId>liquibase-hibernate5</artifactId>
+                                <version>${liquibase.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                                <version>${spring.boot.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>${h2.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>jakarta.validation</groupId>
+                                <artifactId>jakarta.validation-api</artifactId>
+                                <version>${jakarta.validation.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.javassist</groupId>
+                                <artifactId>javassist</artifactId>
+                                <version>${javassist.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

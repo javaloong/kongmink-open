@@ -12,6 +12,12 @@
         <bundle start-level="20">mvn:org.javaloong.kongmink.open/kongmink-open-bean-validator/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-liquibase" version="${project.version}">
+        <bundle start-level="30" dependency="true">mvn:org.yaml/snakeyaml/${snakeyaml.version}</bundle>
+        <bundle start-level="30" dependency="true">wrap:mvn:org.liquibase/liquibase-core/${liquibase.version}$overwrite=merge&amp;Import-Package=!liquibase.*,*;resolution:=optional</bundle>
+        <bundle start-level="30">mvn:org.javaloong.kongmink.open/kongmink-open-liquibase/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-transaction" version="${project.version}">
         <feature dependency="true">transaction-manager-geronimo</feature>
         <requirement>
@@ -53,7 +59,6 @@
             osgi.unit.name=km-open
             url=jdbc:h2:./data/kongmink_open
             aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-            javax.persistence.schema-generation.database.action=drop-and-create
         </config>
         <feature>pax-jdbc-h2</feature>
         <feature>kongmink-open-data-jpa</feature>
@@ -68,10 +73,9 @@
             user=root
             password=
             aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-            javax.persistence.schema-generation.database.action=create
         </config>
         <feature>kongmink-open-data-jpa</feature>
-        <bundle dependency="true">mvn:mysql/mysql-connector-java/8.0.26</bundle>
+        <bundle dependency="true">mvn:mysql/mysql-connector-java/${mysql.version}</bundle>
         <bundle>mvn:org.ops4j.pax.jdbc/pax-jdbc-mysql/${pax.jdbc.version}</bundle>
         <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
     </feature>
@@ -84,7 +88,6 @@
             user=postgres
             password=postgres
             aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-            javax.persistence.schema-generation.database.action=create
         </config>
         <feature>pax-jdbc-postgresql</feature>
         <feature>kongmink-open-data-jpa</feature>
@@ -150,7 +153,7 @@
         <bundle start-level="35" dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${jackson.version}</bundle>
         <bundle start-level="35" dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${jackson.version}</bundle>
         <bundle start-level="35" dependency="true">mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
-        <bundle start-level="35" dependency="true">mvn:org.yaml/snakeyaml/1.27</bundle>
+        <bundle start-level="35" dependency="true">mvn:org.yaml/snakeyaml/${snakeyaml.version}</bundle>
         <bundle>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.jackson/${aries.jax.rs.version}</bundle>
     </feature>
 
@@ -167,7 +170,6 @@
     </feature>
 
     <feature name="kongmink-open-rest-core" version="${project.version}">
-        <feature>kongmink-open-bean-validation</feature>
         <feature>kongmink-open-jax-rs-whiteboard</feature>
         <feature>kongmink-open-jax-rs-whiteboard-jackson</feature>
         <feature>kongmink-open-service</feature>
@@ -216,6 +218,8 @@
     </feature>
 
     <feature name="kongmink-open-rest-server" version="${project.version}">
+        <feature>kongmink-open-bean-validation</feature>
+        <feature>kongmink-open-liquibase</feature>
         <feature>kongmink-open-account-keycloak</feature>
         <feature>kongmink-open-am-keycloak</feature>
         <feature>kongmink-open-apim-gravitee</feature>

@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 @ExtendWith(DBUnitExtension.class)
 public abstract class RepositoryTestSupport {
 
-    private static final String PERSISTENCE_UNIT_NAME = "km-open";
+    private static final String PERSISTENCE_UNIT_NAME = "km-open-test";
 
     private final ConnectionHolder connectionHolder = () ->
             EntityManagerProvider.instance(PERSISTENCE_UNIT_NAME).connection();
