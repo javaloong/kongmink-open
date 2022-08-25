@@ -16,8 +16,17 @@
     <dependencies>
         <dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,7 +69,6 @@
                             org.pac4j.*,
                             io.buji.pac4j.*
                         </DynamicImport-Package>
-                        <Service-Component>OSGI-INF/*.xml</Service-Component>
                     </instructions>
                 </configuration>
             </plugin>

@@ -1,12 +1,11 @@
-package org.javaloong.kongmink.open.rest.auth.jwt.internal.provider;
+package org.javaloong.kongmink.open.rest.auth.internal.provider;
 
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.auth.jwt.internal.mapper.UserMapper;
-import org.javaloong.kongmink.open.rest.auth.jwt.profile.JwtUserProfile;
+import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;
 import org.javaloong.kongmink.open.service.UserService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +34,7 @@ public class UserContextProvider implements ContextProvider<User> {
         if (principal == null) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
-        User user = UserMapper.mapToUser((JwtUserProfile) principal.getProfile());
+        User user = UserMapper.mapToUser(principal.getProfile());
         return userService.loadByUser(user);
     }
 }

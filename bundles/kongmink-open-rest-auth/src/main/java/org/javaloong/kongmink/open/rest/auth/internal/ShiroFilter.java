@@ -1,10 +1,7 @@
 package org.javaloong.kongmink.open.rest.auth.internal;
 
-import org.apache.shiro.util.LifecycleUtils;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.apache.shiro.web.env.WebEnvironment;
-import org.apache.shiro.web.filter.mgt.FilterChainResolver;
-import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -18,18 +15,17 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.Filter;
 
 import static java.lang.Thread.currentThread;
+import static org.apache.shiro.web.env.EnvironmentLoader.ENVIRONMENT_ATTRIBUTE_KEY;
 
 @Component(service = Filter.class, scope = ServiceScope.PROTOTYPE,
         configurationPid = {ShiroConfiguration.SHIRO_CONFIGURATION_PID})
 @HttpWhiteboardContextSelect("(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" + ShiroFilter.CONTEXT_NAME + ")")
 @HttpWhiteboardFilterPattern("/*")
-public class ShiroFilter extends AbstractShiroFilter {
+public class ShiroFilter extends org.apache.shiro.web.servlet.ShiroFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ShiroFilter.class);
 
     public static final String CONTEXT_NAME = "context.for" + RESTConstants.JAX_RS_NAME;
-
-    private WebEnvironment env;
 
     private ShiroConfiguration shiroConfig;
 
@@ -39,19 +35,16 @@ public class ShiroFilter extends AbstractShiroFilter {
     }
 
     @Override
-    public void init() {
+    public void init() throws Exception {
         LOG.info("Initializing Shiro environment");
-        env = createWebEnvironment();
-        setSecurityManager(env.getWebSecurityManager());
+        WebEnvironment env = getWebEnvironment();
+        getServletContext().setAttribute(ENVIRONMENT_ATTRIBUTE_KEY, env);
 
-        FilterChainResolver resolver = env.getFilterChainResolver();
-        if (resolver != null) {
-            setFilterChainResolver(resolver);
-        }
+        super.init();
     }
 
-    private WebEnvironment createWebEnvironment() {
-        final ClassLoader ldr = currentThread().getContextClassLoader();
+    private WebEnvironment getWebEnvironment() {
+        final ClassLoader tccl = currentThread().getContextClassLoader();
         currentThread().setContextClassLoader(this.getClass().getClassLoader());
         try {
             IniWebEnvironment environment = new ShiroIniWebEnvironment(shiroConfig.shiro_ini_file());
@@ -59,13 +52,7 @@ public class ShiroFilter extends AbstractShiroFilter {
             environment.init();
             return environment;
         } finally {
-            currentThread().setContextClassLoader(ldr);
+            currentThread().setContextClassLoader(tccl);
         }
-    }
-
-    @Override
-    public void destroy() {
-        LOG.info("Cleaning up Shiro Environment");
-        LifecycleUtils.destroy(env);
     }
 }

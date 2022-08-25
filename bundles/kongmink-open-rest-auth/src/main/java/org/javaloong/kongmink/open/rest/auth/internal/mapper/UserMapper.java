@@ -1,24 +1,26 @@
-package org.javaloong.kongmink.open.rest.auth.jwt.internal.mapper;
+package org.javaloong.kongmink.open.rest.auth.internal.mapper;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserConstants;
 import org.javaloong.kongmink.open.common.user.UserProfile;
-import org.javaloong.kongmink.open.rest.auth.jwt.profile.JwtUserProfile;
+import org.pac4j.core.profile.CommonProfile;
 
 public class UserMapper {
 
-    public static User mapToUser(JwtUserProfile profile) {
+    public static final String EMAIL_VERIFIED = "email_verified";
+
+    public static User mapToUser(CommonProfile profile) {
         User user = new User();
         user.setId(profile.getId());
         user.setUsername(profile.getUsername());
         user.setEmail(profile.getEmail());
-        user.setEmailVerified(profile.getEmailVerified());
+        user.setEmailVerified((Boolean) profile.getAttribute(EMAIL_VERIFIED));
         user.setEnabled(true);
         user.setProfile(createUserProfile(profile.getId(), profile));
         return user;
     }
 
-    private static UserProfile createUserProfile(String userId, JwtUserProfile profile) {
+    private static UserProfile createUserProfile(String userId, CommonProfile profile) {
         UserProfile userProfile = new UserProfile();
         userProfile.setUserId(userId);
         userProfile.setCompanyName(profile.getAttribute(UserConstants.COMPANY_NAME_KEY, String.class));
