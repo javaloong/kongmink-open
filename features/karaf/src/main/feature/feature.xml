@@ -179,6 +179,7 @@
 
     <feature name="kongmink-open-rest-auth" version="${project.version}">
         <feature>shiro-web</feature>
+        <feature>kongmink-open-service</feature>
         <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/1.9.4</bundle>
         <bundle dependency="true">mvn:commons-collections/commons-collections/3.2.2</bundle>
         <bundle dependency="true">mvn:org.apache.commons/commons-text/1.8</bundle>
@@ -195,15 +196,13 @@
             shiro.ini.file=${karaf.etc}/shiro.ini
         </config>
         <configfile finalname="${karaf.etc}/shiro.ini">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}/cfg/configuration</configfile>
-        <feature>kongmink-open-service</feature>
-        <feature>kongmink-open-rest-auth</feature>
         <bundle dependency="true">wrap:mvn:com.github.stephenc.jcip/jcip-annotations/1.0-1</bundle>
         <bundle dependency="true">mvn:net.minidev/json-smart/${minidev.verison}</bundle>
         <bundle dependency="true">mvn:net.minidev/accessors-smart/${minidev.verison}</bundle>
         <bundle dependency="true">mvn:com.nimbusds/nimbus-jose-jwt/${nimbus.jose.jwt.version}</bundle>
         <bundle dependency="true">mvn:org.pac4j/pac4j-jwt/${pac4j.version}</bundle>
         <bundle>mvn:org.pac4j/pac4j-http/${pac4j.version}</bundle>
-        <bundle start="false">mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-rest-openapi" version="${project.version}">

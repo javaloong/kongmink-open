@@ -69,6 +69,7 @@
                         <Fragment-Host>
                             org.javaloong.kongmink.open.kongmink-open-rest-auth
                         </Fragment-Host>
+                        <Provide-Capability>kongmink.open.rest.auth;type="jwt"</Provide-Capability>
                     </instructions>
                 </configuration>
             </plugin>

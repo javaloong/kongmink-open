@@ -69,6 +69,7 @@
                             org.pac4j.*,
                             io.buji.pac4j.*
                         </DynamicImport-Package>
+                        <Require-Capability>kongmink.open.rest.auth;filter:="(type=*)"</Require-Capability>
                     </instructions>
                 </configuration>
             </plugin>
