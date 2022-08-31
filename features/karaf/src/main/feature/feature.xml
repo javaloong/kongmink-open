@@ -2,9 +2,10 @@
 <features name="${project.artifactId}-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
-    <repository>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</repository>
     <repository>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.features/${aries.jax.rs.version}/xml</repository>
+    <repository>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</repository>
     <repository>mvn:org.apache.shiro/shiro-features/${shiro.version}/xml/features</repository>
+    <repository>mvn:org.ops4j.pax.jdbc/pax-jdbc-features/${pax.jdbc.version}/xml/features-gpl</repository>
 
     <feature name="kongmink-open-bean-validation" version="${project.version}">
         <bundle start-level="10" dependency="true">mvn:org.apache.geronimo.specs/geronimo-validation_2.0_spec/1.1</bundle>
@@ -16,14 +17,6 @@
         <bundle start-level="30" dependency="true">mvn:org.yaml/snakeyaml/${snakeyaml.version}</bundle>
         <bundle start-level="30" dependency="true">wrap:mvn:org.liquibase/liquibase-core/${liquibase.version}$overwrite=merge&amp;Import-Package=!liquibase.*,*;resolution:=optional</bundle>
         <bundle start-level="30">mvn:org.javaloong.kongmink.open/kongmink-open-liquibase/${project.version}</bundle>
-    </feature>
-
-    <feature name="kongmink-open-transaction" version="${project.version}">
-        <feature dependency="true">transaction-manager-geronimo</feature>
-        <requirement>
-            transaction-manager
-        </requirement>
-        <bundle>mvn:org.apache.aries.tx-control/tx-control-service-xa/1.0.1</bundle>
     </feature>
 
     <feature name="kongmink-open-hibernate-orm" version="${project.version}">
@@ -46,51 +39,29 @@
 
     <feature name="kongmink-open-data-jpa" version="${project.version}">
         <feature version="[2,3)">jpa</feature>
-        <feature>kongmink-open-transaction</feature>
         <feature>kongmink-open-hibernate-orm</feature>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-data-jpa/${project.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-data-jpa-xa-h2" version="${project.version}">
-        <config name="org.apache.aries.tx.control.jpa.xa-h2">
-            osgi.jdbc.driver.class=org.h2.Driver
-            osgi.unit.name=km-open
-            url=jdbc:h2:./data/kongmink_open
-            aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-        </config>
-        <feature>pax-jdbc-h2</feature>
-        <feature>kongmink-open-data-jpa</feature>
-        <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
+    <feature name="kongmink-open-transaction-xa" version="${project.version}">
+        <feature dependency="true">transaction-manager-geronimo</feature>
+        <requirement>
+            transaction-manager
+        </requirement>
+        <bundle>mvn:org.apache.aries.tx-control/tx-control-service-xa/${aries.tx.control.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-data-jpa-xa-mysql" version="${project.version}">
-        <config name="org.apache.aries.tx.control.jpa.xa-mysql">
-            osgi.jdbc.driver.class=com.mysql.jdbc.Driver
+    <feature name="kongmink-open-data-jpa-xa" version="${project.version}">
+        <config name="org.apache.aries.tx.control.jpa.xa-db">
+            osgi.jdbc.driver.class=${env:JDBC_DRIVER:-org.h2.Driver}
             osgi.unit.name=km-open
-            url=jdbc:mysql://localhost:3306/kongmink_open?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
-            user=root
-            password=
-            aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
+            url=${env:JDBC_URL:-jdbc:h2:./data/kongmink_open}
+            user=${env:JDBC_USER}
+            password=${env:JDBC_PASSWORD}
         </config>
-        <feature>kongmink-open-data-jpa</feature>
-        <bundle dependency="true">mvn:mysql/mysql-connector-java/${mysql.version}</bundle>
-        <bundle>mvn:org.ops4j.pax.jdbc/pax-jdbc-mysql/${pax.jdbc.version}</bundle>
-        <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
-    </feature>
-
-    <feature name="kongmink-open-data-jpa-xa-psql" version="${project.version}">
-        <config name="org.apache.aries.tx.control.jpa.xa-psql">
-            osgi.jdbc.driver.class=org.postgresql.Driver
-            osgi.unit.name=km-open
-            url=jdbc:postgresql://localhost:5432/kongmink_open
-            user=postgres
-            password=postgres
-            aries.emf.builder.target.filter=(osgi.unit.provider=org.hibernate.jpa.HibernatePersistenceProvider)
-        </config>
-        <feature>pax-jdbc-postgresql</feature>
-        <feature>kongmink-open-data-jpa</feature>
+        <feature>kongmink-open-transaction-xa</feature>
         <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
     </feature>
 
@@ -223,6 +194,7 @@
         <feature>kongmink-open-am-keycloak</feature>
         <feature>kongmink-open-apim-gravitee</feature>
         <feature>kongmink-open-data-jpa</feature>
+        <feature>kongmink-open-data-jpa-xa</feature>
         <feature>kongmink-open-service</feature>
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
@@ -231,17 +203,17 @@
     </feature>
 
     <feature name="kongmink-open-rest-server-h2" version="${project.version}">
-        <feature>kongmink-open-data-jpa-xa-h2</feature>
+        <feature>pax-jdbc-h2</feature>
         <feature>kongmink-open-rest-server</feature>
     </feature>
 
     <feature name="kongmink-open-rest-server-mysql" version="${project.version}">
-        <feature>kongmink-open-data-jpa-xa-mysql</feature>
+        <feature>pax-jdbc-mysql</feature>
         <feature>kongmink-open-rest-server</feature>
     </feature>
 
-    <feature name="kongmink-open-rest-server-psql" version="${project.version}">
-        <feature>kongmink-open-data-jpa-xa-psql</feature>
+    <feature name="kongmink-open-rest-server-postgresql" version="${project.version}">
+        <feature>pax-jdbc-postgresql</feature>
         <feature>kongmink-open-rest-server</feature>
     </feature>
 

@@ -67,7 +67,6 @@
         <wiremock.version>2.27.2</wiremock.version>
         <database.rider.version>1.32.3</database.rider.version>
         <h2.version>2.1.210</h2.version>
-        <mysql.version>8.0.28</mysql.version>
         <pax.jdbc.version>1.5.3</pax.jdbc.version>
         <pax.exam.version>4.13.4</pax.exam.version>
         <pax.url.version>2.6.7</pax.url.version>
@@ -77,6 +76,7 @@
     </properties>
 
 	<modules>
+        <module>assemblies</module>
         <module>bundles</module>
         <module>features</module>
         <module>itests</module>
@@ -495,6 +495,11 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
