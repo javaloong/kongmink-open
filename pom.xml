@@ -39,8 +39,8 @@
         <javassist.version>3.27.0-GA</javassist.version>
         <caffeine.version>2.9.3</caffeine.version>
         <commons.lang3.version>3.11</commons.lang3.version>
-        <cxf.version>3.4.5</cxf.version>
-        <jackson.version>2.12.5</jackson.version>
+        <cxf.version>3.4.8</cxf.version>
+        <jackson.version>2.13.3</jackson.version>
         <snakeyaml.version>1.30</snakeyaml.version>
         <modelmapper.version>2.4.2</modelmapper.version>
         <modelmapper.jsr310.version>1.2.2</modelmapper.jsr310.version>

@@ -190,23 +190,23 @@ public abstract class PaxExamTestSupport {
 
     protected Option jackson() {
         return composite(
-                mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.jaxrs", "jackson-jaxrs-base", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.jaxrs", "jackson-jaxrs-base", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.jaxrs", "jackson-jaxrs-json-provider", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.jaxrs", "jackson-jaxrs-json-provider", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.jackson.module", "jackson-module-jaxb-annotations", "2.12.5")
+                mavenBundle("com.fasterxml.jackson.module", "jackson-module-jaxb-annotations", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.yaml", "snakeyaml", "1.27")
+                mavenBundle("org.yaml", "snakeyaml", "1.30")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1)
         );
     }
@@ -233,25 +233,25 @@ public abstract class PaxExamTestSupport {
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.aries.spec", "org.apache.aries.javax.jax.rs-api", "1.0.1")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("com.fasterxml.woodstox", "woodstox-core", "6.2.6")
+                mavenBundle("com.fasterxml.woodstox", "woodstox-core", "6.2.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.apache.ws.xmlschema", "xmlschema-core", "2.2.5")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("org.codehaus.woodstox", "stax2-api", "4.2.1")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-core", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-core", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-frontend-jaxrs", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-frontend-jaxrs", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-rs-client", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-rs-client", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-rs-sse", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-rs-sse", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-rs-extension-providers", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-rs-extension-providers", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-security", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-security", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
-                mavenBundle("org.apache.cxf", "cxf-rt-transports-http", "3.4.5")
+                mavenBundle("org.apache.cxf", "cxf-rt-transports-http", "3.4.8")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1)
         );
     }
