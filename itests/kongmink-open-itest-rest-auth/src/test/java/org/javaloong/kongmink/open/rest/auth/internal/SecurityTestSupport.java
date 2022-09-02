@@ -80,6 +80,7 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
     protected Option dummyAuthBundle() {
         return BndDSOptions.fragmentBundle(DummyAuthenticator.class.getSimpleName(),
                 bundle().add(DummyAuthenticator.class)
+                        .set(Constants.PROVIDE_CAPABILITY, "kongmink.open.rest.auth;type=\"dummy\"")
                         .set(Constants.REQUIRE_CAPABILITY, String.format( // Fix osgi.ee=unknown
                                 "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=%s))\"", Runtime.version().feature()))
                         .set(Constants.FRAGMENT_HOST, "org.javaloong.kongmink.open.kongmink-open-rest-auth"));
