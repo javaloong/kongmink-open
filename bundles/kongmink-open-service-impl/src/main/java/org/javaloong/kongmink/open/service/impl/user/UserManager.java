@@ -88,7 +88,7 @@ public class UserManager {
 
     private OPUser mapToUser(User base, UserEntity entity) {
         OPUser user = OPUser.fromUser(base);
-        user.setCreatedTimestamp(entity.getCreatedAt());
+        user.setCreatedAt(entity.getCreatedAt());
         return user;
     }
 }

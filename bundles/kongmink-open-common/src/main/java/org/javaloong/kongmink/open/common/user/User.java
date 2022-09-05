@@ -15,7 +15,7 @@ public class User {
     private boolean enabled;
     private UserProfile profile;
 
-    private LocalDateTime createdTimestamp;
+    private LocalDateTime createdAt;
 
     private Map<String, Object> attributes = Collections.emptyMap();
 
@@ -75,12 +75,12 @@ public class User {
         this.profile = profile;
     }
 
-    public LocalDateTime getCreatedTimestamp() {
-        return createdTimestamp;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedTimestamp(LocalDateTime createdTimestamp) {
-        this.createdTimestamp = createdTimestamp;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Map<String, Object> getAttributes() {

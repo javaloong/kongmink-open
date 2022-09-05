@@ -13,7 +13,7 @@ public class OPUser extends User {
         user.setEmailVerified(base.isEmailVerified());
         user.setEnabled(base.isEnabled());
         user.setProfile(base.getProfile());
-        user.setCreatedTimestamp(base.getCreatedTimestamp());
+        user.setCreatedAt(base.getCreatedAt());
         user.setAttributes(base.getAttributes());
         return user;
     }

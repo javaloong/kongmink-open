@@ -11,7 +11,6 @@ import org.javaloong.kongmink.open.common.user.User;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class TestUtils {
 
@@ -93,7 +92,7 @@ public abstract class TestUtils {
         User user = new User();
         user.setId(id);
         user.setUsername(username);
-        user.setCreatedTimestamp(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
         return user;
     }
 }

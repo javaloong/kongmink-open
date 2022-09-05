@@ -120,7 +120,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
         OPUser user = new OPUser();
         user.setId(id);
         user.setUsername(username);
-        user.setCreatedTimestamp(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
         return user;
     }
 }
