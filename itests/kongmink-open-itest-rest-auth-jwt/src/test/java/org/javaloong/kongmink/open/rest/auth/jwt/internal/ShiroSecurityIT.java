@@ -2,7 +2,6 @@ package org.javaloong.kongmink.open.rest.auth.jwt.internal;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.OPUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -34,7 +33,7 @@ public class ShiroSecurityIT extends SecurityTestSupport {
     @Test
     public void testGetUser() {
         when(userService.loadByUser(any(User.class)))
-                .thenAnswer(invocation -> OPUser.fromUser(invocation.getArgument(0)));
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
         assertThat(given().auth().oauth2(getAccessToken())
                 .get("/user")

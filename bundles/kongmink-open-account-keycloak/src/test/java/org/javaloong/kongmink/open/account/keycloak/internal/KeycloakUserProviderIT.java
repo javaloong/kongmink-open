@@ -54,8 +54,8 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
     }
 
     @Test
-    public void getUser() {
-        User user = userProvider.getUser();
+    public void getDetails() {
+        User user = userProvider.getDetails();
         assertThat(user)
                 .returns("30f3efcc-c3ff-43f8-9b9a-ec3d8d9f6bc9", User::getId)
                 .returns("user1", User::getUsername);
@@ -66,7 +66,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
         UserProfile userProfile = new UserProfile();
         userProfile.setCompanyName("company1");
         userProvider.updateProfile(userProfile);
-        User user = userProvider.getUser();
+        User user = userProvider.getDetails();
         assertThat(user.getProfile().getCompanyName()).isEqualTo("company1");
     }
 
@@ -100,7 +100,7 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
         String email = "user11@example.com";
         UserEmail userEmail = new UserEmail(userId, email);
         userProvider.updateEmail(userEmail);
-        User user = userProvider.getUser();
+        User user = userProvider.getDetails();
         assertThat(user)
                 .returns(email, User::getEmail)
                 .returns(false, User::isEmailVerified);

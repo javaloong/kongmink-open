@@ -20,6 +20,6 @@ public class KeycloakAdminClientIT extends KeycloakMockTestSupport {
     @Test
     public void test_user_provider() {
         assertThat(getService(UserProvider.class)).isNotNull().satisfies(
-                provider -> assertThat(provider.getUser().getUsername()).isEqualTo("user1"));
+                provider -> assertThat(provider.getDetails().getUsername()).isEqualTo("user1"));
     }
 }

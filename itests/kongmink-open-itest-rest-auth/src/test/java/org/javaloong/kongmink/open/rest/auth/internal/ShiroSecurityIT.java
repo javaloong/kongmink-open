@@ -4,7 +4,6 @@ import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.common.client.Client;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.OPUser;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -44,7 +43,7 @@ public class ShiroSecurityIT extends SecurityTestSupport {
     @Test
     public void testAuthenticatedAuthPresent() {
         when(userService.loadByUser(any(User.class)))
-                .thenAnswer(invocation -> OPUser.fromUser(invocation.getArgument(0)));
+                .thenAnswer(invocation -> invocation.getArgument(0));
         assertThat(given().auth().oauth2("user1_token")
                 .get("/user")
                 .then().assertThat()

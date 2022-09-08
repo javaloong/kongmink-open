@@ -5,7 +5,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
-import org.javaloong.kongmink.open.service.model.OPUser;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +31,7 @@ public class UserManager {
         long cacheMaximumSize() default 10_000;
     }
 
-    private final Cache<String, OPUser> cache;
+    private final Cache<String, User> cache;
 
     @Reference
     TransactionControl transactionControl;
@@ -47,11 +46,11 @@ public class UserManager {
                 .build();
     }
 
-    public OPUser loadByUser(User user, boolean useCache) {
+    public User loadByUser(User user, boolean useCache) {
         if (useCache) {
-            return cache.get(user.getId(), key -> mapToUser(user, saveEntity(user)));
+            return cache.get(user.getId(), key -> mergeToUser(user, saveEntity(user)));
         }
-        return mapToUser(user, saveEntity(user));
+        return mergeToUser(user, saveEntity(user));
     }
 
     private UserEntity createEntity(User user) {
@@ -86,8 +85,7 @@ public class UserManager {
         return entity;
     }
 
-    private OPUser mapToUser(User base, UserEntity entity) {
-        OPUser user = OPUser.fromUser(base);
+    private User mergeToUser(User user, UserEntity entity) {
         user.setCreatedAt(entity.getCreatedAt());
         return user;
     }

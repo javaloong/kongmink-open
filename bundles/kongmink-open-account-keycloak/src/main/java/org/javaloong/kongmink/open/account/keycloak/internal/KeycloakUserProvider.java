@@ -27,7 +27,7 @@ public class KeycloakUserProvider implements UserProvider {
     }
 
     @Override
-    public User getUser() {
+    public User getDetails() {
         return UserMapper.mapToUser(getUserRepresentation());
     }
 

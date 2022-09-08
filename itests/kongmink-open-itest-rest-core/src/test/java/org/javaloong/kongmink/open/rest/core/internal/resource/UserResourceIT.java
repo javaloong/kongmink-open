@@ -8,8 +8,7 @@ import org.javaloong.kongmink.open.common.user.UserProfile;
 import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
-import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.OPUser;
+import org.javaloong.kongmink.open.service.AccountService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -34,16 +33,16 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     public static void beforeClass() {
         BundleContext context = FrameworkUtil.getBundle(UserResourceIT.class).getBundleContext();
         registerUserContextProvider(context);
-        context.registerService(UserService.class, Mockito.mock(UserService.class), null);
+        context.registerService(AccountService.class, Mockito.mock(AccountService.class), null);
     }
 
     @Inject
-    UserService userService;
+    AccountService accountService;
 
     @Test
     public void updateProfile_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserProfile> profileCapture = ArgumentCaptor.forClass(UserProfile.class);
-        doNothing().when(userService).updateProfile(profileCapture.capture());
+        doNothing().when(accountService).updateProfile(profileCapture.capture());
         ProfileDto profileDto = new ProfileDto();
         profileDto.setCompanyName("company1");
         given().contentType(ContentType.JSON).body(profileDto)
@@ -68,7 +67,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     @Test
     public void updatePassword_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserPassword> passwordCapture = ArgumentCaptor.forClass(UserPassword.class);
-        doNothing().when(userService).updatePassword(passwordCapture.capture());
+        doNothing().when(accountService).updatePassword(passwordCapture.capture());
         UpdatePasswordDto passwordDto = new UpdatePasswordDto();
         passwordDto.setPassword("111111");
         passwordDto.setPasswordNew("222222");
@@ -94,7 +93,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     @Test
     public void updateEmail_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserEmail> emailCapture = ArgumentCaptor.forClass(UserEmail.class);
-        doNothing().when(userService).updateEmail(emailCapture.capture());
+        doNothing().when(accountService).updateEmail(emailCapture.capture());
         EmailDto emailDto = new EmailDto();
         emailDto.setEmail("user1@test.com");
         given().contentType(ContentType.JSON).body(emailDto)
@@ -106,18 +105,18 @@ public class UserResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void getUser_ShouldReturnHttpStatusOk() {
-        OPUser user = createUser("1", "user1");
-        when(userService.get(any(User.class))).thenReturn(user);
-        OPUser result = get("/user").then().assertThat()
+        User user = createUser("1", "user1");
+        when(accountService.getDetails(any(User.class))).thenReturn(user);
+        User result = get("/user").then().assertThat()
                 .statusCode(Response.Status.OK.getStatusCode())
-                .extract().as(OPUser.class);
+                .extract().as(User.class);
         assertThat(result).isNotNull()
-                .extracting(OPUser::getId, OPUser::getUsername)
+                .extracting(User::getId, User::getUsername)
                 .containsExactly(user.getId(), user.getUsername());
     }
 
-    private OPUser createUser(String id, String username) {
-        OPUser user = new OPUser();
+    private User createUser(String id, String username) {
+        User user = new User();
         user.setId(id);
         user.setUsername(username);
         user.setCreatedAt(LocalDateTime.now());

@@ -6,8 +6,7 @@ import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.model.EmailDto;
 import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
 import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
-import org.javaloong.kongmink.open.service.UserService;
-import org.javaloong.kongmink.open.service.model.OPUser;
+import org.javaloong.kongmink.open.service.AccountService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -35,13 +34,13 @@ public class UserResource {
     static final String RESOURCE_NAME = "user";
 
     @Reference
-    UserService userService;
+    AccountService accountService;
 
     @Path("/profile")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     public Response updateProfile(@Valid ProfileDto profileDto, @Context User user) {
-        userService.updateProfile(profileDto.toUserProfile(user));
+        accountService.updateProfile(profileDto.toUserProfile(user));
         return Response.noContent().build();
     }
 
@@ -49,7 +48,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     public Response updatePassword(@Valid UpdatePasswordDto passwordDto, @Context User user) {
-        userService.updatePassword(passwordDto.toUserPassword(user));
+        accountService.updatePassword(passwordDto.toUserPassword(user));
         return Response.noContent().build();
     }
 
@@ -57,13 +56,13 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     public Response updateEmail(@Valid EmailDto emailDto, @Context User user) {
-        userService.updateEmail(emailDto.toUserEmail(user));
+        accountService.updateEmail(emailDto.toUserEmail(user));
         return Response.noContent().build();
     }
 
     @GET
     public Response getUser(@Context User user) {
-        OPUser result = userService.get(user);
+        User result = accountService.getDetails(user);
         return Response.ok(result).build();
     }
 }
