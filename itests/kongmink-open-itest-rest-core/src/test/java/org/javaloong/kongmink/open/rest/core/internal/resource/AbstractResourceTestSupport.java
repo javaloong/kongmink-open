@@ -13,6 +13,7 @@ import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.options.WrappedUrlProvisionOption;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -33,10 +34,10 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
         RestAssured.baseURI = "http://localhost:8080/api";
         RestAssured.config = RestAssuredConfig.config().objectMapperConfig(
                 new ObjectMapperConfig().jackson2ObjectMapperFactory((cls, charset) -> {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            return objectMapper;
-        }));
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.registerModule(new JavaTimeModule());
+                    return objectMapper;
+                }));
     }
 
     @AfterClass
@@ -70,7 +71,9 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject(),
+                wrappedBundle(mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject())
+                        .overwriteManifest(WrappedUrlProvisionOption.OverwriteMode.MERGE)
+                        .exports("org.javaloong.kongmink.open.rest.core.internal.*"),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
         );

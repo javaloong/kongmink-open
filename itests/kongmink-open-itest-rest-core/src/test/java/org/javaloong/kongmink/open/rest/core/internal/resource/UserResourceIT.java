@@ -5,9 +5,9 @@ import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
-import org.javaloong.kongmink.open.rest.core.model.EmailDto;
-import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
-import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
+import org.javaloong.kongmink.open.rest.core.internal.dto.EmailDTO;
+import org.javaloong.kongmink.open.rest.core.internal.dto.ProfileDTO;
+import org.javaloong.kongmink.open.rest.core.internal.dto.UpdatePasswordDTO;
 import org.javaloong.kongmink.open.service.AccountService;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     public void updateProfile_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserProfile> profileCapture = ArgumentCaptor.forClass(UserProfile.class);
         doNothing().when(accountService).updateProfile(profileCapture.capture());
-        ProfileDto profileDto = new ProfileDto();
+        ProfileDTO profileDto = new ProfileDTO();
         profileDto.setCompanyName("company1");
         given().contentType(ContentType.JSON).body(profileDto)
                 .put("/user/profile").then().assertThat()
@@ -54,7 +54,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void updatePassword_PasswordConfirmNotMatch_ShouldReturnValidationErrors() {
-        UpdatePasswordDto passwordDto = new UpdatePasswordDto();
+        UpdatePasswordDTO passwordDto = new UpdatePasswordDTO();
         passwordDto.setPassword("111111");
         passwordDto.setPasswordNew("222222");
         passwordDto.setPasswordConfirm("333333");
@@ -68,7 +68,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     public void updatePassword_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserPassword> passwordCapture = ArgumentCaptor.forClass(UserPassword.class);
         doNothing().when(accountService).updatePassword(passwordCapture.capture());
-        UpdatePasswordDto passwordDto = new UpdatePasswordDto();
+        UpdatePasswordDTO passwordDto = new UpdatePasswordDTO();
         passwordDto.setPassword("111111");
         passwordDto.setPasswordNew("222222");
         passwordDto.setPasswordConfirm("222222");
@@ -81,7 +81,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void updateEmail_EmailInvalid_ShouldReturnValidationErrors() {
-        EmailDto emailDto = new EmailDto();
+        EmailDTO emailDto = new EmailDTO();
         emailDto.setEmail("user1.test.com");
         assertThat(given().contentType(ContentType.JSON).body(emailDto)
                 .put("/user/email").then().assertThat()
@@ -94,7 +94,7 @@ public class UserResourceIT extends AbstractResourceTestSupport {
     public void updateEmail_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<UserEmail> emailCapture = ArgumentCaptor.forClass(UserEmail.class);
         doNothing().when(accountService).updateEmail(emailCapture.capture());
-        EmailDto emailDto = new EmailDto();
+        EmailDTO emailDto = new EmailDTO();
         emailDto.setEmail("user1@test.com");
         given().contentType(ContentType.JSON).body(emailDto)
                 .put("/user/email").then().assertThat()

@@ -8,8 +8,8 @@ import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.core.model.SubscriptionDto;
-import org.javaloong.kongmink.open.rest.core.security.Roles;
+import org.javaloong.kongmink.open.rest.core.internal.dto.SubscriptionDTO;
+import org.javaloong.kongmink.open.rest.core.internal.security.Roles;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +45,7 @@ public class SubscriptionResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSubscription(@Valid SubscriptionDto subscriptionDto, @Context User user) {
+    public Response createSubscription(@Valid SubscriptionDTO subscriptionDto, @Context User user) {
         Subscription newSubscription = subscriptionService.create(subscriptionDto.toSubscription());
         return Response.ok(newSubscription).status(Response.Status.CREATED).build();
     }

@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.core.security;
+package org.javaloong.kongmink.open.rest.core.internal.security;
 
 public class Roles {
 

@@ -1,11 +1,11 @@
-package org.javaloong.kongmink.open.rest.core.model;
+package org.javaloong.kongmink.open.rest.core.internal.dto;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 
 import javax.validation.constraints.NotEmpty;
 
-public class UpdatePasswordDto extends PasswordDto {
+public class UpdatePasswordDTO extends PasswordDTO {
 
     @NotEmpty
     private String password;

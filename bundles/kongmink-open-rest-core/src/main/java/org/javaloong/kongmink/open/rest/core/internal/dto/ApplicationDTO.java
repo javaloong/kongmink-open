@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.core.model;
+package org.javaloong.kongmink.open.rest.core.internal.dto;
 
 import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
@@ -7,7 +7,7 @@ import org.javaloong.kongmink.open.common.application.ApplicationType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class ApplicationDto {
+public class ApplicationDTO {
 
     @NotEmpty
     private String name;

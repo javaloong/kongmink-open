@@ -3,9 +3,9 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.core.model.EmailDto;
-import org.javaloong.kongmink.open.rest.core.model.ProfileDto;
-import org.javaloong.kongmink.open.rest.core.model.UpdatePasswordDto;
+import org.javaloong.kongmink.open.rest.core.internal.dto.EmailDTO;
+import org.javaloong.kongmink.open.rest.core.internal.dto.ProfileDTO;
+import org.javaloong.kongmink.open.rest.core.internal.dto.UpdatePasswordDTO;
 import org.javaloong.kongmink.open.service.AccountService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +39,7 @@ public class UserResource {
     @Path("/profile")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
-    public Response updateProfile(@Valid ProfileDto profileDto, @Context User user) {
+    public Response updateProfile(@Valid ProfileDTO profileDto, @Context User user) {
         accountService.updateProfile(profileDto.toUserProfile(user));
         return Response.noContent().build();
     }
@@ -47,7 +47,7 @@ public class UserResource {
     @Path("/password")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
-    public Response updatePassword(@Valid UpdatePasswordDto passwordDto, @Context User user) {
+    public Response updatePassword(@Valid UpdatePasswordDTO passwordDto, @Context User user) {
         accountService.updatePassword(passwordDto.toUserPassword(user));
         return Response.noContent().build();
     }
@@ -55,7 +55,7 @@ public class UserResource {
     @Path("/email")
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
-    public Response updateEmail(@Valid EmailDto emailDto, @Context User user) {
+    public Response updateEmail(@Valid EmailDTO emailDto, @Context User user) {
         accountService.updateEmail(emailDto.toUserEmail(user));
         return Response.noContent().build();
     }

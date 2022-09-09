@@ -10,7 +10,7 @@ import org.javaloong.kongmink.open.common.application.ApplicationType;
 import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.rest.core.model.ApplicationDto;
+import org.javaloong.kongmink.open.rest.core.internal.dto.ApplicationDTO;
 import org.javaloong.kongmink.open.service.ApplicationService;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class ApplicationResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void createApplication_NameInvalid_ShouldReturnValidationErrors() {
-        assertThat(given().contentType(ContentType.JSON).body(new ApplicationDto())
+        assertThat(given().contentType(ContentType.JSON).body(new ApplicationDTO())
                 .post("/applications").then().assertThat()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
                 .extract().body().jsonPath())
@@ -60,7 +60,7 @@ public class ApplicationResourceIT extends AbstractResourceTestSupport {
     public void createApplication_ShouldAddApplicationAndReturnHttpStatusCreated() {
         ArgumentCaptor<Application> applicationCapture = ArgumentCaptor.forClass(Application.class);
         when(applicationService.create(any(User.class), applicationCapture.capture())).thenReturn(new Application());
-        ApplicationDto applicationDto = new ApplicationDto();
+        ApplicationDTO applicationDto = new ApplicationDTO();
         applicationDto.setName("application1");
         applicationDto.setApplicationType(ApplicationType.WEB);
         setOAuthApplicationSettings(applicationDto, Collections.singletonList("authorization_code"),
@@ -80,7 +80,7 @@ public class ApplicationResourceIT extends AbstractResourceTestSupport {
     public void updateApplication_ShouldReturnHttpStatusOk() {
         ArgumentCaptor<Application> applicationCapture = ArgumentCaptor.forClass(Application.class);
         doNothing().when(applicationService).update(applicationCapture.capture());
-        ApplicationDto applicationDto = new ApplicationDto();
+        ApplicationDTO applicationDto = new ApplicationDTO();
         applicationDto.setName("application11");
         applicationDto.setApplicationType(ApplicationType.WEB);
         setOAuthApplicationSettings(applicationDto, Collections.singletonList("authorization_code"),
@@ -200,7 +200,7 @@ public class ApplicationResourceIT extends AbstractResourceTestSupport {
         return application;
     }
 
-    private void setOAuthApplicationSettings(ApplicationDto applicationDto,
+    private void setOAuthApplicationSettings(ApplicationDTO applicationDto,
                                              List<String> grantTypes, List<String> redirectUris) {
         ApplicationSettings applicationSettings = new ApplicationSettings();
         OAuthClientSettings oauthSettings = new OAuthClientSettings();

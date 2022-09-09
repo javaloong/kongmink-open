@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.core.model;
+package org.javaloong.kongmink.open.rest.core.internal.dto;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
@@ -6,7 +6,7 @@ import org.javaloong.kongmink.open.common.user.UserEmail;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-public class EmailDto {
+public class EmailDTO {
 
     @NotEmpty
     @Email

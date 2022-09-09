@@ -1,10 +1,10 @@
-package org.javaloong.kongmink.open.rest.core.model;
+package org.javaloong.kongmink.open.rest.core.internal.dto;
 
 import org.javaloong.kongmink.open.apim.model.Subscription;
 
 import javax.validation.constraints.NotEmpty;
 
-public class SubscriptionDto {
+public class SubscriptionDTO {
 
     @NotEmpty
     private String application;

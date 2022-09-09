@@ -1,9 +1,9 @@
-package org.javaloong.kongmink.open.rest.core.model;
+package org.javaloong.kongmink.open.rest.core.internal.dto;
 
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserProfile;
 
-public class ProfileDto {
+public class ProfileDTO {
 
     private String companyName;
     private String companyProvince;

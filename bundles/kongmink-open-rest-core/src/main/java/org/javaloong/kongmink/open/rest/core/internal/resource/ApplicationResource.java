@@ -8,8 +8,8 @@ import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.core.model.ApplicationDto;
-import org.javaloong.kongmink.open.rest.core.security.Roles;
+import org.javaloong.kongmink.open.rest.core.internal.dto.ApplicationDTO;
+import org.javaloong.kongmink.open.rest.core.internal.security.Roles;
 import org.javaloong.kongmink.open.service.ApplicationService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +44,7 @@ public class ApplicationResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createApplication(@Valid ApplicationDto applicationDto, @Context User user) {
+    public Response createApplication(@Valid ApplicationDTO applicationDto, @Context User user) {
         Application newApplication = applicationService.create(user, applicationDto.toApplication());
         return Response.ok(newApplication).status(Response.Status.CREATED).build();
     }
@@ -52,7 +52,7 @@ public class ApplicationResource {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateApplication(@PathParam("id") String id, @Valid ApplicationDto applicationDto,
+    public Response updateApplication(@PathParam("id") String id, @Valid ApplicationDTO applicationDto,
                                       @Context User user) {
         applicationService.update(applicationDto.toApplication(id));
         return Response.noContent().build();

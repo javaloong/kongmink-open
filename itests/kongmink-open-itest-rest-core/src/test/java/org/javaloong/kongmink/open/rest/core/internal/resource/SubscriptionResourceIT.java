@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.apim.model.ApiKey;
 import org.javaloong.kongmink.open.apim.model.Subscription;
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.rest.core.model.SubscriptionDto;
+import org.javaloong.kongmink.open.rest.core.internal.dto.SubscriptionDTO;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class SubscriptionResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void createSubscription_InputInvalid_ShouldReturnValidationErrors() {
-        assertThat(given().contentType(ContentType.JSON).body(new SubscriptionDto())
+        assertThat(given().contentType(ContentType.JSON).body(new SubscriptionDTO())
                 .post("/subscriptions").then().assertThat()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode())
                 .extract().body().jsonPath())
@@ -53,7 +53,7 @@ public class SubscriptionResourceIT extends AbstractResourceTestSupport {
     public void createSubscription_ShouldAddSubscriptionAndReturnHttpStatusCreated() {
         ArgumentCaptor<Subscription> subscriptionArgumentCaptor = ArgumentCaptor.forClass(Subscription.class);
         when(subscriptionService.create(subscriptionArgumentCaptor.capture())).thenReturn(new Subscription());
-        SubscriptionDto subscriptionDto = new SubscriptionDto();
+        SubscriptionDTO subscriptionDto = new SubscriptionDTO();
         subscriptionDto.setApplication("application1");
         subscriptionDto.setPlan("plan1");
         given().contentType(ContentType.JSON).body(subscriptionDto)
