@@ -23,6 +23,8 @@
         <module>kongmink-open-apim-gravitee</module>
         <module>kongmink-open-bean-validator</module>
         <module>kongmink-open-common</module>
+        <module>kongmink-open-core</module>
+        <module>kongmink-open-core-service</module>
         <module>kongmink-open-data</module>
         <module>kongmink-open-data-jpa</module>
         <module>kongmink-open-liquibase</module>
@@ -32,8 +34,6 @@
         <module>kongmink-open-rest-core</module>
         <module>kongmink-open-rest-openapi</module>
         <module>kongmink-open-rest-swagger-ui</module>
-        <module>kongmink-open-service</module>
-		<module>kongmink-open-service-impl</module>
     </modules>
 
 </project>

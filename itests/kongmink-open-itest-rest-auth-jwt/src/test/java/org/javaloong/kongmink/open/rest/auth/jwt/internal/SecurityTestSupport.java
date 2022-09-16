@@ -42,7 +42,7 @@ public abstract class SecurityTestSupport extends PaxExamTestSupport {
         return composite(shiro(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-auth").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-auth-jwt").versionAsInProject().noStart(),

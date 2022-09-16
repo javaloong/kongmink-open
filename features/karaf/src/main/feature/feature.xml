@@ -95,15 +95,19 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-apim-gravitee/${project.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-service" version="${project.version}">
-        <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
+    <feature name="kongmink-open-core" version="${project.version}">
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core/${project.version}</bundle>
+    </feature>
+
+    <feature name="kongmink-open-core-service" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-account-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service/${project.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-service-impl/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-service/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-jax-rs-whiteboard" version="${project.version}">
@@ -143,14 +147,14 @@
     <feature name="kongmink-open-rest-core" version="${project.version}">
         <feature>kongmink-open-jax-rs-whiteboard</feature>
         <feature>kongmink-open-jax-rs-whiteboard-jackson</feature>
-        <feature>kongmink-open-service</feature>
+        <feature>kongmink-open-core</feature>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-core/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-rest-auth" version="${project.version}">
         <feature>shiro-web</feature>
-        <feature>kongmink-open-service</feature>
+        <feature>kongmink-open-core</feature>
         <bundle dependency="true">mvn:commons-beanutils/commons-beanutils/1.9.4</bundle>
         <bundle dependency="true">mvn:commons-collections/commons-collections/3.2.2</bundle>
         <bundle dependency="true">mvn:org.apache.commons/commons-text/1.8</bundle>
@@ -195,7 +199,7 @@
         <feature>kongmink-open-apim-gravitee</feature>
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-data-jpa-xa</feature>
-        <feature>kongmink-open-service</feature>
+        <feature>kongmink-open-core-service</feature>
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>
