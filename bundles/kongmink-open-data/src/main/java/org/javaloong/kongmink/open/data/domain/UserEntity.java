@@ -1,13 +1,17 @@
 package org.javaloong.kongmink.open.data.domain;
 
+import org.javaloong.kongmink.open.data.converter.HashMapConverter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Entity
 @Table(name = "users")
 public class UserEntity extends AbstractEntity<String> {
 
     private String username;
+    private Map<String, Object> configData;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -32,6 +36,16 @@ public class UserEntity extends AbstractEntity<String> {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Column(name = "config_data", length = 4000)
+    @Convert(converter = HashMapConverter.class)
+    public Map<String, Object> getConfigData() {
+        return configData;
+    }
+
+    public void setConfigData(Map<String, Object> configData) {
+        this.configData = configData;
     }
 
     @Column(name = "created_at", nullable = false)

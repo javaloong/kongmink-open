@@ -5,6 +5,7 @@
             <column name="id" type="VARCHAR(36)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK"/>
             </column>
+            <column name="config_data" type="VARCHAR(4000)"/>
             <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>

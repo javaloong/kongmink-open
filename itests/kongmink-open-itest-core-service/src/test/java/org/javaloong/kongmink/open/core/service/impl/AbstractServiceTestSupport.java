@@ -17,7 +17,7 @@ public abstract class AbstractServiceTestSupport extends PaxExamTestSupport {
 
     @Override
     protected Option testBundles() {
-        return composite(
+        return composite(jackson(),
                 mavenBundle("com.github.ben-manes.caffeine", "caffeine").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-account-api").versionAsInProject(),

@@ -9,10 +9,12 @@ import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 @DBUnit(mergeDataSets = true)
 @DataSet(value = {"userData.xml"}, cleanAfter = true, disableConstraints = true)
@@ -46,6 +48,17 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
 
     @Test
     @DataSet(transactional = true)
+    @ExpectedDataSet(value = "updateUserConfigDataExpected.xml", compareOperation = CompareOperation.CONTAINS)
+    public void updateUserConfigData() {
+        getUserRepository().findById("1").ifPresent(user -> {
+            user.setConfigData(Collections.singletonMap("user.application.count", 10));
+            UserEntity result = getUserRepository().update(user);
+            assertThat(result.getConfigData()).contains(entry("user.application.count", 10));
+        });
+    }
+
+    @Test
+    @DataSet(transactional = true)
     public void deleteUser() {
         getUserRepository().delete("3");
         assertThat(getUserRepository().findById("3")).isEmpty();
@@ -54,17 +67,15 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
     @Test
     public void findUserById() {
         Optional<UserEntity> result = getUserRepository().findById("1");
-        assertThat(result).isPresent().hasValueSatisfying(user -> {
-            assertThat(user.getUsername()).isEqualTo("user1");
-        });
+        assertThat(result).isPresent().hasValueSatisfying(user ->
+                assertThat(user.getUsername()).isEqualTo("user1"));
     }
 
     @Test
     public void findUserByUsername() {
         Optional<UserEntity> result = getUserRepository().findByUsername("user2");
-        assertThat(result).isPresent().hasValueSatisfying(user -> {
-            assertThat(user.getId()).isEqualTo("2");
-        });
+        assertThat(result).isPresent().hasValueSatisfying(user ->
+                assertThat(user.getId()).isEqualTo("2"));
     }
 
     @Test
