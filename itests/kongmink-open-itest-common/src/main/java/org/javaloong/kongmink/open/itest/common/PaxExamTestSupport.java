@@ -24,9 +24,10 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.configurationFolde
 @ExamReactorStrategy(PerClass.class)
 public abstract class PaxExamTestSupport {
 
-    protected static final String USE_CONFIG_ADMIN = "USE_CONFIG_ADMIN";
-    protected static final String USE_EVENT_ADMIN = "USE_EVENT_ADMIN";
     protected static final String USE_COORDINATOR = "USE_COORDINATOR";
+    protected static final String USE_CONFIG_ADMIN = "USE_CONFIG_ADMIN";
+    protected static final String USE_CONFIGURATOR = "USER_CONFIGURATOR";
+    protected static final String USE_EVENT_ADMIN = "USE_EVENT_ADMIN";
     protected static final String USE_SCR = "USE_SCR";
     protected static final String USE_JDBC = "USE_JDBC";
     protected static final String USE_JPA = "USE_JPA";
@@ -72,12 +73,14 @@ public abstract class PaxExamTestSupport {
                 useOption(this::txControl, USE_TX_CONTROL),
                 useOption(this::jaxRSWhiteboard, USE_JAX_RS_WHITEBOARD),
                 testBundles(),
-                // Felix config admin
-                useOption(this::configAdmin, USE_CONFIG_ADMIN),
-                // Felix event admin
-                useOption(this::eventAdmin, USE_EVENT_ADMIN),
                 // Felix coordinator
                 useOption(this::coordinator, USE_COORDINATOR),
+                // Felix config admin
+                useOption(this::configAdmin, USE_CONFIG_ADMIN),
+                // Felix configurator
+                useOption(this::configurator, USE_CONFIGURATOR),
+                // Felix event admin
+                useOption(this::eventAdmin, USE_EVENT_ADMIN),
                 // Felix scr
                 useOption(this::scr, USE_SCR)
         };
@@ -94,9 +97,10 @@ public abstract class PaxExamTestSupport {
         settings.put(USE_JPA_PROVIDER, true);
         settings.put(USE_TX_CONTROL, true);
         settings.put(USE_JAX_RS_WHITEBOARD, true);
-        settings.put(USE_CONFIG_ADMIN, true);
-        settings.put(USE_EVENT_ADMIN, false);
         settings.put(USE_COORDINATOR, true);
+        settings.put(USE_CONFIG_ADMIN, true);
+        settings.put(USE_CONFIGURATOR, false);
+        settings.put(USE_EVENT_ADMIN, false);
         settings.put(USE_SCR, true);
         customizeSettings(settings);
         return settings;
@@ -106,18 +110,37 @@ public abstract class PaxExamTestSupport {
         // Override configuration settings
     }
 
+    protected Option coordinator() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.coordinator")
+                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    }
+
+    protected Option converter() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.converter")
+                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    }
+
     protected Option configAdmin() {
         return mavenBundle("org.apache.felix", "org.apache.felix.configadmin")
                 .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
     }
 
-    protected Option eventAdmin() {
-        return mavenBundle("org.apache.felix", "org.apache.felix.eventadmin")
-                .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
+    protected Option configurator() {
+        return composite(
+                converter(),
+                mavenBundle("org.apache.servicemix.specs", "org.apache.servicemix.specs.json-api-1.1", "2.9.0")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("org.apache.felix", "org.apache.felix.cm.json", "1.0.6")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("org.apache.sling", "org.apache.sling.commons.johnzon", "1.2.14")
+                        .startLevel(START_LEVEL_SYSTEM_BUNDLES),
+                mavenBundle("org.apache.felix", "org.apache.felix.configurator")
+                        .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES)
+        );
     }
 
-    protected Option coordinator() {
-        return mavenBundle("org.apache.felix", "org.apache.felix.coordinator")
+    protected Option eventAdmin() {
+        return mavenBundle("org.apache.felix", "org.apache.felix.eventadmin")
                 .versionAsInProject().startLevel(START_LEVEL_SYSTEM_BUNDLES);
     }
 
@@ -182,7 +205,7 @@ public abstract class PaxExamTestSupport {
 
     protected Option ariesJaxRSWhiteboardJackson() {
         return composite(
-                jackson(),
+                jacksonJaxRS(),
                 mavenBundle("org.apache.aries.jax.rs", "org.apache.aries.jax.rs.jackson", "2.0.1")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1)
         );
@@ -195,7 +218,13 @@ public abstract class PaxExamTestSupport {
                 mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.13.3")
-                        .startLevel(START_LEVEL_TEST_BUNDLE - 1),
+                        .startLevel(START_LEVEL_TEST_BUNDLE - 1)
+        );
+    }
+
+    protected Option jacksonJaxRS() {
+        return composite(
+                jackson(),
                 mavenBundle("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.13.3")
                         .startLevel(START_LEVEL_TEST_BUNDLE - 1),
                 mavenBundle("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", "2.13.3")

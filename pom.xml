@@ -23,7 +23,9 @@
         <osgi.tx.control.version>1.0.0</osgi.tx.control.version>
         <felix.framework.version>6.0.5</felix.framework.version>
         <felix.configadmin.version>1.9.22</felix.configadmin.version>
+        <felix.configurator.version>1.0.14</felix.configurator.version>
         <felix.coordinator.version>1.0.2</felix.coordinator.version>
+        <felix.converter.version>1.0.18</felix.converter.version>
         <felix.eventadmin.version>1.6.2</felix.eventadmin.version>
         <felix.scr.version>2.1.30</felix.scr.version>
         <karaf.version>4.3.7</karaf.version>
@@ -121,8 +123,20 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.configurator</artifactId>
+                <version>${felix.configurator.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.coordinator</artifactId>
                 <version>${felix.coordinator.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.converter</artifactId>
+                <version>${felix.converter.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
