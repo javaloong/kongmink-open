@@ -46,6 +46,7 @@
         <snakeyaml.version>1.30</snakeyaml.version>
         <modelmapper.version>2.4.2</modelmapper.version>
         <modelmapper.jsr310.version>1.2.2</modelmapper.jsr310.version>
+        <easy-rules.version>4.1.0</easy-rules.version>
         <liquibase.version>4.12.0</liquibase.version>
         <hibernate.version>5.2.18.Final</hibernate.version>
         <hibernate.jpa-2.1-api.verison>1.0.2.Final</hibernate.jpa-2.1-api.verison>
@@ -250,6 +251,11 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper-module-jsr310</artifactId>
                 <version>${modelmapper.jsr310.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-rules-core</artifactId>
+                <version>${easy-rules.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>

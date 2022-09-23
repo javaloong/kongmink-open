@@ -1,0 +1,61 @@
+package org.javaloong.kongmink.open.core.policy.internal.evaluation;
+
+import org.javaloong.kongmink.open.apim.ApplicationProvider;
+import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.core.config.ConfigConstants;
+import org.javaloong.kongmink.open.core.config.ConfigFactory;
+import org.javaloong.kongmink.open.core.config.ConfigProperties;
+import org.javaloong.kongmink.open.core.policy.AccessControlPolicies;
+import org.javaloong.kongmink.open.core.policy.CommonFields;
+import org.javaloong.kongmink.open.core.policy.evaluation.Policy;
+import org.jeasy.rules.api.Rule;
+import org.jeasy.rules.core.RuleBuilder;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
+
+@Component(service = Policy.class)
+public class UserApplicationCreationPolicy implements Policy<Rule> {
+
+    @Reference
+    ConfigFactory configFactory;
+    @Reference
+    ApplicationProvider applicationProvider;
+
+    @Override
+    public String getName() {
+        return AccessControlPolicies.USER_APPLICATION_CREATION;
+    }
+
+    @Override
+    public List<Rule> getRules() {
+        return Collections.singletonList(userCreateApplicationRule());
+    }
+
+    private Rule userCreateApplicationRule() {
+        return new RuleBuilder()
+                .name("user create application rule")
+                .when(facts -> {
+                    User user = facts.get(CommonFields.SUBJECT);
+                    long userApplicationsCount = getUserApplicationsCount();
+                    int userApplicationsLimit = getUserApplicationsLimit(user.getId());
+                    return userApplicationsCount < userApplicationsLimit;
+                })
+                .then(facts -> facts.put(CommonFields.ALLOW, true))
+                .build();
+    }
+
+    private int getUserApplicationsLimit(String userId) {
+        ConfigProperties configProperties = configFactory.getConfig(userId);
+        return configProperties.get(ConfigConstants.USER_APPLICATIONS_LIMIT, Integer.class);
+    }
+
+    private long getUserApplicationsCount() {
+        Page<Application> result = applicationProvider.findAll(1, 1);
+        return result.getTotalCount();
+    }
+}
