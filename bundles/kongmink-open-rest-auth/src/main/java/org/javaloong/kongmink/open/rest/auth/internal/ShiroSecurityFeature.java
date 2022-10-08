@@ -8,11 +8,9 @@ import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationSelect;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsExtension;
 
 import javax.ws.rs.core.Feature;
-import javax.ws.rs.ext.Provider;
 
 @Component(service = Feature.class)
 @JaxrsExtension
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
-@Provider
 public class ShiroSecurityFeature extends ShiroFeature {
 }

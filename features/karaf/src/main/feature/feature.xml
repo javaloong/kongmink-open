@@ -101,6 +101,18 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-core-config" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-config/${project.version}</bundle>
+    </feature>
+
+    <feature name="kongmink-open-core-policy" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">wrap:mvn:org.jeasy/easy-rules-core/${easy-rules.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-policy/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-core-service" version="${project.version}">
         <feature>kongmink-open-core</feature>
         <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
@@ -180,6 +192,12 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-jwt/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-rest-auth-policy" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth-policy/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-rest-openapi" version="${project.version}">
         <feature>kongmink-open-jax-rs-whiteboard-openapi</feature>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
@@ -199,11 +217,14 @@
         <feature>kongmink-open-apim-gravitee</feature>
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-data-jpa-xa</feature>
+        <feature>kongmink-open-core-config</feature>
+        <feature>kongmink-open-core-policy</feature>
         <feature>kongmink-open-core-service</feature>
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>
         <feature>kongmink-open-rest-auth-jwt</feature>
+        <feature>kongmink-open-rest-auth-policy</feature>
     </feature>
 
     <feature name="kongmink-open-rest-server-h2" version="${project.version}">

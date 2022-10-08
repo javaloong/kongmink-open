@@ -7,6 +7,8 @@ import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.core.policy.AccessControlPolicies;
+import org.javaloong.kongmink.open.core.policy.annotation.Policy;
 import org.javaloong.kongmink.open.core.service.ApplicationService;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.internal.dto.ApplicationDTO;
@@ -42,6 +44,7 @@ public class ApplicationResource {
     @Reference
     ApplicationService applicationService;
 
+    @Policy(AccessControlPolicies.USER_APPLICATION_CREATION)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createApplication(@Valid ApplicationDTO applicationDto, @Context User user) {

@@ -33,6 +33,7 @@
         <module>kongmink-open-rest</module>
         <module>kongmink-open-rest-auth</module>
         <module>kongmink-open-rest-auth-jwt</module>
+        <module>kongmink-open-rest-auth-policy</module>
         <module>kongmink-open-rest-core</module>
         <module>kongmink-open-rest-openapi</module>
         <module>kongmink-open-rest-swagger-ui</module>
