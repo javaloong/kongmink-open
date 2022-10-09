@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.liquibase;
+package org.javaloong.kongmink.open.liquibase.extender;
 
 public class LiquibaseExtenderException extends Exception {
 

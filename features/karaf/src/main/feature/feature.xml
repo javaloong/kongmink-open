@@ -13,10 +13,10 @@
         <bundle start-level="20">mvn:org.javaloong.kongmink.open/kongmink-open-bean-validator/${project.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-liquibase" version="${project.version}">
+    <feature name="kongmink-open-liquibase-extender" version="${project.version}">
         <bundle start-level="30" dependency="true">mvn:org.yaml/snakeyaml/${snakeyaml.version}</bundle>
         <bundle start-level="30" dependency="true">wrap:mvn:org.liquibase/liquibase-core/${liquibase.version}$overwrite=merge&amp;Import-Package=!liquibase.*,*;resolution:=optional</bundle>
-        <bundle start-level="30">mvn:org.javaloong.kongmink.open/kongmink-open-liquibase/${project.version}</bundle>
+        <bundle start-level="30">mvn:org.javaloong.kongmink.open/kongmink-open-liquibase-extender/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-hibernate-orm" version="${project.version}">
@@ -211,7 +211,7 @@
 
     <feature name="kongmink-open-rest-server" version="${project.version}">
         <feature>kongmink-open-bean-validation</feature>
-        <feature>kongmink-open-liquibase</feature>
+        <feature>kongmink-open-liquibase-extender</feature>
         <feature>kongmink-open-account-keycloak</feature>
         <feature>kongmink-open-am-keycloak</feature>
         <feature>kongmink-open-apim-gravitee</feature>

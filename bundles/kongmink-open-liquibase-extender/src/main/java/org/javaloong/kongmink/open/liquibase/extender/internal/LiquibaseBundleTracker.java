@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.liquibase.internal;
+package org.javaloong.kongmink.open.liquibase.extender.internal;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -7,7 +7,7 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ResourceAccessor;
-import org.javaloong.kongmink.open.liquibase.LiquibaseExtenderException;
+import org.javaloong.kongmink.open.liquibase.extender.LiquibaseExtenderException;
 import org.osgi.framework.*;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;

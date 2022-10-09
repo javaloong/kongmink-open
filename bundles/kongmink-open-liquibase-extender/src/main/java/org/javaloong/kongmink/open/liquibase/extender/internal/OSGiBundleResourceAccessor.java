@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.liquibase.internal;
+package org.javaloong.kongmink.open.liquibase.extender.internal;
 
 import liquibase.resource.OSGiResourceAccessor;
 import org.osgi.framework.Bundle;
