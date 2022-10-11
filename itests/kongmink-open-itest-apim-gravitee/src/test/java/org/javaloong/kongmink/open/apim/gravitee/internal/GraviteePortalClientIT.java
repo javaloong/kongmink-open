@@ -3,8 +3,8 @@ package org.javaloong.kongmink.open.apim.gravitee.internal;
 import org.javaloong.kongmink.open.apim.*;
 import org.javaloong.kongmink.open.apim.model.ApiUser;
 import org.javaloong.kongmink.open.apim.model.Category;
-import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
 import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
@@ -17,7 +17,7 @@ public class GraviteePortalClientIT extends GraviteeMockTestSupport {
     @BeforeClass
     public static void beforeClass() {
         BundleContext bundleContext = FrameworkUtil.getBundle(GraviteePortalClientIT.class).getBundleContext();
-        bundleContext.registerService(SecurityContextProvider.class, new DummySecurityContextProvider(), null);
+        bundleContext.registerService(UserTokenProvider.class, new DummyUserTokenProvider(), null);
     }
 
     @Test

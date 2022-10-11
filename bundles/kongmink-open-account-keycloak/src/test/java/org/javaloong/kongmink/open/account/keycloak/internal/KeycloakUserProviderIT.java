@@ -11,11 +11,11 @@ import org.javaloong.kongmink.open.account.UserProvider;
 import org.javaloong.kongmink.open.account.exception.UserException;
 import org.javaloong.kongmink.open.account.keycloak.internal.exception.NotImplementedException;
 import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties;
-import org.javaloong.kongmink.open.common.auth.SecurityContext;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.common.user.UserEmail;
 import org.javaloong.kongmink.open.common.user.UserPassword;
 import org.javaloong.kongmink.open.common.user.UserProfile;
+import org.javaloong.kongmink.open.core.auth.UserToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.osgi.util.converter.Converters;
@@ -45,10 +45,10 @@ public class KeycloakUserProviderIT extends EmbeddedKeycloakTestSupport {
         KeycloakAccountClientConfiguration config = createAccountClientConfig(jetty);
         String token = getToken(config);
         KeycloakAccountClient accountClient = new KeycloakAccountClient(config);
-        accountClient.securityContextProvider = () -> {
-            SecurityContext securityContext = new SecurityContext();
-            securityContext.setToken(token);
-            return securityContext;
+        accountClient.userTokenProvider = () -> {
+            UserToken userToken = new UserToken();
+            userToken.setToken(token);
+            return userToken;
         };
         userProvider = new KeycloakUserProvider(accountClient);
     }

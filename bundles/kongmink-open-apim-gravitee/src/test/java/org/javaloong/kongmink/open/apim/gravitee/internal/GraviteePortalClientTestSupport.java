@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
-import org.javaloong.kongmink.open.common.auth.SecurityContext;
+import org.javaloong.kongmink.open.core.auth.UserToken;
 import org.osgi.util.converter.Converters;
 
 import java.util.HashMap;
@@ -12,14 +12,14 @@ public abstract class GraviteePortalClientTestSupport {
 
     public GraviteePortalClient createPortalClient() {
         GraviteePortalClient client = new GraviteePortalClient(createPortalClientConfig());
-        client.securityContextProvider = this::createSecurityContext;
+        client.userTokenProvider = this::createUserToken;
         return client;
     }
 
-    public SecurityContext createSecurityContext() {
-        SecurityContext securityContext = new SecurityContext();
-        securityContext.setToken(getToken());
-        return securityContext;
+    public UserToken createUserToken() {
+        UserToken userToken = new UserToken();
+        userToken.setToken(getToken());
+        return userToken;
     }
 
     protected String getToken() {

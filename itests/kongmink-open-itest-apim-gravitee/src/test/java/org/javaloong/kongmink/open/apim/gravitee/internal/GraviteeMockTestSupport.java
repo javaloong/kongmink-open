@@ -54,6 +54,7 @@ public abstract class GraviteeMockTestSupport extends PaxExamTestSupport {
                 wrappedBundle(mavenBundle("org.modelmapper", "modelmapper-module-jsr310").versionAsInProject()),
                 mavenBundle("com.github.ben-manes.caffeine", "caffeine").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-gravitee").versionAsInProject(),
 

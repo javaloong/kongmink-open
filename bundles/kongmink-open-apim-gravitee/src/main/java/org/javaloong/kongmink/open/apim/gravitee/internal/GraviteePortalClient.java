@@ -16,7 +16,7 @@ import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.apache.cxf.transport.http.auth.HttpAuthSupplier;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.TokenEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.*;
-import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
+import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -55,7 +55,7 @@ public class GraviteePortalClient {
     private final GraviteePortalClientConfiguration config;
 
     @Reference
-    SecurityContextProvider securityContextProvider;
+    UserTokenProvider userTokenProvider;
 
     GraviteeTokenManager tokenManager;
 
@@ -99,7 +99,7 @@ public class GraviteePortalClient {
     }
 
     public TokenEntity tokenExchange() {
-        String accessToken = securityContextProvider.getContext().getToken();
+        String accessToken = userTokenProvider.getUserToken().getToken();
         return tokenManager.getToken(accessToken, token -> {
             AuthResource authResource = environmentsResource.getAuthResource();
             return authResource.getOAuth2AuthenticationResource(config.identityProvider())

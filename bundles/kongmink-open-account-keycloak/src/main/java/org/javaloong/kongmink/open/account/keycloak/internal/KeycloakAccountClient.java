@@ -15,7 +15,7 @@ import org.apache.cxf.transport.http.HTTPConduitConfigurer;
 import org.apache.cxf.transport.http.auth.HttpAuthSupplier;
 import org.javaloong.kongmink.open.account.keycloak.internal.resource.AccountRealmsResource;
 import org.javaloong.kongmink.open.account.keycloak.internal.resource.AccountRestService;
-import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
+import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -48,7 +48,7 @@ public class KeycloakAccountClient {
     private final KeycloakAccountClientConfiguration config;
 
     @Reference
-    SecurityContextProvider securityContextProvider;
+    UserTokenProvider userTokenProvider;
 
     AccountRealmsResource accountRealmsResource;
 
@@ -111,7 +111,7 @@ public class KeycloakAccountClient {
 
         @Override
         public String getAuthorization(AuthorizationPolicy authPolicy, URI uri, Message message, String fullHeader) {
-            return "Bearer " + securityContextProvider.getContext().getToken();
+            return "Bearer " + userTokenProvider.getUserToken().getToken();
         }
     }
 
