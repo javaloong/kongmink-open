@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
 import org.javaloong.kongmink.open.common.client.Client;
-import org.javaloong.kongmink.open.core.policy.annotation.Fact;
-import org.javaloong.kongmink.open.core.policy.annotation.Policy;
+import org.javaloong.kongmink.open.core.auth.policy.annotation.Fact;
+import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;

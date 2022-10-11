@@ -2,9 +2,9 @@ package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.Phase;
-import org.javaloong.kongmink.open.core.policy.annotation.Fact;
-import org.javaloong.kongmink.open.core.policy.annotation.Policy;
-import org.javaloong.kongmink.open.core.policy.evaluation.PolicyEvaluator;
+import org.javaloong.kongmink.open.core.auth.policy.annotation.Fact;
+import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 
 import javax.ws.rs.ForbiddenException;
 import java.lang.reflect.Method;

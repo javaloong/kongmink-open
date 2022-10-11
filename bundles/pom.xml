@@ -24,8 +24,8 @@
         <module>kongmink-open-bean-validator</module>
         <module>kongmink-open-common</module>
         <module>kongmink-open-core</module>
+        <module>kongmink-open-core-auth-policy</module>
         <module>kongmink-open-core-config</module>
-        <module>kongmink-open-core-policy</module>
         <module>kongmink-open-core-service</module>
         <module>kongmink-open-data</module>
         <module>kongmink-open-data-jpa</module>

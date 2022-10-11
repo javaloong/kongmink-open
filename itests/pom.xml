@@ -23,8 +23,8 @@
         <module>kongmink-open-itest-apim-gravitee</module>
         <module>kongmink-open-itest-common</module>
         <module>kongmink-open-itest-core</module>
+        <module>kongmink-open-itest-core-auth-policy</module>
         <module>kongmink-open-itest-core-config</module>
-        <module>kongmink-open-itest-core-policy</module>
 		<module>kongmink-open-itest-core-service</module>
         <module>kongmink-open-itest-karaf</module>
         <module>kongmink-open-itest-rest-auth</module>

@@ -5,7 +5,7 @@ import org.apache.cxf.logging.FaultListener;
 import org.apache.cxf.logging.NoOpFaultListener;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
-import org.javaloong.kongmink.open.core.policy.evaluation.PolicyEvaluator;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;

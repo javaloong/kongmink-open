@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.rest.auth.jwt.internal;
 
 import org.apache.shiro.authz.annotation.RequiresUser;
-import org.javaloong.kongmink.open.common.auth.SecurityContextProvider;
 import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 public class TestUserResource {
 
     @Reference
-    SecurityContextProvider securityContextProvider;
+    UserTokenProvider userTokenProvider;
 
     @RequiresUser
     @GET
@@ -39,7 +39,7 @@ public class TestUserResource {
     @GET
     @Path("/token")
     public Response getUserToken() {
-        String token = securityContextProvider.getContext().getToken();
+        String token = userTokenProvider.getUserToken().getToken();
         return Response.ok(token).build();
     }
 }

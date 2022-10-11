@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
-import org.javaloong.kongmink.open.core.policy.evaluation.PolicyEvaluator;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
