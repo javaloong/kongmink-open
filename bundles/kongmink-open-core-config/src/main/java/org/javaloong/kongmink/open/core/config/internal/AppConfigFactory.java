@@ -1,12 +1,13 @@
 package org.javaloong.kongmink.open.core.config.internal;
 
-import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.javaloong.kongmink.open.core.config.ConfigFactory;
+import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.transaction.control.TransactionControl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class AppConfigFactory implements ConfigFactory {
 
     private Map<String, Object> configMap;
 
+    @Reference
+    TransactionControl transactionControl;
     @Reference
     UserRepository userRepository;
 
@@ -40,12 +43,14 @@ public class AppConfigFactory implements ConfigFactory {
 
     @Override
     public ConfigProperties getConfig(String userId) {
-        Map<String, Object> userConfigMap = new HashMap<>(configMap);
-        userRepository.findById(userId).ifPresent(user -> {
-            if (user.getConfigData() != null) {
-                user.getConfigData().forEach(userConfigMap::put);
-            }
+        return transactionControl.supports(() -> {
+            Map<String, Object> userConfigMap = new HashMap<>(configMap);
+            userRepository.findById(userId).ifPresent(user -> {
+                if (user.getConfigData() != null) {
+                    user.getConfigData().forEach(userConfigMap::put);
+                }
+            });
+            return new ConfigProperties(userConfigMap);
         });
-        return new ConfigProperties(userConfigMap);
     }
 }

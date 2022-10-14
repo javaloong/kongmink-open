@@ -5,9 +5,12 @@ import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.osgi.service.transaction.control.TransactionControl;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -19,14 +22,17 @@ import static org.mockito.Mockito.when;
 public class AppConfigFactoryTest {
 
     private UserRepository userRepository;
+    private TransactionControl transactionControl;
 
     private AppConfigFactory appConfigFactory;
 
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
+        transactionControl = mock(TransactionControl.class);
         appConfigFactory = new AppConfigFactory();
         appConfigFactory.userRepository = userRepository;
+        appConfigFactory.transactionControl = transactionControl;
         appConfigFactory.activate(Collections.singletonMap(USER_APPLICATIONS_LIMIT, 1));
     }
 
@@ -38,6 +44,10 @@ public class AppConfigFactoryTest {
 
     @Test
     public void testGetConfigByUser() {
+        when(transactionControl.supports(ArgumentMatchers.any())).thenAnswer(invocation -> {
+            Callable<?> work = invocation.getArgument(0);
+            return work.call();
+        });
         UserEntity userEntity = createUserEntity();
         when(userRepository.findById(anyString())).thenReturn(Optional.of(userEntity));
         ConfigProperties configProperties = appConfigFactory.getConfig("1");
