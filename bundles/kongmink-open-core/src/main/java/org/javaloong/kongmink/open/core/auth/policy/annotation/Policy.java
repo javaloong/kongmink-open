@@ -9,5 +9,5 @@ public @interface Policy {
 
     String value();
 
-    String message() default "Operation Not Allowed";
+    String message() default "{error.notAuthorized}";
 }

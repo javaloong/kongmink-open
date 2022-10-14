@@ -6,6 +6,7 @@ import org.apache.cxf.logging.NoOpFaultListener;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
+import org.javaloong.kongmink.open.core.i18n.TranslationProvider;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -16,8 +17,8 @@ import java.util.List;
 public class PolicyAuthorizationFilter extends PolicyAuthorizationInInterceptor
         implements ContainerRequestFilter {
 
-    public PolicyAuthorizationFilter(PolicyEvaluator policyEvaluator) {
-        super(policyEvaluator);
+    public PolicyAuthorizationFilter(PolicyEvaluator policyEvaluator, TranslationProvider i18nProvider) {
+        super(policyEvaluator, i18nProvider);
     }
 
     @Override
@@ -32,6 +33,7 @@ public class PolicyAuthorizationFilter extends PolicyAuthorizationInInterceptor
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+        setLocale(requestContext.getLanguage());
         InterceptorChain chain = PhaseInterceptorChain.getCurrentMessage().getInterceptorChain();
         chain.add(this);
     }

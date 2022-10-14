@@ -45,7 +45,7 @@ public class PolicySecurityIT extends SecurityTestSupport {
         when(policyEvaluator.evaluate(any(String.class), anyMap())).thenReturn(true);
 
         Client client = new Client();
-        client.setName("aaaaa");
+        client.setName("test");
         given().contentType(ContentType.JSON).body(client)
                 .post("/clients").then().assertThat()
                 .statusCode(Response.Status.CREATED.getStatusCode());

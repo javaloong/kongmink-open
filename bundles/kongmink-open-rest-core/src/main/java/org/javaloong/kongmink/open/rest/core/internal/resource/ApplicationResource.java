@@ -44,7 +44,7 @@ public class ApplicationResource {
     @Reference
     ApplicationService applicationService;
 
-    @Policy(AccessControlPolicies.USER_APPLICATION_CREATION)
+    @Policy(value = AccessControlPolicies.USER_APPLICATION_CREATION, message = "{error.userApplicationCreationLimit}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createApplication(@Valid ApplicationDTO applicationDto, @Context User user) {
