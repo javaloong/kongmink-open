@@ -1,6 +1,7 @@
 package org.javaloong.kongmink.open.core.auth.policy.internal.evaluation;
 
 import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.Policy;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluationException;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
@@ -28,14 +29,14 @@ public class EasyRulesPolicyEvaluatorTest {
 
     @Test
     public void testEvaluateWhenPolicyDoesNotExist() {
-        assertThatThrownBy(() -> policyEvaluator.evaluate("TEST2", Collections.emptyMap()))
+        assertThatThrownBy(() -> policyEvaluator.evaluate("TEST2", new EvaluationContext()))
                 .isInstanceOf(PolicyEvaluationException.class)
                 .hasMessage("Unable to find policy: TEST2");
     }
 
     @Test
     public void testEvaluate() {
-        assertThat(policyEvaluator.evaluate("TEST", Collections.emptyMap())).isTrue();
+        assertThat(policyEvaluator.evaluate("TEST", new EvaluationContext())).isTrue();
     }
 
     static class TestPolicy implements Policy<Rule> {

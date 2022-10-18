@@ -4,12 +4,13 @@ import org.javaloong.kongmink.open.apim.ApplicationProvider;
 import org.javaloong.kongmink.open.apim.model.Application;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.core.auth.policy.AccessControlPolicies;
+import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.javaloong.kongmink.open.core.config.ConfigConstants;
 import org.javaloong.kongmink.open.core.config.ConfigFactory;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
-import org.javaloong.kongmink.open.core.auth.policy.AccessControlPolicies;
-import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
-import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -18,7 +19,6 @@ import org.osgi.framework.FrameworkUtil;
 
 import javax.inject.Inject;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,12 +46,12 @@ public class UserApplicationCreationPolicyIT extends AbstractTestSupport {
     public void testEvaluate() {
         when(configFactory.getConfig(anyString())).thenReturn(createConfig());
         when(applicationProvider.findAll(anyInt(), anyInt())).thenReturn(createPage(0));
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put(CommonFields.SUBJECT, createUser());
-        boolean result = policyEvaluator.evaluate(AccessControlPolicies.USER_APPLICATION_CREATION, attributes);
+        EvaluationContext evaluationContext = new EvaluationContext();
+        evaluationContext.setAttribute(CommonFields.SUBJECT, createUser());
+        boolean result = policyEvaluator.evaluate(AccessControlPolicies.USER_APPLICATION_CREATION, evaluationContext);
         assertThat(result).isTrue();
         when(applicationProvider.findAll(anyInt(), anyInt())).thenReturn(createPage(1));
-        result = policyEvaluator.evaluate(AccessControlPolicies.USER_APPLICATION_CREATION, attributes);
+        result = policyEvaluator.evaluate(AccessControlPolicies.USER_APPLICATION_CREATION, evaluationContext);
         assertThat(result).isFalse();
     }
 

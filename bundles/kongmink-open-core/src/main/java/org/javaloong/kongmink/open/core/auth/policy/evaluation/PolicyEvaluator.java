@@ -1,10 +1,8 @@
 package org.javaloong.kongmink.open.core.auth.policy.evaluation;
 
-import java.util.Map;
-
 public interface PolicyEvaluator {
 
-    boolean evaluate(String name, Map<String, Object> attributes);
+    boolean evaluate(String name, EvaluationContext evaluationContext);
 
-    boolean evaluate(Policy<?> policy, Map<String, Object> attributes);
+    boolean evaluate(Policy<?> policy, EvaluationContext evaluationContext);
 }

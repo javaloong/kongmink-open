@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
 import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import javax.ws.rs.core.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.when;
 import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.tinybundles.core.TinyBundles.bundle;
@@ -33,7 +33,7 @@ public class PolicySecurityIT extends SecurityTestSupport {
 
     @Test
     public void testPolicyNoAuthPermission() {
-        when(policyEvaluator.evaluate(any(String.class), anyMap())).thenReturn(false);
+        when(policyEvaluator.evaluate(any(String.class), any(EvaluationContext.class))).thenReturn(false);
 
         given().contentType(ContentType.JSON).body(new Client())
                 .post("/clients").then().assertThat()
@@ -42,7 +42,7 @@ public class PolicySecurityIT extends SecurityTestSupport {
 
     @Test
     public void testPolicyAuthPermission() {
-        when(policyEvaluator.evaluate(any(String.class), anyMap())).thenReturn(true);
+        when(policyEvaluator.evaluate(any(String.class), any(EvaluationContext.class))).thenReturn(true);
 
         Client client = new Client();
         client.setName("test");

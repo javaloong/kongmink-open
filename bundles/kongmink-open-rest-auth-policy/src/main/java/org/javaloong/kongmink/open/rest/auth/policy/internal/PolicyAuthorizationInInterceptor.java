@@ -6,6 +6,7 @@ import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Fact;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.javaloong.kongmink.open.core.i18n.TranslationProvider;
 import org.osgi.framework.Bundle;
@@ -37,11 +38,11 @@ public class PolicyAuthorizationInInterceptor extends AbstractPolicyAuthorizatio
         Policy methodPolicySpec = method.getAnnotation(Policy.class);
         if (methodPolicySpec == null) return;
 
-        boolean hasPermission = policyEvaluator.evaluate(methodPolicySpec.value(),
-                createAttributes(method, arguments));
+        EvaluationContext evaluationContext = new EvaluationContext(createAttributes(method, arguments));
+        boolean hasPermission = policyEvaluator.evaluate(methodPolicySpec.value(), evaluationContext);
         if (!hasPermission) {
             throw new ForbiddenException(getLocalizedMessage(resourceInstance.getClass(),
-                    methodPolicySpec.message(), locale, arguments.toArray()));
+                    methodPolicySpec.message(), locale, evaluationContext.getMessageParameters()));
         }
     }
 

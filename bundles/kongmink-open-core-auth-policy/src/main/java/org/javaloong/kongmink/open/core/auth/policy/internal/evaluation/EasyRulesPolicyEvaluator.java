@@ -1,5 +1,6 @@
 package org.javaloong.kongmink.open.core.auth.policy.internal.evaluation;
 
+import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.Policy;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluationException;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component(service = PolicyEvaluator.class)
@@ -45,19 +47,22 @@ public class EasyRulesPolicyEvaluator implements PolicyEvaluator {
     }
 
     @Override
-    public boolean evaluate(String name, Map<String, Object> attributes) {
+    public boolean evaluate(String name, EvaluationContext evaluationContext) {
+        Objects.requireNonNull(name, "Name must not be null");
         if (!policies.containsKey(name)) {
             throw new PolicyEvaluationException("Unable to find policy: " + name);
         }
         Policy<?> policy = policies.get(name);
-        return evaluate(policy, attributes);
+        return evaluate(policy, evaluationContext);
     }
 
     @Override
-    public boolean evaluate(Policy<?> policy, Map<String, Object> attributes) {
+    public boolean evaluate(Policy<?> policy, EvaluationContext evaluationContext) {
+        Objects.requireNonNull(policy, "Policy must not be null");
+        Objects.requireNonNull(evaluationContext, "EvaluationContext must not be null");
         Rules rules = new Rules();
         policy.getRules().forEach(rules::register);
-        AttributeBasedFacts facts = new AttributeBasedFacts(attributes);
+        AttributeBasedFacts facts = new AttributeBasedFacts(evaluationContext);
         rulesEngine.fire(rules, facts.getFacts());
         return facts.hasPermission();
     }
