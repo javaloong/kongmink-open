@@ -9,7 +9,7 @@ import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.Policy;
 import org.javaloong.kongmink.open.core.config.ConfigConstants;
-import org.javaloong.kongmink.open.core.config.ConfigFactory;
+import org.javaloong.kongmink.open.core.config.ConfigManager;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rule;
@@ -24,7 +24,7 @@ import java.util.List;
 public class UserApplicationCreationPolicy implements Policy<Rule> {
 
     @Reference
-    ConfigFactory configFactory;
+    ConfigManager configManager;
     @Reference
     ApplicationProvider applicationProvider;
 
@@ -59,7 +59,7 @@ public class UserApplicationCreationPolicy implements Policy<Rule> {
     }
 
     private int getUserApplicationsLimit(String userId) {
-        ConfigProperties configProperties = configFactory.getConfig(userId);
+        ConfigProperties configProperties = configManager.getConfig(userId);
         return configProperties.get(ConfigConstants.USER_APPLICATIONS_LIMIT, Integer.class);
     }
 

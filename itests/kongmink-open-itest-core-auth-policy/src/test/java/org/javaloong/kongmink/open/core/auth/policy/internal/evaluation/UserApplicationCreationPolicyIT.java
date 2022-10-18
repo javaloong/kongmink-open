@@ -9,7 +9,7 @@ import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.javaloong.kongmink.open.core.config.ConfigConstants;
-import org.javaloong.kongmink.open.core.config.ConfigFactory;
+import org.javaloong.kongmink.open.core.config.ConfigManager;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,12 +31,12 @@ public class UserApplicationCreationPolicyIT extends AbstractTestSupport {
     @BeforeClass
     public static void beforeClass() {
         BundleContext context = FrameworkUtil.getBundle(UserApplicationCreationPolicyIT.class).getBundleContext();
-        context.registerService(ConfigFactory.class, Mockito.mock(ConfigFactory.class), null);
+        context.registerService(ConfigManager.class, Mockito.mock(ConfigManager.class), null);
         context.registerService(ApplicationProvider.class, Mockito.mock(ApplicationProvider.class), null);
     }
 
     @Inject
-    ConfigFactory configFactory;
+    ConfigManager configFactory;
     @Inject
     ApplicationProvider applicationProvider;
     @Inject

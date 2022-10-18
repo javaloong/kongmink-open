@@ -1,56 +1,49 @@
 package org.javaloong.kongmink.open.core.config.internal;
 
+import org.javaloong.kongmink.open.core.config.ConfigManager;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.osgi.service.transaction.control.TransactionControl;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.javaloong.kongmink.open.core.config.ConfigConstants.USER_APPLICATIONS_LIMIT;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AppConfigFactoryTest {
+public class ConfigManagerImplIT extends AbstractTestSupport {
 
-    private UserRepository userRepository;
-    private TransactionControl transactionControl;
-
-    private AppConfigFactory appConfigFactory;
-
-    @BeforeEach
-    public void setUp() {
-        userRepository = mock(UserRepository.class);
-        transactionControl = mock(TransactionControl.class);
-        appConfigFactory = new AppConfigFactory();
-        appConfigFactory.userRepository = userRepository;
-        appConfigFactory.transactionControl = transactionControl;
-        appConfigFactory.activate(Collections.singletonMap(USER_APPLICATIONS_LIMIT, 1));
+    @BeforeClass
+    public static void beforeClass() {
+        BundleContext context = FrameworkUtil.getBundle(ConfigManagerImplIT.class).getBundleContext();
+        context.registerService(UserRepository.class, Mockito.mock(UserRepository.class), null);
     }
+
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    ConfigManager configManager;
 
     @Test
     public void testGetConfig() {
-        ConfigProperties configProperties = appConfigFactory.getConfig();
+        ConfigProperties configProperties = configManager.getConfig();
         assertThat(configProperties).contains(entry(USER_APPLICATIONS_LIMIT, 1));
     }
 
     @Test
     public void testGetConfigByUser() {
-        when(transactionControl.supports(ArgumentMatchers.any())).thenAnswer(invocation -> {
-            Callable<?> work = invocation.getArgument(0);
-            return work.call();
-        });
         UserEntity userEntity = createUserEntity();
         when(userRepository.findById(anyString())).thenReturn(Optional.of(userEntity));
-        ConfigProperties configProperties = appConfigFactory.getConfig("1");
+        ConfigProperties configProperties = configManager.getConfig("1");
         assertThat(configProperties).contains(entry(USER_APPLICATIONS_LIMIT, 10));
     }
 

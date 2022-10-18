@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.core.config;
 
-public interface ConfigFactory {
+public interface ConfigManager {
 
     ConfigProperties getConfig();
 

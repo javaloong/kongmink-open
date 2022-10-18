@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.core.config.internal;
 
-import org.javaloong.kongmink.open.core.config.ConfigFactory;
+import org.javaloong.kongmink.open.core.config.ConfigManager;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.osgi.service.component.annotations.Activate;
@@ -12,12 +12,10 @@ import org.osgi.service.transaction.control.TransactionControl;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.javaloong.kongmink.open.core.config.internal.AppConfigFactory.APP_CONFIG_FACTORY_PID;
+@Component(service = ConfigManager.class, configurationPid = ConfigManagerImpl.CONFIGURATION_PID)
+public class ConfigManagerImpl implements ConfigManager {
 
-@Component(service = ConfigFactory.class, configurationPid = APP_CONFIG_FACTORY_PID)
-public class AppConfigFactory implements ConfigFactory {
-
-    public static final String APP_CONFIG_FACTORY_PID = "org.javaloong.kongmink.open.core.config";
+    public static final String CONFIGURATION_PID = "org.javaloong.kongmink.open.config";
 
     private Map<String, Object> configMap;
 
