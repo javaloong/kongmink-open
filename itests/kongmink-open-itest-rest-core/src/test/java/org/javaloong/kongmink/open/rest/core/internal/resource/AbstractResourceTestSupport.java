@@ -13,7 +13,6 @@ import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.ops4j.pax.exam.Option;
-import org.ops4j.pax.exam.options.WrappedUrlProvisionOption;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -72,9 +71,7 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
-                wrappedBundle(mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject())
-                        .overwriteManifest(WrappedUrlProvisionOption.OverwriteMode.MERGE)
-                        .exports("org.javaloong.kongmink.open.rest.core.internal.*"),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
         );

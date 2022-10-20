@@ -8,7 +8,7 @@ import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.core.internal.dto.SubscriptionDTO;
+import org.javaloong.kongmink.open.rest.core.dto.SubscriptionDTO;
 import org.javaloong.kongmink.open.rest.core.internal.security.Roles;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.osgi.service.component.annotations.Component;

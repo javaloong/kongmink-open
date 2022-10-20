@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.rest.core.internal.dto;
+package org.javaloong.kongmink.open.rest.core.dto;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.ScriptAssert;

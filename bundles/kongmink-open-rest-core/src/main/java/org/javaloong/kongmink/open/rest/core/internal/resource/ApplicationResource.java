@@ -10,7 +10,7 @@ import org.javaloong.kongmink.open.common.user.User;
 import org.javaloong.kongmink.open.core.auth.policy.AccessControlPolicies;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.rest.core.internal.dto.ApplicationDTO;
+import org.javaloong.kongmink.open.rest.core.dto.ApplicationDTO;
 import org.javaloong.kongmink.open.rest.core.internal.security.Roles;
 import org.javaloong.kongmink.open.service.ApplicationService;
 import org.osgi.service.component.annotations.Component;

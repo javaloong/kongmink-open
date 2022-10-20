@@ -10,7 +10,7 @@ import org.javaloong.kongmink.open.common.application.ApplicationType;
 import org.javaloong.kongmink.open.common.client.ClientSecret;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.rest.core.internal.dto.ApplicationDTO;
+import org.javaloong.kongmink.open.rest.core.dto.ApplicationDTO;
 import org.javaloong.kongmink.open.service.ApplicationService;
 import org.junit.BeforeClass;
 import org.junit.Test;
