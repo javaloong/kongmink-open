@@ -24,7 +24,6 @@ public abstract class AbstractTestSupport extends PaxExamTestSupport {
     protected Option testBundles() {
         return composite(jackson(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()

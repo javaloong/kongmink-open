@@ -68,8 +68,9 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.apache.geronimo.specs", "geronimo-validation_2.0_spec", "1.1"),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-bean-validator").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
                 wrappedBundle(mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject())
                         .overwriteManifest(WrappedUrlProvisionOption.OverwriteMode.MERGE)

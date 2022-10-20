@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.rest.auth.internal;
 import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.common.client.Client;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.core.service.UserService;
+import org.javaloong.kongmink.open.service.UserService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;

@@ -65,11 +65,28 @@
         <bundle>mvn:org.apache.aries.tx-control/tx-control-provider-jpa-xa/${aries.tx.control.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-core" version="${project.version}">
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core/${project.version}</bundle>
+    </feature>
+
+    <feature name="kongmink-open-core-auth-policy" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">wrap:mvn:org.jeasy/easy-rules-core/${easy-rules.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-auth-policy/${project.version}</bundle>
+    </feature>
+
+    <feature name="kongmink-open-core-config" version="${project.version}">
+        <feature>kongmink-open-core</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-config/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-account-keycloak" version="${project.version}">
         <feature>cxf-rs-security-oauth2</feature>
+        <feature>kongmink-open-core</feature>
         <bundle dependency="true">mvn:org.keycloak/keycloak-common/${keycloak.version}</bundle>
         <bundle dependency="true">mvn:org.keycloak/keycloak-core/${keycloak.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-account-api/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-account-keycloak/${project.version}</bundle>
     </feature>
@@ -87,39 +104,23 @@
 
     <feature name="kongmink-open-apim-gravitee" version="${project.version}">
         <feature>cxf-rs-security-oauth2</feature>
+        <feature>kongmink-open-core</feature>
         <bundle dependency="true">mvn:org.modelmapper/modelmapper/${modelmapper.version}</bundle>
         <bundle dependency="true">wrap:mvn:org.modelmapper/modelmapper-module-jsr310/${modelmapper.jsr310.version}</bundle>
         <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-apim-gravitee/${project.version}</bundle>
     </feature>
 
-    <feature name="kongmink-open-core" version="${project.version}">
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core/${project.version}</bundle>
-    </feature>
-
-    <feature name="kongmink-open-core-auth-policy" version="${project.version}">
-        <feature>kongmink-open-core</feature>
-        <bundle dependency="true">wrap:mvn:org.jeasy/easy-rules-core/${easy-rules.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-auth-policy/${project.version}</bundle>
-    </feature>
-
-    <feature name="kongmink-open-core-config" version="${project.version}">
-        <feature>kongmink-open-core</feature>
-        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-config/${project.version}</bundle>
-    </feature>
-
-    <feature name="kongmink-open-core-service" version="${project.version}">
-        <feature>kongmink-open-core</feature>
+    <feature name="kongmink-open-service-core" version="${project.version}">
         <bundle dependency="true">mvn:com.github.ben-manes.caffeine/caffeine/${caffeine.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-account-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-data/${project.version}</bundle>
-        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-service/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service-api/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-service-core/${project.version}</bundle>
     </feature>
 
     <feature name="kongmink-open-jax-rs-whiteboard" version="${project.version}">
@@ -219,7 +220,7 @@
         <feature>kongmink-open-data-jpa-xa</feature>
         <feature>kongmink-open-core-auth-policy</feature>
         <feature>kongmink-open-core-config</feature>
-        <feature>kongmink-open-core-service</feature>
+        <feature>kongmink-open-service-core</feature>
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>

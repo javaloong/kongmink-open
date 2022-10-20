@@ -2,11 +2,11 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.core.service.AccountService;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.internal.dto.EmailDTO;
 import org.javaloong.kongmink.open.rest.core.internal.dto.ProfileDTO;
 import org.javaloong.kongmink.open.rest.core.internal.dto.UpdatePasswordDTO;
+import org.javaloong.kongmink.open.service.AccountService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;

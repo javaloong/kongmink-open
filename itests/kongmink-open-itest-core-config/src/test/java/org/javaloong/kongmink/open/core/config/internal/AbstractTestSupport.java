@@ -25,7 +25,6 @@ public abstract class AbstractTestSupport extends PaxExamTestSupport {
         return composite(jackson(), xaTxControlService(),
                 mavenBundle("org.hibernate.javax.persistence", "hibernate-jpa-2.1-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-data").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core-config").versionAsInProject(),
