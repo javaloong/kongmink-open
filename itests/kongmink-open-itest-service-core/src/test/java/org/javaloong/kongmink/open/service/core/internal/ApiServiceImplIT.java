@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.apim.ApiProvider;
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
-import org.javaloong.kongmink.open.apim.model.ApiPage;
+import org.javaloong.kongmink.open.common.model.Api;
+import org.javaloong.kongmink.open.common.model.ApiMetrics;
+import org.javaloong.kongmink.open.common.model.ApiPage;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.service.ApiService;
 import org.junit.BeforeClass;

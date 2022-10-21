@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.model.Client;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.PolicyEvaluator;
 import org.junit.BeforeClass;

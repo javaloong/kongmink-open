@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.KeyEntity;
-import org.javaloong.kongmink.open.apim.model.ApiKey;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 
 public class ApiKeyMapper {
 

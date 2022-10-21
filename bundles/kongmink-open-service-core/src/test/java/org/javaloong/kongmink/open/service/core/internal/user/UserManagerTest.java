@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.core.internal.user;
 
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.BeforeEach;

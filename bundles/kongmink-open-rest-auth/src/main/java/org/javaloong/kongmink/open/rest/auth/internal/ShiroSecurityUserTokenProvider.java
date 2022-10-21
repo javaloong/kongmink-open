@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.rest.auth.internal;
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.core.auth.UserToken;
 import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;

@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.rest.auth.internal.mapper;
 
-import org.javaloong.kongmink.open.common.user.User;
-import org.javaloong.kongmink.open.common.user.UserConstants;
-import org.javaloong.kongmink.open.common.user.UserProfile;
+import org.javaloong.kongmink.open.common.model.User;
+import org.javaloong.kongmink.open.common.model.UserProfile;
+import org.javaloong.kongmink.open.common.model.user.UserConstants;
 import org.pac4j.core.profile.CommonProfile;
 
 public class UserMapper {

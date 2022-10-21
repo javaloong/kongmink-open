@@ -6,7 +6,7 @@ import com.github.mjeanroy.junit.servers.jetty.EmbeddedJettyConfiguration;
 import org.javaloong.kongmink.open.am.ClientProvider;
 import org.javaloong.kongmink.open.am.embedded.keycloak.KeycloakServerProperties;
 import org.javaloong.kongmink.open.am.exception.ClientException;
-import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.model.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.keycloak.OAuth2Constants;

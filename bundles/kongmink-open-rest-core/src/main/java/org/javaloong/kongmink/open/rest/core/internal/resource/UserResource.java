@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.core.dto.EmailDTO;
 import org.javaloong.kongmink.open.rest.core.dto.ProfileDTO;

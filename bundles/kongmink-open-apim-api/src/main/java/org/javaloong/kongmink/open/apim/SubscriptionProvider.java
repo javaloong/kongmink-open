@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.apim;
 
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Subscription;
-import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
+import org.javaloong.kongmink.open.common.model.SubscriptionStatus;
 
 import java.util.List;
 import java.util.Optional;

@@ -5,7 +5,7 @@ import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.CategoryMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.CategoryEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
-import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.common.model.Category;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

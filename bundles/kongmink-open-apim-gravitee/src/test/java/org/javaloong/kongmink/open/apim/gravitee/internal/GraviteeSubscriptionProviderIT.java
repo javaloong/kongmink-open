@@ -1,10 +1,10 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.SubscriptionProvider;
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Subscription;
-import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
+import org.javaloong.kongmink.open.common.model.SubscriptionStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

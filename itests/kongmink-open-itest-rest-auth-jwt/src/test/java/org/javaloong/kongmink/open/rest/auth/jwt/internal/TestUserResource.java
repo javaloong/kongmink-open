@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.rest.auth.jwt.internal;
 
 import org.apache.shiro.authz.annotation.RequiresUser;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.osgi.service.component.annotations.Component;

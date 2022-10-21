@@ -1,11 +1,11 @@
 package org.javaloong.kongmink.open.am.keycloak.internal;
 
-import org.javaloong.kongmink.open.am.exception.ClientException;
 import org.javaloong.kongmink.open.am.ClientProvider;
+import org.javaloong.kongmink.open.am.exception.ClientException;
 import org.javaloong.kongmink.open.am.keycloak.internal.mapper.ClientMapper;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientResource;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientsResource;
-import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.model.Client;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

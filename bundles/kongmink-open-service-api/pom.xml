@@ -19,11 +19,6 @@
             <artifactId>kongmink-open-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-apim-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

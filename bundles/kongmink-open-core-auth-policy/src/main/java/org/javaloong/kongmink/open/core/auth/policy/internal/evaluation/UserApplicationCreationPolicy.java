@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.core.auth.policy.internal.evaluation;
 
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
-import org.javaloong.kongmink.open.apim.model.Application;
+import org.javaloong.kongmink.open.common.model.Application;
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.core.auth.policy.AccessControlPolicies;
 import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
 import org.javaloong.kongmink.open.core.auth.policy.evaluation.EvaluationContext;

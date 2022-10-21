@@ -1,12 +1,12 @@
 package org.javaloong.kongmink.open.apim;
 
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Application;
-import org.javaloong.kongmink.open.apim.model.ApplicationLog;
-import org.javaloong.kongmink.open.apim.model.analytics.Analytics;
-import org.javaloong.kongmink.open.apim.model.analytics.query.AnalyticsQuery;
-import org.javaloong.kongmink.open.apim.model.log.query.LogQuery;
+import org.javaloong.kongmink.open.common.model.ApiKey;
+import org.javaloong.kongmink.open.common.model.Application;
+import org.javaloong.kongmink.open.common.model.ApplicationLog;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.analytics.Analytics;
+import org.javaloong.kongmink.open.common.model.analytics.query.AnalyticsQuery;
+import org.javaloong.kongmink.open.common.model.log.query.LogQuery;
 
 import java.util.Optional;
 

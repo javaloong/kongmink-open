@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.service.core.internal.user;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.osgi.service.component.annotations.Activate;

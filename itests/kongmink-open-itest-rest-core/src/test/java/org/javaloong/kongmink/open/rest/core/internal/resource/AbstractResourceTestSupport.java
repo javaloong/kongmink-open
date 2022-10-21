@@ -7,7 +7,7 @@ import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.itest.common.PaxExamTestSupport;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.junit.AfterClass;
@@ -68,7 +68,6 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-bean-validator").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-core").versionAsInProject(),
-                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-apim-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject(),

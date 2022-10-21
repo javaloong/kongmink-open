@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.apim.gravitee.internal.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.application.ApplicationSettings;
-import org.javaloong.kongmink.open.apim.model.ApiKeyMode;
+import org.javaloong.kongmink.open.common.model.ApiKeyMode;
 
 import java.util.Date;
 import java.util.List;

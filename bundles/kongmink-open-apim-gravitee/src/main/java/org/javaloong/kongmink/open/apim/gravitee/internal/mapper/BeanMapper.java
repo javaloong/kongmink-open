@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.CategoryEntity;
-import org.javaloong.kongmink.open.apim.model.Category;
+import org.javaloong.kongmink.open.common.model.Category;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;

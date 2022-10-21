@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.apim.SubscriptionProvider;
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Subscription;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.junit.BeforeClass;
 import org.junit.Test;

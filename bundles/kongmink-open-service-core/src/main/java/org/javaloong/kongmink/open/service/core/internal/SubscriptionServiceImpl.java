@@ -1,10 +1,10 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.apim.SubscriptionProvider;
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Subscription;
-import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
+import org.javaloong.kongmink.open.common.model.SubscriptionStatus;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

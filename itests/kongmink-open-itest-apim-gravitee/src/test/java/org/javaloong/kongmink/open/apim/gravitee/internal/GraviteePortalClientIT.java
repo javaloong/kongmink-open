@@ -1,9 +1,9 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.*;
-import org.javaloong.kongmink.open.apim.model.ApiUser;
-import org.javaloong.kongmink.open.apim.model.Category;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.ApiUser;
+import org.javaloong.kongmink.open.common.model.Category;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.core.auth.UserTokenProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;

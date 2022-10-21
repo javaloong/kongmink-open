@@ -3,10 +3,10 @@ package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.ApiEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.PageEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
-import org.javaloong.kongmink.open.apim.model.Api;
-import org.javaloong.kongmink.open.apim.model.ApiPage;
-import org.javaloong.kongmink.open.apim.model.Plan;
+import org.javaloong.kongmink.open.common.model.Api;
+import org.javaloong.kongmink.open.common.model.ApiPage;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Plan;
 import org.modelmapper.TypeToken;
 
 import java.util.Collection;

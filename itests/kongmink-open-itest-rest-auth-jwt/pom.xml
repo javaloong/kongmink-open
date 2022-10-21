@@ -13,18 +13,6 @@
     <artifactId>kongmink-open-itest-rest-auth-jwt</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-common</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-rest-auth</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
 		<dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest-auth-jwt</artifactId>

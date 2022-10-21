@@ -1,8 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.javaloong.kongmink.open.apim.model.*;
-import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.*;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.service.ApiService;
 import org.osgi.service.component.annotations.Component;

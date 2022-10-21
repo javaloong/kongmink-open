@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.rest.auth.internal.provider;
 import io.buji.pac4j.subject.Pac4jPrincipal;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;
 import org.javaloong.kongmink.open.service.UserService;

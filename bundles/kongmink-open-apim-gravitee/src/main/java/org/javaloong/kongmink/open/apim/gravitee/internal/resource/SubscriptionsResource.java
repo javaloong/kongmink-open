@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.apim.gravitee.internal.resource;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewSubscriptionEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.SubscriptionEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.param.PaginationParam;
-import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
+import org.javaloong.kongmink.open.common.model.SubscriptionStatus;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

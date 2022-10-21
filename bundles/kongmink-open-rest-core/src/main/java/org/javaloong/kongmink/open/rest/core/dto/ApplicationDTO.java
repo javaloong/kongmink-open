@@ -1,8 +1,8 @@
 package org.javaloong.kongmink.open.rest.core.dto;
 
-import org.javaloong.kongmink.open.apim.model.Application;
-import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
-import org.javaloong.kongmink.open.common.application.ApplicationType;
+import org.javaloong.kongmink.open.common.model.Application;
+import org.javaloong.kongmink.open.common.model.application.ApplicationSettings;
+import org.javaloong.kongmink.open.common.model.application.ApplicationType;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -57,7 +57,7 @@ public class ApplicationDTO {
         this.settings = settings;
     }
 
-    public Application toApplication(){
+    public Application toApplication() {
         return toApplication(null);
     }
 

@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.rest.core.dto;
 
-import org.javaloong.kongmink.open.apim.model.Subscription;
+import org.javaloong.kongmink.open.common.model.Subscription;
 
 import javax.validation.constraints.NotEmpty;
 

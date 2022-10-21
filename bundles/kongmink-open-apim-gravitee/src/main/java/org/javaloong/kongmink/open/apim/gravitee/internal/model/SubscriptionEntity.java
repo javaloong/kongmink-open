@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.javaloong.kongmink.open.apim.model.SubscriptionStatus;
+import org.javaloong.kongmink.open.common.model.SubscriptionStatus;
 
 import java.util.Date;
 import java.util.List;

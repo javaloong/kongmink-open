@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.am.keycloak.internal.mapper;
 
 import org.apache.commons.lang3.BooleanUtils;
-import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.model.Client;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.modelmapper.ModelMapper;

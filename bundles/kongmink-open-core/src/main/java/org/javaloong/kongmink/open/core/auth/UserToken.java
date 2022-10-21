@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.core.auth;
 
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 
 import java.util.Objects;
 

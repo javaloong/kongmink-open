@@ -1,8 +1,7 @@
 package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.common.mapper.TypeRef;
-import org.javaloong.kongmink.open.apim.model.*;
-import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.*;
 import org.javaloong.kongmink.open.service.ApiService;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -73,6 +73,7 @@
     <feature name="kongmink-open-core-auth-policy" version="${project.version}">
         <feature>kongmink-open-core</feature>
         <bundle dependency="true">wrap:mvn:org.jeasy/easy-rules-core/${easy-rules.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-apim-api/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-core-auth-policy/${project.version}</bundle>
     </feature>
 

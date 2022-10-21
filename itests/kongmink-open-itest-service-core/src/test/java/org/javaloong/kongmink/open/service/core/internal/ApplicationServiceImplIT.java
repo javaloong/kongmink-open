@@ -2,13 +2,9 @@ package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.am.ClientProvider;
 import org.javaloong.kongmink.open.apim.ApplicationProvider;
-import org.javaloong.kongmink.open.apim.model.Application;
-import org.javaloong.kongmink.open.apim.model.application.ApplicationSettings;
-import org.javaloong.kongmink.open.common.application.ApplicationType;
-import org.javaloong.kongmink.open.common.client.Client;
-import org.javaloong.kongmink.open.common.client.ClientSecret;
-import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.*;
+import org.javaloong.kongmink.open.common.model.application.ApplicationSettings;
+import org.javaloong.kongmink.open.common.model.application.ApplicationType;
 import org.javaloong.kongmink.open.service.ApplicationService;
 import org.junit.Before;
 import org.junit.BeforeClass;

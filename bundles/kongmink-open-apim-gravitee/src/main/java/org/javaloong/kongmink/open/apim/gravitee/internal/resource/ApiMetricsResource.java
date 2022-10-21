@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.resource;
 
-import org.javaloong.kongmink.open.apim.model.ApiMetrics;
+import org.javaloong.kongmink.open.common.model.ApiMetrics;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;

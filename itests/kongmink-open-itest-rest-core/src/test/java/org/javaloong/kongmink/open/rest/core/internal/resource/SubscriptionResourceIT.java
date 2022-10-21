@@ -2,9 +2,9 @@ package org.javaloong.kongmink.open.rest.core.internal.resource;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.apim.model.ApiKey;
-import org.javaloong.kongmink.open.apim.model.Subscription;
+import org.javaloong.kongmink.open.common.model.ApiKey;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
 import org.javaloong.kongmink.open.rest.core.dto.SubscriptionDTO;
 import org.javaloong.kongmink.open.service.SubscriptionService;
 import org.junit.BeforeClass;

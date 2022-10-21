@@ -1,11 +1,10 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.mapper;
 
-import org.javaloong.kongmink.open.apim.model.Subscription;
-import org.javaloong.kongmink.open.apim.gravitee.internal.mapper.BeanMapper;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.NewSubscriptionEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.model.SubscriptionEntity;
 import org.javaloong.kongmink.open.apim.gravitee.internal.resource.DataResponse;
 import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.Subscription;
 import org.modelmapper.TypeToken;
 
 import java.util.Collection;

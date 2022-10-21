@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
-import org.javaloong.kongmink.open.common.client.Client;
+import org.javaloong.kongmink.open.common.model.Client;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Fact;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;
 import org.javaloong.kongmink.open.rest.RESTConstants;

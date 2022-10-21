@@ -1,6 +1,6 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.service.UserService;
 import org.javaloong.kongmink.open.service.core.internal.user.UserManager;
 import org.osgi.service.component.annotations.Component;

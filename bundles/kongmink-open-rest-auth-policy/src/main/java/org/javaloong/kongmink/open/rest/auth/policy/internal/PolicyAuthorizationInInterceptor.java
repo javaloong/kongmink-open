@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.rest.auth.policy.internal;
 
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.Phase;
-import org.javaloong.kongmink.open.common.user.User;
+import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.core.auth.policy.CommonFields;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Fact;
 import org.javaloong.kongmink.open.core.auth.policy.annotation.Policy;

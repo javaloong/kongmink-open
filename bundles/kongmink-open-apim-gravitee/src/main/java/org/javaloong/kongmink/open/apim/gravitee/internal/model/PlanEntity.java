@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal.model;
 
-import org.javaloong.kongmink.open.apim.model.Plan.Security;
-import org.javaloong.kongmink.open.apim.model.Plan.Validation;
+import org.javaloong.kongmink.open.common.model.Plan.Security;
+import org.javaloong.kongmink.open.common.model.Plan.Validation;
 
 import java.util.List;
 import java.util.Objects;

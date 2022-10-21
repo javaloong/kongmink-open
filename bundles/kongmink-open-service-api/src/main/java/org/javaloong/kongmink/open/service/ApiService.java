@@ -1,7 +1,6 @@
 package org.javaloong.kongmink.open.service;
 
-import org.javaloong.kongmink.open.apim.model.*;
-import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.*;
 
 import java.util.Collection;
 import java.util.Optional;

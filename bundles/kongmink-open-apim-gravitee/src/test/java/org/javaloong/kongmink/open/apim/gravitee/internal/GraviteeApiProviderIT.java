@@ -1,8 +1,7 @@
 package org.javaloong.kongmink.open.apim.gravitee.internal;
 
 import org.javaloong.kongmink.open.apim.ApiProvider;
-import org.javaloong.kongmink.open.apim.model.*;
-import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
