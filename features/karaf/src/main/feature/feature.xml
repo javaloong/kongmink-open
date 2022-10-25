@@ -158,10 +158,19 @@
         <bundle>mvn:org.apache.aries.jax.rs/org.apache.aries.jax.rs.openapi.resource/${aries.jax.rs.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-rest-admin" version="${project.version}">
+        <feature>kongmink-open-jax-rs-whiteboard</feature>
+        <feature>kongmink-open-jax-rs-whiteboard-jackson</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service-api/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-admin/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-rest-core" version="${project.version}">
         <feature>kongmink-open-jax-rs-whiteboard</feature>
         <feature>kongmink-open-jax-rs-whiteboard-jackson</feature>
         <feature>kongmink-open-core</feature>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-core/${project.version}</bundle>
     </feature>
@@ -176,6 +185,7 @@
         <bundle dependency="true">mvn:org.apache.shiro/shiro-jaxrs/${shiro.version}</bundle>
         <bundle dependency="true">mvn:org.pac4j/pac4j-core/${pac4j.version}</bundle>
         <bundle dependency="true">wrap:mvn:io.buji/buji-pac4j/${pac4j.buji.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-service-api/${project.version}</bundle>
         <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-rest/${project.version}</bundle>
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-rest-auth/${project.version}</bundle>
     </feature>
@@ -222,6 +232,7 @@
         <feature>kongmink-open-core-auth-policy</feature>
         <feature>kongmink-open-core-config</feature>
         <feature>kongmink-open-service-core</feature>
+        <feature>kongmink-open-rest-admin</feature>
         <feature>kongmink-open-rest-core</feature>
         <feature>kongmink-open-rest-openapi</feature>
         <feature>kongmink-open-rest-auth</feature>

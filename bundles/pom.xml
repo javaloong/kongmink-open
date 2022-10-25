@@ -30,6 +30,7 @@
         <module>kongmink-open-data-jpa</module>
         <module>kongmink-open-liquibase-extender</module>
         <module>kongmink-open-rest</module>
+        <module>kongmink-open-rest-admin</module>
         <module>kongmink-open-rest-auth</module>
         <module>kongmink-open-rest-auth-jwt</module>
         <module>kongmink-open-rest-auth-policy</module>

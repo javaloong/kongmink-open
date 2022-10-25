@@ -26,6 +26,7 @@
         <module>kongmink-open-itest-core-auth-policy</module>
         <module>kongmink-open-itest-core-config</module>
         <module>kongmink-open-itest-karaf</module>
+        <module>kongmink-open-itest-rest-admin</module>
         <module>kongmink-open-itest-rest-auth</module>
         <module>kongmink-open-itest-rest-auth-jwt</module>
         <module>kongmink-open-itest-rest-auth-policy</module>
