@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.service.core.internal.user;
+package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.data.UserRepository;
@@ -20,20 +20,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class UserManagerTest {
+public class UserDetailsServiceImplTest {
 
     private UserRepository userRepository;
     private TransactionControl transactionControl;
 
-    private UserManager userManager;
+    private UserDetailsServiceImpl userDetailsService;
 
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
         transactionControl = mock(TransactionControl.class);
-        userManager = new UserManager(createConfig());
-        userManager.userRepository = userRepository;
-        userManager.transactionControl = transactionControl;
+        userDetailsService = new UserDetailsServiceImpl(createConfig());
+        userDetailsService.userRepository = userRepository;
+        userDetailsService.transactionControl = transactionControl;
     }
 
     @Test
@@ -45,7 +45,7 @@ public class UserManagerTest {
         UserEntity entity = createUserEntity("1", "user1");
         when(userRepository.create(any(UserEntity.class))).thenReturn(entity);
         User user = createUser("1", "user1");
-        userManager.loadByUser(user, false);
+        userDetailsService.loadByUser(user, false);
         ArgumentCaptor<UserEntity> createEntityCaptor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).create(createEntityCaptor.capture());
         assertThat(createEntityCaptor.getValue())
@@ -55,17 +55,17 @@ public class UserManagerTest {
         when(userRepository.findById(anyString())).thenReturn(Optional.of(entity));
         when(userRepository.update(any(UserEntity.class))).thenReturn(entity);
         User user1 = createUser("1", "user11");
-        userManager.loadByUser(user1, false);
+        userDetailsService.loadByUser(user1, false);
         ArgumentCaptor<UserEntity> updateEntityCaptor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).update(updateEntityCaptor.capture());
         assertThat(updateEntityCaptor.getValue())
                 .returns("1", UserEntity::getId)
                 .returns("user11", UserEntity::getUsername);
-        userManager.loadByUser(user1, true);
+        userDetailsService.loadByUser(user1, true);
         verify(userRepository, times(3)).findById("1");
-        userManager.loadByUser(user1, true);
+        userDetailsService.loadByUser(user1, true);
         verify(userRepository, times(3)).findById("1");
-        userManager.loadByUser(user1, true);
+        userDetailsService.loadByUser(user1, true);
         verify(userRepository, times(3)).findById("1");
     }
 
@@ -84,8 +84,8 @@ public class UserManagerTest {
         return entity;
     }
 
-    private UserManager.Config createConfig() {
+    private UserDetailsServiceImpl.Config createConfig() {
         Map<String, Object> props = new HashMap<>();
-        return Converters.standardConverter().convert(props).to(UserManager.Config.class);
+        return Converters.standardConverter().convert(props).to(UserDetailsServiceImpl.Config.class);
     }
 }

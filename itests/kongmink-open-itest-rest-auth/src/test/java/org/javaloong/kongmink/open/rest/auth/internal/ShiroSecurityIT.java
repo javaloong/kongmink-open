@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.rest.auth.internal;
 import io.restassured.http.ContentType;
 import org.javaloong.kongmink.open.common.model.Client;
 import org.javaloong.kongmink.open.common.model.User;
-import org.javaloong.kongmink.open.service.UserService;
+import org.javaloong.kongmink.open.service.UserDetailsService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -28,11 +28,11 @@ public class ShiroSecurityIT extends SecurityTestSupport {
     @BeforeClass
     public static void beforeClass() {
         BundleContext context = FrameworkUtil.getBundle(ShiroSecurityIT.class).getBundleContext();
-        context.registerService(UserService.class, Mockito.mock(UserService.class), null);
+        context.registerService(UserDetailsService.class, Mockito.mock(UserDetailsService.class), null);
     }
 
     @Inject
-    UserService userService;
+    UserDetailsService userDetailsService;
 
     @Test
     public void testAuthenticatedNoAuthPresent() {
@@ -42,7 +42,7 @@ public class ShiroSecurityIT extends SecurityTestSupport {
 
     @Test
     public void testAuthenticatedAuthPresent() {
-        when(userService.loadByUser(any(User.class)))
+        when(userDetailsService.loadByUser(any(User.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
         assertThat(given().auth().oauth2("user1_token")
                 .get("/user")

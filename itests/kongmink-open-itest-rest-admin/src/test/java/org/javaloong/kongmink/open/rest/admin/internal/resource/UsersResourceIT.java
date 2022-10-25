@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.rest.admin.internal.resource;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
-import org.javaloong.kongmink.open.service.UserConfigService;
+import org.javaloong.kongmink.open.service.UserService;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,11 +31,11 @@ public class UsersResourceIT extends AbstractResourceTestSupport {
     @BeforeClass
     public static void beforeClass() {
         BundleContext context = FrameworkUtil.getBundle(UsersResourceIT.class).getBundleContext();
-        context.registerService(UserConfigService.class, Mockito.mock(UserConfigService.class), null);
+        context.registerService(UserService.class, Mockito.mock(UserService.class), null);
     }
 
     @Inject
-    UserConfigService userConfigService;
+    UserService userService;
 
     @Captor
     ArgumentCaptor<Map<String, Object>> userConfigCapture;
@@ -47,7 +47,7 @@ public class UsersResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void getUserConfig_ShouldReturnHttpStatusOk() {
-        when(userConfigService.getConfig(anyString())).thenReturn(createUserConfig());
+        when(userService.getConfig(anyString())).thenReturn(createUserConfig());
         Map<String, Object> result = get("/users/{id}/config", "1").then().assertThat()
                 .statusCode(Response.Status.OK.getStatusCode())
                 .extract().as(new TypeRef<>() {
@@ -59,7 +59,7 @@ public class UsersResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void setUserConfig_ShouldReturnHttpStatusOk() {
-        doNothing().when(userConfigService).setConfig(anyString(), userConfigCapture.capture());
+        doNothing().when(userService).setConfig(anyString(), userConfigCapture.capture());
         Map<String, Object> userConfig = new HashMap<>();
         userConfig.put("user.config.key1", 10);
         userConfig.put("user.config.key2", false);
@@ -74,7 +74,7 @@ public class UsersResourceIT extends AbstractResourceTestSupport {
 
     @Test
     public void updateUserConfig_ShouldReturnHttpStatusOk() {
-        doNothing().when(userConfigService).updateConfig(anyString(), userConfigCapture.capture());
+        doNothing().when(userService).updateConfig(anyString(), userConfigCapture.capture());
         Map<String, Object> userConfig = new HashMap<>();
         userConfig.put("user.config.key1", 10);
         given().contentType(ContentType.JSON).body(userConfig)

@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.rest.admin.internal.resource;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.rest.admin.internal.security.Roles;
-import org.javaloong.kongmink.open.service.UserConfigService;
+import org.javaloong.kongmink.open.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,30 +13,30 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsersResource {
 
-    private final UserConfigService userConfigService;
+    private final UserService userService;
 
-    public UsersResource(UserConfigService userConfigService) {
-        this.userConfigService = userConfigService;
+    public UsersResource(UserService userService) {
+        this.userService = userService;
     }
 
     @GET
     @Path("/{id}/config")
     public Response getUserConfig(@PathParam("id") String userId) {
-        Map<String, Object> userConfig = userConfigService.getConfig(userId);
+        Map<String, Object> userConfig = userService.getConfig(userId);
         return Response.ok(userConfig).build();
     }
 
     @PUT
     @Path("/{id}/config")
     public Response setUserConfig(@PathParam("id") String userId, Map<String, Object> userConfig) {
-        userConfigService.setConfig(userId, userConfig);
+        userService.setConfig(userId, userConfig);
         return Response.noContent().build();
     }
 
     @PATCH
     @Path("/{id}/config")
     public Response updateUserConfig(@PathParam("id") String userId, Map<String, Object> userConfig) {
-        userConfigService.updateConfig(userId, userConfig);
+        userService.updateConfig(userId, userConfig);
         return Response.noContent().build();
     }
 }

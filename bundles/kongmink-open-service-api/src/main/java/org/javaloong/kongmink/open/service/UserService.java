@@ -1,8 +1,12 @@
 package org.javaloong.kongmink.open.service;
 
-import org.javaloong.kongmink.open.common.model.User;
+import java.util.Map;
 
 public interface UserService {
 
-    User loadByUser(User user);
+    Map<String, Object> getConfig(String userId);
+
+    void updateConfig(String userId, Map<String, Object> configMap);
+
+    void setConfig(String userId, Map<String, Object> configMap);
 }

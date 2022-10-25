@@ -3,7 +3,7 @@ package org.javaloong.kongmink.open.rest.admin.internal.resource;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.javaloong.kongmink.open.rest.RESTConstants;
-import org.javaloong.kongmink.open.service.UserConfigService;
+import org.javaloong.kongmink.open.service.UserService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -27,10 +27,10 @@ public class AdminResource {
     static final String RESOURCE_NAME = "admin";
 
     @Reference
-    UserConfigService userConfigService;
+    UserService userService;
 
     @Path("users")
     public UsersResource getUsersResource() {
-        return new UsersResource(userConfigService);
+        return new UsersResource(userService);
     }
 }

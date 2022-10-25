@@ -1,10 +1,11 @@
-package org.javaloong.kongmink.open.service.core.internal.user;
+package org.javaloong.kongmink.open.service.core.internal;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
+import org.javaloong.kongmink.open.service.UserDetailsService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -17,13 +18,13 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@Component(service = UserManager.class)
-@Designate(ocd = UserManager.Config.class)
-public class UserManager {
+@Component(service = UserDetailsService.class)
+@Designate(ocd = UserDetailsServiceImpl.Config.class)
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    @ObjectClassDefinition(name = "User Manager Service Configuration")
+    @ObjectClassDefinition(name = "User Details Service Configuration")
     public @interface Config {
 
         long cacheExpireAfterAccess() default 600_000;
@@ -39,11 +40,16 @@ public class UserManager {
     UserRepository userRepository;
 
     @Activate
-    public UserManager(Config config) {
+    public UserDetailsServiceImpl(Config config) {
         this.cache = Caffeine.newBuilder()
                 .expireAfterAccess(Duration.ofMillis(config.cacheExpireAfterAccess()))
                 .maximumSize(config.cacheMaximumSize())
                 .build();
+    }
+
+    @Override
+    public User loadByUser(User user) {
+        return loadByUser(user, true);
     }
 
     public User loadByUser(User user, boolean useCache) {

@@ -6,7 +6,7 @@ import org.apache.cxf.message.Message;
 import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.auth.internal.mapper.UserMapper;
-import org.javaloong.kongmink.open.service.UserService;
+import org.javaloong.kongmink.open.service.UserDetailsService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
@@ -25,7 +25,7 @@ import javax.ws.rs.ext.Provider;
 public class UserContextProvider implements ContextProvider<User> {
 
     @Reference
-    UserService userService;
+    UserDetailsService userDetailsService;
 
     @Override
     public User createContext(Message message) {
@@ -35,6 +35,6 @@ public class UserContextProvider implements ContextProvider<User> {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
         User user = UserMapper.mapToUser(principal.getProfile());
-        return userService.loadByUser(user);
+        return userDetailsService.loadByUser(user);
     }
 }
