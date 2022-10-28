@@ -1,15 +1,17 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
+import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.javaloong.kongmink.open.service.UserService;
+import org.javaloong.kongmink.open.service.dto.UserDTO;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.transaction.control.TransactionControl;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component(service = UserService.class)
 public class UserServiceImpl implements UserService {
@@ -49,5 +51,32 @@ public class UserServiceImpl implements UserService {
             });
             return null;
         });
+    }
+
+    @Override
+    public Optional<UserDTO> findById(String userId) {
+        return transactionControl.supports(() -> userRepository.findById(userId).map(this::mapToUserDTO));
+    }
+
+    @Override
+    public Page<UserDTO> findAll(UserQuery query, int page, int size) {
+        return transactionControl.notSupported(() -> {
+            Page<UserEntity> result = userRepository.findAll(query, page, size);
+            Collection<UserDTO> items = mapToUserDTOList(result.getData());
+            return new Page<>(items, result.getTotalCount());
+        });
+    }
+
+    private UserDTO mapToUserDTO(UserEntity entity) {
+        UserDTO user = new UserDTO();
+        user.setId(entity.getId());
+        user.setUsername(entity.getUsername());
+        user.setCreatedAt(entity.getCreatedAt());
+        user.setUpdatedAt(entity.getUpdatedAt());
+        return user;
+    }
+
+    private Collection<UserDTO> mapToUserDTOList(Collection<UserEntity> entities) {
+        return entities.stream().map(this::mapToUserDTO).collect(Collectors.toList());
     }
 }

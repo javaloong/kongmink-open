@@ -4,11 +4,15 @@ import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.dataset.CompareOperation;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import org.javaloong.kongmink.open.common.model.Page;
+import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
 import org.javaloong.kongmink.open.data.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +88,21 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
         assertThat(users).isNotEmpty().hasSize(3)
                 .extracting(UserEntity::getUsername)
                 .containsExactly("user3", "user2", "user1");
+    }
+
+    @Test
+    public void findAllUsersByQueryByPagination() {
+        UserQuery query = new UserQuery();
+        query.setFrom(LocalDateTime.parse("2021-12-01T00:00:00")
+                .toInstant(ZoneOffset.UTC).toEpochMilli());
+        query.setTo(LocalDateTime.parse("2021-12-31T23:59:59")
+                .toInstant(ZoneOffset.UTC).toEpochMilli());
+        query.setField("username");
+        query.setQuery("user");
+        Page<UserEntity> result = getUserRepository().findAll(query, 1, 2);
+        assertThat(result.getTotalCount()).isEqualTo(2);
+        assertThat(result.getData()).isNotEmpty().hasSize(2)
+                .extracting(UserEntity::getUsername).containsExactly("user3", "user2");
     }
 
     private synchronized UserRepository getUserRepository() {

@@ -13,6 +13,18 @@
     <artifactId>kongmink-open-itest-rest-admin</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-bean-validator</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.javaloong.kongmink.open</groupId>
+            <artifactId>kongmink-open-rest-core</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
             <groupId>org.javaloong.kongmink.open</groupId>
             <artifactId>kongmink-open-rest-admin</artifactId>
@@ -28,16 +40,6 @@
         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-rs-extension-providers</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

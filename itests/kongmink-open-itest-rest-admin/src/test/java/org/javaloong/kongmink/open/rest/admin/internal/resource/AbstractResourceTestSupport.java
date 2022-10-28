@@ -2,6 +2,7 @@ package org.javaloong.kongmink.open.rest.admin.internal.resource;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -22,6 +23,7 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
                 new ObjectMapperConfig().jackson2ObjectMapperFactory((cls, charset) -> {
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                    objectMapper.registerModule(new JavaTimeModule());
                     return objectMapper;
                 }));
     }
@@ -38,9 +40,14 @@ public abstract class AbstractResourceTestSupport extends PaxExamTestSupport {
     @Override
     protected Option testBundles() {
         return composite(
+                mavenBundle("org.glassfish", "jakarta.el", "3.0.3"),
+                mavenBundle("com.fasterxml", "classmate", "1.5.1"),
+                mavenBundle("org.apache.geronimo.specs", "geronimo-validation_2.0_spec", "1.1"),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-bean-validator").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-common").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-service-api").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest").versionAsInProject(),
+                mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-core").versionAsInProject(),
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-rest-admin").versionAsInProject(),
 
                 mavenBundle("org.javaloong.kongmink.open", "kongmink-open-itest-common").versionAsInProject()
