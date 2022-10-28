@@ -1,8 +1,8 @@
-package org.javaloong.kongmink.open.data.jpa.internal;
+package org.javaloong.kongmink.open.data.jpa.internal.repository;
 
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
-import org.javaloong.kongmink.open.data.UserRepository;
+import org.javaloong.kongmink.open.data.repository.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.osgi.service.component.annotations.Component;
 

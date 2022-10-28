@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.common.model.User;
-import org.javaloong.kongmink.open.data.UserRepository;
+import org.javaloong.kongmink.open.data.repository.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

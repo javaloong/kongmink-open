@@ -1,7 +1,7 @@
-package org.javaloong.kongmink.open.data.jpa.internal;
+package org.javaloong.kongmink.open.data.jpa.internal.repository;
 
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.data.CrudRepository;
+import org.javaloong.kongmink.open.data.repository.CrudRepository;
 import org.javaloong.kongmink.open.data.domain.AbstractEntity;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;

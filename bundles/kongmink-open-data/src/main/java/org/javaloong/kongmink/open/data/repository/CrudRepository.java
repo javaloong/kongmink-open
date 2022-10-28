@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.data;
+package org.javaloong.kongmink.open.data.repository;
 
 import java.util.List;
 import java.util.Optional;

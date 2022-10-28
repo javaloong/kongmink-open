@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.data.jpa.internal;
+package org.javaloong.kongmink.open.data.jpa.internal.repository;
 
 import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.junit5.DBUnitExtension;

@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.core.config.internal;
 
 import org.javaloong.kongmink.open.core.config.ConfigManager;
 import org.javaloong.kongmink.open.core.config.ConfigProperties;
-import org.javaloong.kongmink.open.data.UserRepository;
+import org.javaloong.kongmink.open.data.repository.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.BeforeClass;
 import org.junit.Test;

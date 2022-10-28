@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.data;
+package org.javaloong.kongmink.open.data.repository;
 
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.model.user.query.UserQuery;

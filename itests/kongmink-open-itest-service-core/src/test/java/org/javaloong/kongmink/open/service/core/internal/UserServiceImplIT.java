@@ -2,7 +2,7 @@ package org.javaloong.kongmink.open.service.core.internal;
 
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
-import org.javaloong.kongmink.open.data.UserRepository;
+import org.javaloong.kongmink.open.data.repository.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.javaloong.kongmink.open.service.UserService;
 import org.javaloong.kongmink.open.service.dto.UserDTO;

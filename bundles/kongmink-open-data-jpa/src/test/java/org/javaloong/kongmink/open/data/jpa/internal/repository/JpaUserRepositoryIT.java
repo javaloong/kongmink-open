@@ -1,4 +1,4 @@
-package org.javaloong.kongmink.open.data.jpa.internal;
+package org.javaloong.kongmink.open.data.jpa.internal.repository;
 
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.dataset.CompareOperation;
@@ -6,11 +6,10 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import org.javaloong.kongmink.open.common.model.Page;
 import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
-import org.javaloong.kongmink.open.data.UserRepository;
+import org.javaloong.kongmink.open.data.repository.UserRepository;
 import org.javaloong.kongmink.open.data.domain.UserEntity;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
