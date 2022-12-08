@@ -8,9 +8,18 @@ import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsApplicationSelect;
 import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsExtension;
 
 import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.FeatureContext;
 
 @Component(service = Feature.class)
 @JaxrsExtension
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 public class ShiroSecurityFeature extends ShiroFeature {
+
+    @Override
+    public boolean configure(FeatureContext context) {
+
+        context.register(SubresourceAuthorizationFilterProxy.class);
+
+        return super.configure(context);
+    }
 }

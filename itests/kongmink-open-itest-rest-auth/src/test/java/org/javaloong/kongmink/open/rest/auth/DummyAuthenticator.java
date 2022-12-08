@@ -25,7 +25,7 @@ public class DummyAuthenticator implements Authenticator<TokenCredentials> {
         profile.addAttribute("username", "user1");
         profile.addAttribute("email", "user1@example.com");
         profile.addAttribute("email_verified", true);
-        profile.addAttribute("roles", new String[]{"manage-clients"});
+        profile.addAttribute("roles", new String[]{"manage-clients", "manage-users"});
         profile.addAttribute("permissions", new String[]{"client:*"});
         return profile;
     }

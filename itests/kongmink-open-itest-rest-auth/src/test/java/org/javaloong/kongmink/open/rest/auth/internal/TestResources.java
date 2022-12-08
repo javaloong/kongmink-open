@@ -16,6 +16,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TestResources {
 
@@ -77,6 +79,31 @@ public abstract class TestResources {
             client.setId("1");
             client.setName("client1");
             return client;
+        }
+    }
+
+    @Component(service = TestAdminResource.class)
+    @JaxrsResource
+    @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
+    @JSONRequired
+    @Path("/admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public static class TestAdminResource {
+
+        @Path("/users")
+        public TestAdminUsersResource getUsersResource() {
+            return new TestAdminUsersResource();
+        }
+    }
+
+    @RequiresRoles("manage-users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public static class TestAdminUsersResource {
+
+        @GET
+        public Response getUsers() {
+            List<User> result = new ArrayList<>();
+            return Response.ok(result).build();
         }
     }
 }

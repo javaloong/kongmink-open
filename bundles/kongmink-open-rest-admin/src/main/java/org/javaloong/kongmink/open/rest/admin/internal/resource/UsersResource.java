@@ -1,8 +1,9 @@
 package org.javaloong.kongmink.open.rest.admin.internal.resource;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.model.Page;
-import org.javaloong.kongmink.open.common.model.user.query.UserQuery;
+import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.admin.dto.UserQueryDto;
 import org.javaloong.kongmink.open.rest.admin.internal.security.Roles;
 import org.javaloong.kongmink.open.service.UserService;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RequiresRoles(Roles.MANAGE_USERS)
+@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Produces(MediaType.APPLICATION_JSON)
 public class UsersResource {
 

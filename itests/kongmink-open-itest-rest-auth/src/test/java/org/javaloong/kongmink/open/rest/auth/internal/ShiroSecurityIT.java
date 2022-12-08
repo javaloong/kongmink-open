@@ -85,6 +85,20 @@ public class ShiroSecurityIT extends SecurityTestSupport {
                 .statusCode(Response.Status.CREATED.getStatusCode());
     }
 
+    @Test
+    public void testSubresourceRoleAuthPresent() {
+        given().auth().oauth2("user2_token")
+                .get("/admin/users").then().assertThat()
+                .statusCode(Response.Status.FORBIDDEN.getStatusCode());
+    }
+
+    @Test
+    public void testSubresourceRoleAuthWithRolePresent() {
+        given().auth().oauth2("user1_token")
+                .get("/admin/users").then().assertThat()
+                .statusCode(Response.Status.OK.getStatusCode());
+    }
+
     @Override
     protected Option testBundles() {
         return composite(super.testBundles(),
