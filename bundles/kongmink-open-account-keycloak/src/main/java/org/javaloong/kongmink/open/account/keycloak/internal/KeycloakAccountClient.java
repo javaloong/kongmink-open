@@ -99,7 +99,7 @@ public class KeycloakAccountClient {
 
     @Deactivate
     public void deactivate() {
-        bus.shutdown(true);
+        bus.shutdown(false);
     }
 
     class BearerAuthSupplier implements HttpAuthSupplier {
