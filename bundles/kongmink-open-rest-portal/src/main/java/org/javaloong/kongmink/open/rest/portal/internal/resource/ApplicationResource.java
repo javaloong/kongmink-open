@@ -1,6 +1,5 @@
 package org.javaloong.kongmink.open.rest.portal.internal.resource;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.model.*;
 import org.javaloong.kongmink.open.core.auth.policy.AccessControlPolicies;
@@ -30,10 +29,9 @@ import java.util.Optional;
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
 @RequiresRoles(Roles.MANAGE_APPLICATIONS)
-@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Path("/applications")
 @Produces(MediaType.APPLICATION_JSON)
-public class ApplicationResource {
+public class ApplicationResource extends AbstractResource {
 
     static final String RESOURCE_NAME = "application";
 

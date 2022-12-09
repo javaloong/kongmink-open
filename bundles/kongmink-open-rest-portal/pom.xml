@@ -64,7 +64,7 @@
                     <instructions>
                         <Import-Package>
                             org.apache.shiro.authz.annotation.*;version="[1,2)";resolution:=optional,
-                            io.swagger.v3.oas.annotations.security;version="[2,3)";resolution:=optional,
+                            io.swagger.v3.oas.annotations.*;version="[2,3)";resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>

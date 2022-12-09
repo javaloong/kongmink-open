@@ -1,6 +1,5 @@
 package org.javaloong.kongmink.open.rest.portal.internal.resource;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.javaloong.kongmink.open.common.model.*;
 import org.javaloong.kongmink.open.rest.RESTConstants;
@@ -29,10 +28,9 @@ import java.util.Optional;
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
 @RequiresRoles(Roles.MANAGE_SUBSCRIPTIONS)
-@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Path("/subscriptions")
 @Produces(MediaType.APPLICATION_JSON)
-public class SubscriptionResource {
+public class SubscriptionResource extends AbstractResource {
 
     static final String RESOURCE_NAME = "subscription";
 

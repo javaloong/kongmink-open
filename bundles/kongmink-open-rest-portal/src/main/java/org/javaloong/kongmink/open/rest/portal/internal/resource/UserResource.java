@@ -1,6 +1,5 @@
 package org.javaloong.kongmink.open.rest.portal.internal.resource;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.javaloong.kongmink.open.common.model.User;
 import org.javaloong.kongmink.open.rest.RESTConstants;
 import org.javaloong.kongmink.open.rest.portal.dto.EmailDTO;
@@ -26,10 +25,9 @@ import javax.ws.rs.core.Response;
 @JaxrsName(UserResource.RESOURCE_NAME)
 @JaxrsApplicationSelect("(" + JaxrsWhiteboardConstants.JAX_RS_NAME + "=" + RESTConstants.JAX_RS_NAME + ")")
 @JSONRequired
-@SecurityRequirement(name = RESTConstants.SECURITY_BEARER_AUTH)
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
-public class UserResource {
+public class UserResource extends AbstractResource {
 
     static final String RESOURCE_NAME = "user";
 
