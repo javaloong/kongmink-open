@@ -76,9 +76,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.javaloong.kongmink.open</groupId>
-            <artifactId>kongmink-open-am-embedded-keycloak</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.javaloong.kongmink.keycloak</groupId>
+            <artifactId>keycloak-embedded-server</artifactId>
+            <version>${keycloak.embedded.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

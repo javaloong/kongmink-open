@@ -17,7 +17,6 @@
         <module>kongmink-open-account-api</module>
         <module>kongmink-open-account-keycloak</module>
         <module>kongmink-open-am-api</module>
-        <module>kongmink-open-am-embedded-keycloak</module>
         <module>kongmink-open-am-keycloak</module>
         <module>kongmink-open-apim-api</module>
         <module>kongmink-open-apim-gravitee</module>

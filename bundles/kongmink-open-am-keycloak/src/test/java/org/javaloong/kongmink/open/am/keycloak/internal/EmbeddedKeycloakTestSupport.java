@@ -1,7 +1,7 @@
 package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import com.github.mjeanroy.junit.servers.jupiter.JunitServerExtension;
-import org.javaloong.kongmink.open.am.embedded.keycloak.support.SimplePlatformProvider;
+import org.javaloong.kongmink.keycloak.embedded.support.SimplePlatformProvider;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.keycloak.platform.Platform;
@@ -11,7 +11,7 @@ public abstract class EmbeddedKeycloakTestSupport {
 
     @AfterAll
     public static void tearDown() {
-        SimplePlatformProvider platform = (SimplePlatformProvider)Platform.getPlatform();
+        SimplePlatformProvider platform = (SimplePlatformProvider) Platform.getPlatform();
         platform.shutdown();
     }
 }

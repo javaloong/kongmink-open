@@ -5,7 +5,7 @@
 
     <filter>
         <filter-name>keycloakSessionManagementFilter</filter-name>
-        <filter-class>org.javaloong.kongmink.open.am.embedded.keycloak.EmbeddedKeycloakRequestFilter</filter-class>
+        <filter-class>org.javaloong.kongmink.keycloak.embedded.EmbeddedKeycloakRequestFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>keycloakSessionManagementFilter</filter-name>
@@ -17,7 +17,7 @@
         <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.javaloong.kongmink.open.am.embedded.keycloak.EmbeddedKeycloakApplication</param-value>
+            <param-value>org.javaloong.kongmink.keycloak.embedded.EmbeddedKeycloakApplication</param-value>
         </init-param>
         <init-param>
             <param-name>resteasy.servlet.mapping.prefix</param-name>
