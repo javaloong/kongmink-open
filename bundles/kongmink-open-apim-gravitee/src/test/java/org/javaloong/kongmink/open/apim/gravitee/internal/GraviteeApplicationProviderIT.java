@@ -17,7 +17,7 @@ import org.javaloong.kongmink.open.common.model.application.OAuthClientSettings;
 import org.javaloong.kongmink.open.common.model.application.SimpleApplicationSettings;
 import org.javaloong.kongmink.open.common.model.log.query.LogQuery;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.ForbiddenException;
@@ -28,7 +28,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Disabled
+@Tag("gravitee")
 public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSupport {
 
     private ApplicationProvider applicationProvider;
@@ -39,20 +39,11 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
     }
 
     @Test
-    public void findById() {
-        String id = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
-        Optional<Application> result = applicationProvider.findById(id);
-        assertThat(result).hasValueSatisfying(app -> {
-            assertThat(app)
-                    .returns("Default application", Application::getName);
-        });
-    }
-
-    @Test
-    public void createSimpleApplication() {
+    public void testSimpleApplicationCRUD() {
+        // create application
         Application application = new Application();
-        application.setName("test");
-        application.setDescription("test description");
+        application.setName("test simple");
+        application.setDescription("test simple application");
         application.setApplicationType(ApplicationType.SIMPLE);
         ApplicationSettings settings = new ApplicationSettings();
         SimpleApplicationSettings simpleSettings = new SimpleApplicationSettings();
@@ -64,116 +55,100 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
         assertThat(newApplication)
                 .returns("test-resource-server", app -> app.getSettings().getApp().getClientId())
                 .extracting(Application::getId).isNotNull();
+        // update application
+        newApplication.setDescription("test simple application2");
+        simpleSettings.setType("WEB");
+        settings.setApp(simpleSettings);
+        newApplication.setSettings(settings);
+        applicationProvider.update(newApplication);
+        Optional<Application> result = applicationProvider.findById(newApplication.getId());
+        assertThat(result).hasValueSatisfying(value -> {
+            assertThat(value)
+                    .returns("test simple application2", Application::getDescription)
+                    .returns("WEB", app -> app.getSettings().getApp().getType());
+        });
+        // delete application
+        applicationProvider.delete(newApplication.getId());
+        assertThatThrownBy(() -> applicationProvider.findById(newApplication.getId()))
+                .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    public void createOAuthApplication() {
+    public void testOAuthApplicationCRUD() {
+        // create application
         Application application = new Application();
         application.setName("test oauth");
-        application.setDescription("test oauth description");
-        application.setApplicationType(ApplicationType.WEB);
+        application.setDescription("test oauth application");
+        application.setApplicationType(ApplicationType.BROWSER);
         ApplicationSettings settings = new ApplicationSettings();
         OAuthClientSettings oauthSettings = new OAuthClientSettings();
-        oauthSettings.setApplicationType(ApplicationType.WEB.toString());
+        oauthSettings.setApplicationType(ApplicationType.BROWSER.toString());
         oauthSettings.setGrantTypes(Collections.singletonList("authorization_code"));
         oauthSettings.setRedirectUris(Collections.singletonList("http://localhost/redirect"));
         settings.setOauth(oauthSettings);
         application.setSettings(settings);
         Application newApplication = applicationProvider.create(application);
         assertThat(newApplication)
-                .returns(ApplicationType.WEB, Application::getApplicationType)
+                .returns(ApplicationType.BROWSER, Application::getApplicationType)
                 .returns(Collections.singletonList("authorization_code"),
                         app -> app.getSettings().getOauth().getGrantTypes())
                 .returns(Collections.singletonList("http://localhost/redirect"),
                         app -> app.getSettings().getOauth().getRedirectUris())
                 .extracting(Application::getId).isNotNull();
-    }
-
-    @Test
-    public void updateSimpleApplication() {
-        Application application = new Application();
-        application.setId("c5e00d43-ba8a-4422-a00d-43ba8a64221b");
-        application.setName("test2");
-        ApplicationSettings settings = new ApplicationSettings();
-        SimpleApplicationSettings simpleSettings = new SimpleApplicationSettings();
-        simpleSettings.setType("WEB");
-        settings.setApp(simpleSettings);
-        application.setSettings(settings);
-        applicationProvider.update(application);
-        Optional<Application> result = applicationProvider.findById(application.getId());
-        assertThat(result).hasValueSatisfying(value -> {
-            assertThat(value)
-                    .returns("test2", Application::getName)
-                    .returns("WEB", app -> app.getSettings().getApp().getType());
-        });
-    }
-
-    @Test
-    public void updateOAuthApplication() {
-        Application application = new Application();
-        application.setId("7ed439cd-3f6a-4161-9439-cd3f6a1161b8");
-        application.setName("test oauth2");
-        application.setDescription("test oauth description");
-        application.setApplicationType(ApplicationType.WEB);
-        ApplicationSettings settings = new ApplicationSettings();
-        OAuthClientSettings oauthSettings = new OAuthClientSettings();
-        oauthSettings.setApplicationType(ApplicationType.WEB.toString());
+        // update application
+        newApplication.setDescription("test oauth application2");
         oauthSettings.setGrantTypes(Arrays.asList("authorization_code", "implicit"));
         oauthSettings.setRedirectUris(Collections.singletonList("http://localhost/redirect"));
         settings.setOauth(oauthSettings);
-        application.setSettings(settings);
-        applicationProvider.update(application);
-        Optional<Application> result = applicationProvider.findById(application.getId());
+        newApplication.setSettings(settings);
+        applicationProvider.update(newApplication);
+        Optional<Application> result = applicationProvider.findById(newApplication.getId());
         assertThat(result).hasValueSatisfying(value -> {
             assertThat(value)
-                    .returns("test oauth2", Application::getName)
+                    .returns("test oauth application2", Application::getDescription)
                     .extracting(app -> app.getSettings().getOauth())
                     .returns(oauthSettings.getGrantTypes(), OAuthClientSettings::getGrantTypes);
         });
-    }
-
-    @Test
-    public void delete() {
-        String id = "c5e00d43-ba8a-4422-a00d-43ba8a64221b";
-        applicationProvider.delete(id);
-        assertThatThrownBy(() -> applicationProvider.findById(id))
+        // delete application
+        applicationProvider.delete(newApplication.getId());
+        assertThatThrownBy(() -> applicationProvider.findById(newApplication.getId()))
                 .isInstanceOf(ForbiddenException.class);
     }
 
     @Test
     public void findAll() {
         Page<Application> result = applicationProvider.findAll(1, 10);
-        assertThat(result.getTotalCount()).isEqualTo(1);
-        assertThat(result.getData()).isNotEmpty().hasSize(1)
-                .extracting(Application::getName).contains("Default Application");
+        assertThat(result.getTotalCount()).isGreaterThan(1);
+        assertThat(result.getData()).isNotEmpty()
+                .extracting(Application::getName).contains("Default application");
     }
 
     @Test
     public void getLog() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
-        String logId = "0c9a2694-555a-425e-9a26-94555ac25e7f";
-        Long timestamp = 1650441061674L;
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
+        String logId = "57ac6be3-efdd-4bbe-ac6b-e3efddfbbeb9";
+        Long timestamp = 1671089430523L;
         ApplicationLog applicationLog = applicationProvider.getLog(applicationId, logId, timestamp);
         assertThat(applicationLog).isNotNull()
-                .extracting(ApplicationLog::getApi).isEqualTo("167f6b66-da50-4c39-bf6b-66da505c391a");
+                .extracting(ApplicationLog::getApi).isEqualTo("ebbb4e21-9bbc-400d-bb4e-219bbc400d97");
     }
 
     @Test
     public void getLogs() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         LogQuery logQuery = new LogQuery();
-        logQuery.setFrom(1650384000000L);
-        logQuery.setTo(1650470399999L);
-        logQuery.setQuery("api:167f6b66-da50-4c39-bf6b-66da505c391a");
+        logQuery.setFrom(1671033600000L);
+        logQuery.setTo(1671119999999L);
+        logQuery.setQuery("api:ebbb4e21-9bbc-400d-bb4e-219bbc400d97");
         logQuery.setOrder("DESC");
         Page<ApplicationLog> result = applicationProvider.getLogs(applicationId, logQuery, 1, 10);
-        assertThat(result.getData()).isNotEmpty().hasSize(2)
-                .extracting(ApplicationLog::getApi).contains("167f6b66-da50-4c39-bf6b-66da505c391a");
+        assertThat(result.getData()).isNotEmpty()
+                .extracting(ApplicationLog::getApi).contains("ebbb4e21-9bbc-400d-bb4e-219bbc400d97");
     }
 
     @Test
     public void getHistogramAnalytics() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         AnalyticsQuery analyticsQuery = new AnalyticsQuery();
         analyticsQuery.setType(AnalyticsType.DATE_HISTO);
         analyticsQuery.setFrom(1650384000000L);
@@ -187,7 +162,7 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
 
     @Test
     public void getTopHitsAnalytics() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         AnalyticsQuery analyticsQuery = new AnalyticsQuery();
         analyticsQuery.setType(AnalyticsType.GROUP_BY);
         analyticsQuery.setFrom(1650384000000L);
@@ -202,7 +177,7 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
 
     @Test
     public void getHitsAnalytics() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         AnalyticsQuery analyticsQuery = new AnalyticsQuery();
         analyticsQuery.setType(AnalyticsType.COUNT);
         analyticsQuery.setFrom(1650384000000L);
@@ -216,7 +191,7 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
 
     @Test
     public void getStatsAnalytics() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         AnalyticsQuery analyticsQuery = new AnalyticsQuery();
         analyticsQuery.setType(AnalyticsType.STATS);
         analyticsQuery.setFrom(1650384000000L);
@@ -230,14 +205,14 @@ public class GraviteeApplicationProviderIT extends GraviteePortalClientTestSuppo
 
     @Test
     public void renewSharedKey() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         ApiKey apiKey = applicationProvider.renewSharedKey(applicationId);
         assertThat(apiKey).isNotNull();
     }
 
     @Test
     public void revokeKey() {
-        String applicationId = "e0e75fa9-3fd7-4584-a75f-a93fd7558400";
+        String applicationId = "bfe2c4c2-dfc7-43c3-a2c4-c2dfc703c365";
         String apiKey = "c9d063f4-bfc1-4ea7-9063-f4bfc19ea750";
         applicationProvider.revokeKey(applicationId, apiKey);
     }
