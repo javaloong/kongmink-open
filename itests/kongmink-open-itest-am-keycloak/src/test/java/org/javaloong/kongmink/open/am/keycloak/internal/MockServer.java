@@ -7,6 +7,8 @@ import org.keycloak.representations.idm.ClientRepresentation;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,11 +32,11 @@ public class MockServer {
         wireMockServer.stubFor(post(urlMatching(".*/protocol/openid-connect/token"))
                 .willReturn(aResponse().withBody(writeValueAsString(createAccessToken()))));
         // Client
-        wireMockServer.stubFor(get(urlMatching(".*/clients/1"))
+        wireMockServer.stubFor(get(urlMatching(".*/clients\\?clientId=example-client"))
                 .withHeader(HttpHeaders.AUTHORIZATION, matching("Bearer test_access_token"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                        .withBody(writeValueAsString(createClientRepresentation()))));
+                        .withBody(writeValueAsString(Collections.singletonList(createClientRepresentation())))));
     }
 
     public static void stop() {
@@ -65,6 +67,7 @@ public class MockServer {
         ClientRepresentation clientRepresentation = new ClientRepresentation();
         clientRepresentation.setId("1");
         clientRepresentation.setClientId("example-client");
+        clientRepresentation.setName("Example Client");
         return clientRepresentation;
     }
 }

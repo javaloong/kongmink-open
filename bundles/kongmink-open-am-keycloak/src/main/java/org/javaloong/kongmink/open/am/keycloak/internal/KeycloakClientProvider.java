@@ -30,7 +30,6 @@ public class KeycloakClientProvider implements ClientProvider {
         this.adminClient = adminClient;
     }
 
-    @Override
     public Optional<Client> findById(String id) {
         Optional<ClientResource> clientResource = getClientResource(id);
         return clientResource.flatMap(

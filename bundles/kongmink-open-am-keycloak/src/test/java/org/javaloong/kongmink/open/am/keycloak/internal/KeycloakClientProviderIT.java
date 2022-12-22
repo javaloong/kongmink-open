@@ -27,7 +27,7 @@ public class KeycloakClientProviderIT extends EmbeddedKeycloakTestSupport {
                 .build();
     }
 
-    private ClientProvider clientProvider;
+    private KeycloakClientProvider clientProvider;
 
     @BeforeEach
     public void setUp(EmbeddedJetty jetty) {

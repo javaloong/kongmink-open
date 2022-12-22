@@ -103,6 +103,13 @@
         <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-am-keycloak/${project.version}</bundle>
     </feature>
 
+    <feature name="kongmink-open-am-ory-hydra" version="${project.version}">
+        <bundle dependency="true">mvn:org.apache.commons/commons-lang3/${commons.lang3.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-common/${project.version}</bundle>
+        <bundle dependency="true">mvn:org.javaloong.kongmink.open/kongmink-open-am-api/${project.version}</bundle>
+        <bundle>mvn:org.javaloong.kongmink.open/kongmink-open-am-ory-hydra/${project.version}</bundle>
+    </feature>
+
     <feature name="kongmink-open-apim-gravitee" version="${project.version}">
         <feature>cxf-rs-security-oauth2</feature>
         <feature>kongmink-open-core</feature>
@@ -228,7 +235,7 @@
         <feature>kongmink-open-bean-validation</feature>
         <feature>kongmink-open-liquibase-extender</feature>
         <feature>kongmink-open-account-keycloak</feature>
-        <feature>kongmink-open-am-keycloak</feature>
+        <feature>kongmink-open-am-ory-hydra</feature>
         <feature>kongmink-open-apim-gravitee</feature>
         <feature>kongmink-open-data-jpa</feature>
         <feature>kongmink-open-data-jpa-xa</feature>

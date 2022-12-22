@@ -6,8 +6,6 @@ import java.util.Optional;
 
 public interface ClientProvider {
 
-    Optional<Client> findById(String id);
-
     Optional<Client> findByClientId(String clientId);
 
     Client create(Client client);

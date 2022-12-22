@@ -8,7 +8,7 @@ import java.util.Map;
 
 public abstract class GraviteePortalClientTestSupport {
 
-    public static final String SERVER_URL = "http://PORTAL.API.SERVER:8083/portal";
+    public static final String SERVER_URL = "http://gravitee:8083/portal";
 
     public GraviteePortalClient createPortalClient() {
         GraviteePortalClient client = new GraviteePortalClient(createPortalClientConfig());
