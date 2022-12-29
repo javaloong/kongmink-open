@@ -40,11 +40,18 @@ public class ClientMapper {
     private static ModelMapper createModelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        // Client scopes
         modelMapper.createTypeMap(Client.class, ClientRepresentation.class)
+                .addMapping(Client::getClientName, ClientRepresentation::setName)
+                .addMapping(Client::getClientSecret, ClientRepresentation::setSecret)
+                .addMapping(Client::getClientUri, ClientRepresentation::setBaseUrl)
+                // Client scopes
                 .addMapping(Client::getDefaultScopes, ClientRepresentation::setDefaultClientScopes)
                 .addMapping(Client::getAllowedScopes, ClientRepresentation::setOptionalClientScopes);
         modelMapper.createTypeMap(ClientRepresentation.class, Client.class)
+                .addMapping(ClientRepresentation::getName, Client::setClientName)
+                .addMapping(ClientRepresentation::getSecret, Client::setClientSecret)
+                .addMapping(ClientRepresentation::getBaseUrl, Client::setClientUri)
+                // Client scopes
                 .addMapping(ClientRepresentation::getDefaultClientScopes, Client::setDefaultScopes)
                 .addMapping(ClientRepresentation::getOptionalClientScopes, Client::setAllowedScopes);
         return modelMapper;

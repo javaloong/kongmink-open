@@ -1,7 +1,6 @@
 package org.javaloong.kongmink.open.am.keycloak.internal;
 
 import org.javaloong.kongmink.open.am.ClientProvider;
-import org.javaloong.kongmink.open.am.exception.ClientException;
 import org.javaloong.kongmink.open.am.keycloak.internal.mapper.ClientMapper;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientResource;
 import org.javaloong.kongmink.open.am.keycloak.internal.resource.ClientsResource;
@@ -30,27 +29,13 @@ public class KeycloakClientProvider implements ClientProvider {
         this.adminClient = adminClient;
     }
 
-    public Optional<Client> findById(String id) {
-        Optional<ClientResource> clientResource = getClientResource(id);
-        return clientResource.flatMap(
-                resource -> getClientRepresentation(resource)
-                        .map(ClientMapper::mapToClient));
-    }
-
     @Override
-    public Optional<Client> findByClientId(String clientId) {
-        ClientsResource clientsResource = adminClient.getClientsResource();
-        List<ClientRepresentation> clientList = clientsResource.findByClientId(clientId);
-        Optional<Client> result = Optional.empty();
-        if (clientList.size() > 0) {
-            result = Optional.of(ClientMapper.mapToClient(clientList.get(0)));
-        }
-        return result;
+    public Optional<Client> findById(String clientId) {
+        return getClientRepresentation(clientId).map(ClientMapper::mapToClient);
     }
 
     @Override
     public Client create(Client client) {
-        verifyClient(client.getClientId());
         ClientsResource clientsResource = adminClient.getClientsResource();
         ClientRepresentation clientRepresentation = ClientMapper.mapToClientRepresentation(client);
         Response response = clientsResource.create(clientRepresentation);
@@ -59,37 +44,45 @@ public class KeycloakClientProvider implements ClientProvider {
             log.info("Response Location: " + response.getLocation());
         }
         String id = JAXRSClientUtils.getCreatedId(response);
-        return findById(id).orElseThrow();
+        Optional<ClientResource> clientResource = getClientResource(id);
+        return clientResource.flatMap(
+                resource -> getClientRepresentation(resource)
+                        .map(ClientMapper::mapToClient)).orElseThrow();
     }
 
     @Override
     public void update(Client client) {
-        Optional<ClientResource> clientResource = getClientResource(client.getId());
-        clientResource.ifPresent(resource -> {
-            ClientRepresentation clientRepresentation = resource.toRepresentation();
+        getClientRepresentation(client.getClientId()).ifPresent(clientRepresentation -> {
             String clientId = clientRepresentation.getClientId();
             ClientMapper.map(client, clientRepresentation);
             clientRepresentation.setClientId(clientId);
-            resource.update(clientRepresentation);
+            Optional<ClientResource> clientResource = getClientResource(clientRepresentation.getId());
+            clientResource.ifPresent(resource -> resource.update(clientRepresentation));
         });
     }
 
     @Override
-    public void delete(String id) {
-        Optional<ClientResource> clientResource = getClientResource(id);
-        clientResource.ifPresent(ClientResource::remove);
+    public void delete(String clientId) {
+        getClientRepresentation(clientId).ifPresent(clientRepresentation -> {
+            Optional<ClientResource> clientResource = getClientResource(clientRepresentation.getId());
+            clientResource.ifPresent(ClientResource::remove);
+        });
     }
 
     @Override
-    public String getSecret(String id) {
-        Optional<ClientResource> clientResource = getClientResource(id);
-        return clientResource.map(resource -> resource.getSecret().getValue()).orElse(null);
+    public String getSecret(String clientId) {
+        return getClientRepresentation(clientId).flatMap(clientRepresentation -> {
+            Optional<ClientResource> clientResource = getClientResource(clientRepresentation.getId());
+            return clientResource.map(resource -> resource.getSecret().getValue());
+        }).orElse(null);
     }
 
     @Override
-    public String regenerateSecret(String id) {
-        Optional<ClientResource> clientResource = getClientResource(id);
-        return clientResource.map(resource -> resource.generateNewSecret().getValue()).orElse(null);
+    public String regenerateSecret(String clientId) {
+        return getClientRepresentation(clientId).flatMap(clientRepresentation -> {
+            Optional<ClientResource> clientResource = getClientResource(clientRepresentation.getId());
+            return clientResource.map(resource -> resource.generateNewSecret().getValue());
+        }).orElse(null);
     }
 
     private Optional<ClientResource> getClientResource(String id) {
@@ -104,10 +97,13 @@ public class KeycloakClientProvider implements ClientProvider {
         }
     }
 
-    private void verifyClient(String clientId) {
-        Optional<Client> result = findByClientId(clientId);
-        if (result.isPresent()) {
-            throw ClientException.clientExistsException();
+    private Optional<ClientRepresentation> getClientRepresentation(String clientId) {
+        ClientsResource clientsResource = adminClient.getClientsResource();
+        List<ClientRepresentation> clientList = clientsResource.findByClientId(clientId);
+        Optional<ClientRepresentation> result = Optional.empty();
+        if (clientList.size() > 0) {
+            result = Optional.of(clientList.get(0));
         }
+        return result;
     }
 }

@@ -26,35 +26,35 @@ public class HydraClientProviderIT extends HydraAdminClientTestSupport {
     public void testOAuth2ClientCRUD() {
         // create client
         Client client = new Client();
-        client.setName("New Client");
+        client.setClientName("New Client");
+        client.setScope("profile email");
         client.setRedirectUris(Collections.singletonList("/new-client/*"));
         client.setGrantTypes(Arrays.asList("authorization_code", "refresh_token"));
-        client.setAllowedScopes(Arrays.asList("profile", "email"));
         Client newClient = clientProvider.create(client);
         assertThat(newClient)
-                .returns("New Client", Client::getName)
+                .returns("New Client", Client::getClientName)
                 .returns(Collections.singletonList("/new-client/*"), Client::getRedirectUris)
                 .returns(Arrays.asList("authorization_code", "refresh_token"), Client::getGrantTypes)
-                .returns(Arrays.asList("profile", "email"), Client::getAllowedScopes);
+                .returns("profile email", Client::getScope);
         // update client
-        newClient.setName("New Client2");
+        newClient.setClientName("New Client2");
         newClient.setRedirectUris(Arrays.asList("/new-client/*", "/new-client2/*"));
         newClient.setGrantTypes(Collections.singletonList("implicit"));
-        newClient.setAllowedScopes(Arrays.asList("profile", "phone"));
+        newClient.setScope("profile phone");
         clientProvider.update(newClient);
-        Optional<Client> result = clientProvider.findByClientId(newClient.getClientId());
+        Optional<Client> result = clientProvider.findById(newClient.getClientId());
         assertThat(result).hasValueSatisfying(value -> {
             assertThat(value)
-                    .returns("New Client2", Client::getName)
+                    .returns("New Client2", Client::getClientName)
                     .returns(Arrays.asList("/new-client/*", "/new-client2/*"), Client::getRedirectUris)
                     .returns(Collections.singletonList("implicit"), Client::getGrantTypes)
-                    .returns(Arrays.asList("profile", "phone"), Client::getAllowedScopes);
+                    .returns("profile phone", Client::getScope);
         });
         // regenerate secret
         String clientSecret = clientProvider.regenerateSecret(newClient.getClientId());
         assertThat(clientSecret).isNotEmpty();
         // delete client
         clientProvider.delete(newClient.getClientId());
-        assertThat(clientProvider.findByClientId(newClient.getClientId())).isEmpty();
+        assertThat(clientProvider.findById(newClient.getClientId())).isEmpty();
     }
 }

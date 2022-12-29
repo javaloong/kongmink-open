@@ -78,11 +78,10 @@ public abstract class TestUtils {
         return subscription;
     }
 
-    public static Client createClient(String id, String clientId, String name) {
+    public static Client createClient(String clientId, String name) {
         Client client = new Client();
-        client.setId(id);
-        client.setName(name);
         client.setClientId(clientId);
+        client.setClientName(name);
         return client;
     }
 

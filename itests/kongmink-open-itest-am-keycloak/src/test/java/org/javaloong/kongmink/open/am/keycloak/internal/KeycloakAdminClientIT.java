@@ -10,7 +10,7 @@ public class KeycloakAdminClientIT extends KeycloakMockTestSupport {
     @Test
     public void test_client_provider() {
         assertThat(getService(ClientProvider.class)).isNotNull().satisfies(
-                provider -> assertThat(provider.findByClientId("example-client")).hasValueSatisfying(
-                        client -> assertThat(client.getName()).isEqualTo("Example Client")));
+                provider -> assertThat(provider.findById("example-client")).hasValueSatisfying(
+                        client -> assertThat(client.getClientName()).isEqualTo("Example Client")));
     }
 }

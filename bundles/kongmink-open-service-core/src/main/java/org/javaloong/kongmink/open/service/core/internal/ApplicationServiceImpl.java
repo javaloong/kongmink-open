@@ -12,7 +12,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component(service = ApplicationService.class)
 public class ApplicationServiceImpl implements ApplicationService {
@@ -27,7 +26,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applicationProvider.findById(id).map(application -> {
             if (application.getApplicationType() == ApplicationType.SIMPLE) {
                 String clientId = application.getSettings().getApp().getClientId();
-                clientProvider.findByClientId(clientId).ifPresent(client -> {
+                clientProvider.findById(clientId).ifPresent(client -> {
                     ApplicationSettings applicationSettings = createApplicationSettings(application, client);
                     application.setSettings(applicationSettings);
                 });
@@ -53,7 +52,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             if (updateApplication.getSettings().getApp() != null) {
                 if (application.getApplicationType() == ApplicationType.SIMPLE && application.getSettings().getOauth() != null) {
                     String clientId = updateApplication.getSettings().getApp().getClientId();
-                    clientProvider.findByClientId(clientId).ifPresent(updateClient -> {
+                    clientProvider.findById(clientId).ifPresent(updateClient -> {
                         updateClient(application, updateClient);
                         ApplicationSettings applicationSettings = createApplicationSettings(updateClient.getClientId(),
                                 application.getSettings().getOauth().getApplicationType());
@@ -76,9 +75,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         applicationProvider.findById(id).ifPresent(application -> {
             if (application.getSettings().getApp() != null) {
                 String clientId = application.getSettings().getApp().getClientId();
-                clientProvider.findByClientId(clientId).ifPresent(client -> {
-                    clientProvider.delete(client.getId());
-                });
+                clientProvider.delete(clientId);
             }
             applicationProvider.delete(id);
         });
@@ -92,14 +89,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ClientSecret getClientSecret(String applicationId) {
         return applicationProvider.findById(applicationId).map(application -> findClient(application)
-                .map(client -> new ClientSecret(client.getClientId(), clientProvider.getSecret(client.getId())))
+                .map(client -> new ClientSecret(client.getClientId(), clientProvider.getSecret(client.getClientId())))
                 .orElseGet(() -> createClientSecret(application.getSettings().getOauth()))).orElse(null);
     }
 
     @Override
     public ClientSecret regenerateClientSecret(String applicationId) {
         return applicationProvider.findById(applicationId).map(application -> findClient(application)
-                .map(client -> new ClientSecret(client.getClientId(), clientProvider.regenerateSecret(client.getId())))
+                .map(client -> new ClientSecret(client.getClientId(), clientProvider.regenerateSecret(client.getClientId())))
                 .orElseThrow(() -> new UnsupportedOperationException("Not implemented yet."))).orElse(null);
     }
 
@@ -115,17 +112,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private Client createClient(Application application) {
         Client client = new Client();
-        client.setClientId(UUID.randomUUID().toString());
-        client.setName(application.getName());
-        client.setDescription((application.getDescription()));
+        client.setClientName(application.getName());
         client.setGrantTypes(application.getSettings().getOauth().getGrantTypes());
         client.setRedirectUris(application.getSettings().getOauth().getRedirectUris());
         return clientProvider.create(client);
     }
 
     private void updateClient(Application application, Client client) {
-        client.setName(application.getName());
-        client.setDescription(application.getDescription());
+        client.setClientName(application.getName());
         client.setGrantTypes(application.getSettings().getOauth().getGrantTypes());
         client.setRedirectUris(application.getSettings().getOauth().getRedirectUris());
         clientProvider.update(client);
@@ -147,7 +141,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         oauthSettings.setGrantTypes(client.getGrantTypes());
         oauthSettings.setRedirectUris(client.getRedirectUris());
         oauthSettings.setClientId(client.getClientId());
-        oauthSettings.setClientSecret(client.getSecret());
+        oauthSettings.setClientSecret(client.getClientSecret());
         applicationSettings.setOauth(oauthSettings);
         return applicationSettings;
     }
@@ -155,7 +149,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private Optional<Client> findClient(Application application) {
         if (application.getSettings().getApp() != null) {
             String clientId = application.getSettings().getApp().getClientId();
-            return clientProvider.findByClientId(clientId);
+            return clientProvider.findById(clientId);
         }
         return Optional.empty();
     }

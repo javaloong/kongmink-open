@@ -61,7 +61,7 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
                 .returns("client1", app -> app.getSettings().getApp().getClientId())
                 .returns("WEB", app -> app.getSettings().getApp().getType());
         when(applicationProvider.findById(anyString())).thenReturn(Optional.of(application));
-        when(clientProvider.findByClientId(anyString())).thenReturn(Optional.empty());
+        when(clientProvider.findById(anyString())).thenReturn(Optional.empty());
         application.setName("application11");
         application.getSettings().getApp().setClientId("client11");
         application.getSettings().getApp().setType("NATIVE");
@@ -102,7 +102,7 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
                 .returns("application11", Application::getName)
                 .returns(Collections.singletonList("client_credentials"), app -> app.getSettings().getOauth().getGrantTypes())
                 .returns(Collections.singletonList("https://localhost/redirect2"), app -> app.getSettings().getOauth().getRedirectUris());
-        when(clientProvider.findByClientId(anyString())).thenReturn(Optional.empty());
+        when(clientProvider.findById(anyString())).thenReturn(Optional.empty());
         ClientSecret clientSecret = applicationService.getClientSecret(application.getId());
         assertThat(clientSecret)
                 .returns("client1", ClientSecret::getClientId)
@@ -123,14 +123,14 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
                 null, null, grantTypes, redirectUris);
         Application application = TestUtils.createApplication("1", "application1", applicationType, applicationSettings);
         User user = TestUtils.createUser("1", "user1");
-        Client client = TestUtils.createClient("1", "client1", "application1");
+        Client client = TestUtils.createClient("client1", "application1");
         when(clientProvider.create(any(Client.class))).thenReturn(client);
         when(applicationProvider.create(any(Application.class))).thenReturn(new Application());
         applicationService.create(user, application);
         ArgumentCaptor<Client> clientArgumentCaptor = ArgumentCaptor.forClass(Client.class);
         verify(clientProvider).create(clientArgumentCaptor.capture());
         assertThat(clientArgumentCaptor.getValue())
-                .returns("application1", Client::getName)
+                .returns("application1", Client::getClientName)
                 .returns(grantTypes, Client::getGrantTypes)
                 .returns(redirectUris, Client::getRedirectUris);
         ArgumentCaptor<Application> applicationArgumentCaptor = ArgumentCaptor.forClass(Application.class);
@@ -142,8 +142,8 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
         Application updateApplication = TestUtils.createApplication("1", "application1", applicationType,
                 TestUtils.createApplicationSettings("client1", "WEB"));
         when(applicationProvider.findById(anyString())).thenReturn(Optional.of(updateApplication));
-        Client updateClient = TestUtils.createClient("1", "client1", "application1");
-        when(clientProvider.findByClientId(anyString())).thenReturn(Optional.of(updateClient));
+        Client updateClient = TestUtils.createClient("client1", "application1");
+        when(clientProvider.findById(anyString())).thenReturn(Optional.of(updateClient));
         application.setName("application11");
         applicationSettings.getOauth().setGrantTypes(Collections.singletonList("client_credentials"));
         applicationSettings.getOauth().setRedirectUris(Collections.singletonList("https://localhost/redirect2"));
@@ -151,7 +151,7 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
         applicationService.update(application);
         verify(clientProvider).update(clientArgumentCaptor.capture());
         assertThat(clientArgumentCaptor.getValue())
-                .returns("application11", Client::getName)
+                .returns("application11", Client::getClientName)
                 .returns(Collections.singletonList("client_credentials"), Client::getGrantTypes)
                 .returns(Collections.singletonList("https://localhost/redirect2"), Client::getRedirectUris);
         verify(applicationProvider).update(applicationArgumentCaptor.capture());
@@ -161,18 +161,18 @@ public class ApplicationServiceImplIT extends AbstractServiceTestSupport {
                 .returns("WEB", app -> app.getSettings().getApp().getType());
         when(clientProvider.getSecret(anyString())).thenReturn("secret1");
         ClientSecret clientSecret = applicationService.getClientSecret(updateApplication.getId());
-        verify(clientProvider).getSecret(updateClient.getId());
+        verify(clientProvider).getSecret(updateClient.getClientId());
         assertThat(clientSecret)
                 .returns("client1", ClientSecret::getClientId)
                 .returns("secret1", ClientSecret::getSecret);
         when(clientProvider.regenerateSecret(anyString())).thenReturn("secret2");
         clientSecret = applicationService.regenerateClientSecret(updateApplication.getId());
-        verify(clientProvider).regenerateSecret(updateClient.getId());
+        verify(clientProvider).regenerateSecret(updateClient.getClientId());
         assertThat(clientSecret)
                 .returns("client1", ClientSecret::getClientId)
                 .returns("secret2", ClientSecret::getSecret);
         applicationService.delete(updateApplication.getId());
-        verify(clientProvider).delete(updateClient.getId());
+        verify(clientProvider).delete(updateClient.getClientId());
         verify(applicationProvider).delete(updateApplication.getId());
     }
 

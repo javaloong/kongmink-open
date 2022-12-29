@@ -6,15 +6,15 @@ import java.util.Optional;
 
 public interface ClientProvider {
 
-    Optional<Client> findByClientId(String clientId);
+    Optional<Client> findById(String clientId);
 
     Client create(Client client);
 
     void update(Client client);
 
-    void delete(String id);
+    void delete(String clientId);
 
-    String getSecret(String id);
+    String getSecret(String clientId);
 
-    String regenerateSecret(String id);
+    String regenerateSecret(String clientId);
 }

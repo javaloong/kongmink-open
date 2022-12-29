@@ -30,7 +30,7 @@ public class HydraClientProvider implements ClientProvider {
     }
 
     @Override
-    public Optional<Client> findByClientId(String clientId) {
+    public Optional<Client> findById(String clientId) {
         Optional<ClientResource> clientResource = getClientResource(clientId);
         return clientResource.flatMap(
                 resource -> getOAuth2Client(resource)
