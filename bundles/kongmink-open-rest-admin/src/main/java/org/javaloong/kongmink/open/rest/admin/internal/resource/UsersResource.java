@@ -35,6 +35,7 @@ public class UsersResource {
 
     @PUT
     @Path("/{id}/config")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response setUserConfig(@PathParam("id") String userId, Map<String, Object> userConfig) {
         userService.setConfig(userId, userConfig);
         return Response.noContent().build();
@@ -42,6 +43,7 @@ public class UsersResource {
 
     @PATCH
     @Path("/{id}/config")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUserConfig(@PathParam("id") String userId, Map<String, Object> userConfig) {
         userService.updateConfig(userId, userConfig);
         return Response.noContent().build();
