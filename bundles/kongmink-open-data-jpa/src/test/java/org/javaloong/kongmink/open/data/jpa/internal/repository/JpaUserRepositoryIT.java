@@ -32,7 +32,6 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
         UserEntity user = new UserEntity();
         user.setId("4");
         user.setUsername("user4");
-        user.setCreatedAt(LocalDateTime.parse("2021-12-30T10:25:12"));
         UserEntity result = getUserRepository().create(user);
         assertThat(result).isNotNull();
     }
@@ -43,7 +42,6 @@ public class JpaUserRepositoryIT extends RepositoryTestSupport {
     public void updateUser() {
         getUserRepository().findById("2").ifPresent(user -> {
             user.setUsername("user22");
-            user.setUpdatedAt(LocalDateTime.parse("2021-12-13T13:13:13"));
             UserEntity result = getUserRepository().update(user);
             assertThat(result).returns("user22", UserEntity::getUsername);
         });

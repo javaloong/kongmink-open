@@ -1,19 +1,18 @@
 package org.javaloong.kongmink.open.data.domain;
 
 import org.javaloong.kongmink.open.data.converter.HashMapConverter;
+import org.javaloong.kongmink.open.data.domain.support.AuditListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends AbstractEntity<String> {
+@EntityListeners(AuditListener.class)
+public class UserEntity extends AbstractEntityAuditable<String> {
 
     private String username;
     private Map<String, Object> configData;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     private long version;
 
@@ -46,24 +45,6 @@ public class UserEntity extends AbstractEntity<String> {
 
     public void setConfigData(Map<String, Object> configData) {
         this.configData = configData;
-    }
-
-    @Column(name = "created_at", nullable = false)
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @Column(name = "updated_at")
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Version
