@@ -24,12 +24,16 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Optional<Application> findById(String id) {
         return applicationProvider.findById(id).map(application -> {
-            if (application.getApplicationType() == ApplicationType.SIMPLE) {
+            if (application.getApplicationType() == ApplicationType.SIMPLE
+                    && application.getSettings() != null
+                    && application.getSettings().getApp() != null) {
                 String clientId = application.getSettings().getApp().getClientId();
-                clientProvider.findById(clientId).ifPresent(client -> {
-                    ApplicationSettings applicationSettings = createApplicationSettings(application, client);
-                    application.setSettings(applicationSettings);
-                });
+                if (clientId != null) {
+                    clientProvider.findById(clientId).ifPresent(client -> {
+                        ApplicationSettings applicationSettings = createApplicationSettings(application, client);
+                        application.setSettings(applicationSettings);
+                    });
+                }
             }
             return application;
         });
